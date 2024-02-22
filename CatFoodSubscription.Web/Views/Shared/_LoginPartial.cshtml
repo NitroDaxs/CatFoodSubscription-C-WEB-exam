@@ -1,0 +1,46 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<head>
+    <link rel="stylesheet" href="css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="body">
+    <ul class="navbar-nav">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="dropdown">
+                <button class="dropbtn">Sing In</button>
+                <div class="dropdown-content">
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
+            </li>
+            </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="dropdown">
+                <button class="dropbtn">
+                    <i class="fa-solid fa-circle-user"></i>
+                </button>
+                <div class="dropdown-content">
+            <li class="nav-item">
+                <a class="nav-link register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
+            </div>
+            </div>
+
+        }
+    </ul>
+</body>

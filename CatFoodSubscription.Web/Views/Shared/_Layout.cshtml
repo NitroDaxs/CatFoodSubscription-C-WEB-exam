@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Catio</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="body">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light fixed-top border-bottom box-shadow mb-3 border-bottom-0">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="/css/images/logo.png" alt="Catio Logo" style="width: 140px; height: 35px; margin-bottom: 5px">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex">
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item-pages">
+                            <a class="nav-link custom-color" asp-area="" asp-controller="Home" asp-action="Product">
+                                <span class="subscription-icon">Products🐾</span>
+                            </a>
+                        </li>
+                        <li class="nav-item-pages">
+                            <a class="nav-link custom-color" asp-area="" asp-controller="Home" asp-action="Product">
+                                <span class="subscription-icon">Subsctiptions🐾</span>
+                            </a>
+                        </li>
+                        <li class="nav-item-pages">
+                            <a class="nav-link custom-color" asp-area="" asp-controller="Home" asp-action="Product">
+                                <span class="subscription-icon">About Us🐾</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <ul class="nav navbar-nav ms-auto">
+                        <li class="nav-item ">
+                            <form id="searchBar" class="d-flex ">
+                                <div class="input-group ">
+                                    <input type="search" id="query" name="q" class="form-control" placeholder="Search...">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-outline-secondary" type="button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                <partial name="_LoginPartial" />
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            &copy; @DateTime.Now.Year - Catio
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
