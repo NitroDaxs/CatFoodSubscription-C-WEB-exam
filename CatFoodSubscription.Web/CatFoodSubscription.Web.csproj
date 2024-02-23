@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CatFoodSubscription.Common\CatFoodSubscription.Common.csproj" />
+    <ProjectReference Include="..\CatFoodSubscription.Data.Models\CatFoodSubscription.Data.Models.csproj" />
     <ProjectReference Include="..\CatFoodSubscription.Web.ViewModels\CatFoodSubscription.Web.ViewModels.csproj" />
     <ProjectReference Include="..\CatFoodSubsctiptio.Data\CatFoodSubscription.Data.csproj" />
   </ItemGroup>
