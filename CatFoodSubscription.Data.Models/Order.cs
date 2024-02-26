@@ -26,8 +26,17 @@ namespace CatFoodSubscription.Data.Models
         [Required]
         public DateTime ShippedDate { get; set; }
 
+        [Comment("Identification of the address")]
+        public int AddressId { get; set; }
+
+        [Comment("Address of the order")]
+        [ForeignKey(nameof(AddressId))]
+        public Address Address { get; set; } = null!;
+
+        [Comment("Identification of the subscriptionBox")]
         public int? SubscriptionBoxId { get; set; }
 
+        [Comment("The subscriptionBox")]
         [ForeignKey(nameof(SubscriptionBoxId))]
         public SubscriptionBox SubscriptionBox { get; set; } = null!;
 

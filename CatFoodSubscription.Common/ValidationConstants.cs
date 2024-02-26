@@ -47,5 +47,16 @@
             public const int CategoryNameMinLength = 3;
             public const int CategoryNameMaxLength = 25;
         }
+
+        public class SubscriptionBox
+        {
+            //Name           
+            public const int SubscriptionBoxNameMinLength = 3;
+            public const int SubscriptionBoxNameMaxLength = 50;
+
+            //Description
+            public const int SubscriptionBoxDescriptionMinLength = 3;
+            public const int SubscriptionBoxDescriptionMaxLength = 250;
+        }
     }
 }
