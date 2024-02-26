@@ -41,5 +41,8 @@ namespace CatFoodSubscription.Data.Models
         [Comment("The user")]
         [ForeignKey(nameof(UserId))]
         public IdentityUser User { get; set; } = null!;
+
+        [Comment("Collection of all orders")]
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

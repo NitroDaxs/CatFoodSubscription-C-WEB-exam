@@ -26,6 +26,10 @@ namespace CatFoodSubscription.Data.Models
         [Required]
         public DateTime ShippedDate { get; set; }
 
+        [Comment("Indicates whether the order is a subscription")]
+        [Required]
+        public bool IsSubscription { get; set; }
+
         [Comment("Identification of the address")]
         public int AddressId { get; set; }
 

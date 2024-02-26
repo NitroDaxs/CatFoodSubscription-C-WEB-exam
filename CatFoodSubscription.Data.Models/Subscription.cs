@@ -17,8 +17,5 @@ namespace CatFoodSubscription.Data.Models
         [Comment("The customer")]
         [ForeignKey(nameof(CustomerId))]
         public Customer Customer { get; set; } = null!;
-
-        [Comment("Collection of all orders")]
-        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
