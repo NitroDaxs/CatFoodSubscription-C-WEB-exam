@@ -26,7 +26,7 @@ namespace CatFoodSubscription.Data.Models
         public decimal Price { get; set; }
 
         [Comment("Path leading to the product's image")]
-        public string? ImgPath { get; set; }
+        public string? ImageUrl { get; set; }
 
         [Comment("Identification for the category of the product")]
         [Required]
@@ -35,5 +35,8 @@ namespace CatFoodSubscription.Data.Models
         [Comment("Category of the product")]
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; } = null!;
+
+        [Comment("Collection for the mapping table")]
+        public ICollection<ProductSubscriptionBox> ProductSubscriptionBoxes { get; set; } = new HashSet<ProductSubscriptionBox>();
     }
 }

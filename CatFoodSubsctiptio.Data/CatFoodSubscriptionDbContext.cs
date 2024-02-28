@@ -1,10 +1,12 @@
 ﻿using CatFoodSubscription.Data.Models;
+using CatFoodSubscription.Data.SeedDb;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatFoodSubscription.Data
 {
-    public class CatFoodSubscriptionDbContext : IdentityDbContext
+    public class CatFoodSubscriptionDbContext : IdentityDbContext<Customer, IdentityRole<string>, string>
     {
         public CatFoodSubscriptionDbContext(DbContextOptions<CatFoodSubscriptionDbContext> options)
             : base(options)
@@ -14,19 +16,32 @@ namespace CatFoodSubscription.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>()
-                .Property(p => p.Price)
-                .HasColumnType("decimal(18, 2)");
-
-            modelBuilder.Entity<SubscriptionBox>()
-                .Property(sb => sb.Price)
-                .HasColumnType("decimal(18, 2)");
-
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.Customer)
                 .WithMany(c => c.Orders)
                 .HasForeignKey(o => o.CustomerId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ProductSubscriptionBox>(entity =>
+            {
+                entity.HasKey(ps => new { ps.ProductId, ps.SubscriptionBoxId });
+
+                entity.HasOne(ps => ps.Product)
+                    .WithMany(p => p.ProductSubscriptionBoxes)
+                    .HasForeignKey(ps => ps.ProductId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                entity.HasOne(ps => ps.SubscriptionBox)
+                    .WithMany(s => s.ProductSubscriptionBoxes)
+                    .HasForeignKey(ps => ps.SubscriptionBoxId)
+                    .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new StatusConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new SubscriptionBoxConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductSubscriptionBoxConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -35,8 +50,9 @@ namespace CatFoodSubscription.Data
         public DbSet<Customer> Customers { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
-        public DbSet<Subscription> Subscriptions { get; set; } = null!;
         public DbSet<SubscriptionBox> SubscriptionBoxes { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<Status> Statuses { get; set; } = null!;
+        public DbSet<ProductSubscriptionBox> ProductSubscriptionBoxes { get; set; } = null!;
     }
 }

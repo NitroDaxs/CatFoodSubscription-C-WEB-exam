@@ -12,7 +12,7 @@ namespace CatFoodSubscription.Data.Models
 
         [Comment("Identification of the customer")]
         [Required]
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; } = null!;
 
         [Comment("Customer of the order")]
         [ForeignKey(nameof(CustomerId))]
@@ -23,12 +23,17 @@ namespace CatFoodSubscription.Data.Models
         public DateTime OrderDate { get; set; }
 
         [Comment("Date of the shipment")]
-        [Required]
-        public DateTime ShippedDate { get; set; }
+        public DateTime? ShippedDate { get; set; }
 
         [Comment("Indicates whether the order is a subscription")]
         [Required]
-        public bool IsSubscription { get; set; }
+        public bool IsSubscription { get; set; } = false;
+
+        [Required]
+        public int StatusId { get; set; }
+
+        [ForeignKey(nameof(StatusId))]
+        public Status Status { get; set; } = null!;
 
         [Comment("Identification of the address")]
         public int AddressId { get; set; }
@@ -38,13 +43,13 @@ namespace CatFoodSubscription.Data.Models
         public Address Address { get; set; } = null!;
 
         [Comment("Identification of the subscriptionBox")]
-        public int? SubscriptionBoxId { get; set; }
+        public int SubscriptionBoxId { get; set; }
 
         [Comment("The subscriptionBox")]
         [ForeignKey(nameof(SubscriptionBoxId))]
         public SubscriptionBox SubscriptionBox { get; set; } = null!;
 
         [Comment("Collection of products in the order")]
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
     }
 }

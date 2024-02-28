@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatFoodSubscription.Data.Migrations
 {
     [DbContext(typeof(CatFoodSubscriptionDbContext))]
-    [Migration("20240226220544_Intial")]
-    partial class Intial
+    [Migration("20240228230131_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,50 +78,116 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Wet Food"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Dry Food"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Supplement"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Toy"
+                        });
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.Customer", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)")
                         .HasComment("Identification for the customer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
                     b.Property<int>("AddressId")
                         .HasColumnType("int")
                         .HasComment("Address Id of the customer");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasComment("First name of the customer");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Specifies if the customer account is deleted");
+
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasComment("Last name of the customer");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Phone number of the customer");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasComment("Identification for the user");
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
 
-                    b.ToTable("Customers");
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.Order", b =>
@@ -137,8 +203,9 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("Identification of the address");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int")
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
                         .HasComment("Identification of the customer");
 
                     b.Property<bool>("IsSubscription")
@@ -149,12 +216,14 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasComment("Date of the order");
 
-                    b.Property<DateTime>("ShippedDate")
+                    b.Property<DateTime?>("ShippedDate")
                         .HasColumnType("datetime2")
                         .HasComment("Date of the shipment");
 
-                    b.Property<int?>("SubscriptionBoxId")
-                        .IsRequired()
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubscriptionBoxId")
                         .HasColumnType("int")
                         .HasComment("Identification of the subscriptionBox");
 
@@ -163,6 +232,8 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("StatusId");
 
                     b.HasIndex("SubscriptionBoxId");
 
@@ -188,7 +259,7 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasComment("Description of the product");
 
-                    b.Property<string>("ImgPath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Path leading to the product's image");
 
@@ -205,38 +276,216 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Price of the product");
 
-                    b.Property<int?>("SubscriptionBoxId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("SubscriptionBoxId");
-
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 3,
+                            Description = "Essential cat calcium supplement for strong bones and teeth.",
+                            ImageUrl = "https://i.ibb.co/frhS8TM/Catio-com-2.png",
+                            Name = "Calcium",
+                            Price = 8.99m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 3,
+                            Description = "Boost your cat's coat and skin health with our Omega-3 supplement. Promotes a shiny coat and supports overall well-being.",
+                            ImageUrl = "https://i.ibb.co/DzdTWbZ/6.png",
+                            Name = "Omega-3",
+                            Price = 9.99m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            Description = "Maintain healthy digestion for your cat with our fiber supplement. Supports bowel regularity and digestive balance.",
+                            ImageUrl = "https://i.ibb.co/wLCVbkz/Catio-com-3.png",
+                            Name = "Fiber",
+                            Price = 7.99m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 1,
+                            Description = "Delicious wet cat food with real chicken for a savory dining experience.",
+                            ImageUrl = "https://i.ibb.co/6PNYp8Q/Wet-Chicken.png",
+                            Name = "Wet Chicken",
+                            Price = 2.99m
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 2,
+                            Description = "Nutritious dry cat food with chicken as the main ingredient. Supports overall health.",
+                            ImageUrl = "https://i.ibb.co/vjHdjs2/Dry-Chicken.png",
+                            Name = "Dry Chicken",
+                            Price = 2.50m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 1,
+                            Description = "Tasty wet cat food featuring real fish to satisfy your cat's seafood cravings.",
+                            ImageUrl = "https://i.ibb.co/vVXjkg7/Wet-Fish.png",
+                            Name = "Wet Fish",
+                            Price = 3.99m
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 2,
+                            Description = "High-quality dry cat food with fish for a protein-rich and flavorful meal.",
+                            ImageUrl = "https://i.ibb.co/JshpRy2/Dry-Fish.png",
+                            Name = "Dry Fish",
+                            Price = 3.50m
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 1,
+                            Description = "Irresistible wet cat food with real beef, providing a source of premium protein.",
+                            ImageUrl = "https://i.ibb.co/thzxbh1/Wet-Beef.png",
+                            Name = "Wet Beef",
+                            Price = 3.99m
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 2,
+                            Description = "Wholesome dry cat food featuring beef for a balanced and tasty diet.",
+                            ImageUrl = "https://i.ibb.co/0FSfBhf/Dry-Beef.png",
+                            Name = "Dry Beef",
+                            Price = 3.50m
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 2,
+                            Description = "Perfectly balanced dry cat food with a blend of chicken and turkey for optimal nutrition.",
+                            ImageUrl = "https://i.ibb.co/XL7NV1D/Dry-Chicken-And-Turkey.png",
+                            Name = "Dry Chicken & Turkey",
+                            Price = 4.99m
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 1,
+                            Description = "Indulge your cat with wet food featuring a delightful combination of salmon and chicken.",
+                            ImageUrl = "https://i.ibb.co/WK3QYZ5/Wet-Chicken-And-Salmon.png",
+                            Name = "Wet Salmon & Chicken",
+                            Price = 3.99m
+                        });
                 });
 
-            modelBuilder.Entity("CatFoodSubscription.Data.Models.Subscription", b =>
+            modelBuilder.Entity("CatFoodSubscription.Data.Models.ProductSubscriptionBox", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubscriptionBoxId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "SubscriptionBoxId");
+
+                    b.HasIndex("SubscriptionBoxId");
+
+                    b.ToTable("ProductSubscriptionBoxes");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            SubscriptionBoxId = 1
+                        },
+                        new
+                        {
+                            ProductId = 5,
+                            SubscriptionBoxId = 1
+                        },
+                        new
+                        {
+                            ProductId = 11,
+                            SubscriptionBoxId = 1
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            SubscriptionBoxId = 2
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            SubscriptionBoxId = 2
+                        },
+                        new
+                        {
+                            ProductId = 8,
+                            SubscriptionBoxId = 2
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            SubscriptionBoxId = 3
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            SubscriptionBoxId = 3
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            SubscriptionBoxId = 3
+                        });
+                });
+
+            modelBuilder.Entity("CatFoodSubscription.Data.Models.Status", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasComment("Identification of the subscription");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int")
-                        .HasComment("Identification of the customer");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.ToTable("Statuses");
 
-                    b.ToTable("Subscriptions");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "In Progress"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Shipped"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "In Delivery Center"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Picked up"
+                        });
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.SubscriptionBox", b =>
@@ -254,7 +503,7 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasComment("Name of the subscriptionBox");
 
-                    b.Property<string>("ImgPath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Path for subscriptionBox image");
 
@@ -271,9 +520,35 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubscriptionBoxes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Promote strong bones and teeth with this subscription box.",
+                            ImageUrl = "https://i.ibb.co/yXPZG4G/1.png",
+                            Name = "Bone Health",
+                            Price = 15.49m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Enhance your cat's coat health for a shiny and lustrous fur.",
+                            ImageUrl = "https://i.ibb.co/0QMLRbh/2.png",
+                            Name = "Silky Fur",
+                            Price = 17.49m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Support healthy digestion and bowel movements with this subscription box.",
+                            ImageUrl = "https://i.ibb.co/GQQBknL/3.png",
+                            Name = "Bowl Movement",
+                            Price = 15.99m
+                        });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -323,71 +598,6 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -483,15 +693,7 @@ namespace CatFoodSubscription.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Address");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.Order", b =>
@@ -508,6 +710,12 @@ namespace CatFoodSubscription.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("CatFoodSubscription.Data.Models.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CatFoodSubscription.Data.Models.SubscriptionBox", "SubscriptionBox")
                         .WithMany()
                         .HasForeignKey("SubscriptionBoxId")
@@ -517,6 +725,8 @@ namespace CatFoodSubscription.Data.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Status");
 
                     b.Navigation("SubscriptionBox");
                 });
@@ -533,27 +743,31 @@ namespace CatFoodSubscription.Data.Migrations
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("CatFoodSubscription.Data.Models.SubscriptionBox", null)
-                        .WithMany("Products")
-                        .HasForeignKey("SubscriptionBoxId");
-
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("CatFoodSubscription.Data.Models.Subscription", b =>
+            modelBuilder.Entity("CatFoodSubscription.Data.Models.ProductSubscriptionBox", b =>
                 {
-                    b.HasOne("CatFoodSubscription.Data.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("CatFoodSubscription.Data.Models.Product", "Product")
+                        .WithMany("ProductSubscriptionBoxes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.HasOne("CatFoodSubscription.Data.Models.SubscriptionBox", "SubscriptionBox")
+                        .WithMany("ProductSubscriptionBoxes")
+                        .HasForeignKey("SubscriptionBoxId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("SubscriptionBox");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -562,7 +776,7 @@ namespace CatFoodSubscription.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("CatFoodSubscription.Data.Models.Customer", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -571,7 +785,7 @@ namespace CatFoodSubscription.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("CatFoodSubscription.Data.Models.Customer", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -580,13 +794,13 @@ namespace CatFoodSubscription.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("CatFoodSubscription.Data.Models.Customer", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -595,7 +809,7 @@ namespace CatFoodSubscription.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("CatFoodSubscription.Data.Models.Customer", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -612,9 +826,14 @@ namespace CatFoodSubscription.Data.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("CatFoodSubscription.Data.Models.Product", b =>
+                {
+                    b.Navigation("ProductSubscriptionBoxes");
+                });
+
             modelBuilder.Entity("CatFoodSubscription.Data.Models.SubscriptionBox", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("ProductSubscriptionBoxes");
                 });
 #pragma warning restore 612, 618
         }

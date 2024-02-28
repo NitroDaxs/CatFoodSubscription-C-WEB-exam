@@ -48,7 +48,7 @@
             public const int CategoryNameMaxLength = 25;
         }
 
-        public class SubscriptionBox
+        public class SubscriptionBoxConstants
         {
             //Name           
             public const int SubscriptionBoxNameMinLength = 3;
@@ -57,6 +57,13 @@
             //Description
             public const int SubscriptionBoxDescriptionMinLength = 3;
             public const int SubscriptionBoxDescriptionMaxLength = 250;
+        }
+
+        public class StatusConstants
+        {
+            //Name
+            public const int StatusNameMinLength = 3;
+            public const int StatusNameMaxLength = 50;
         }
     }
 }
