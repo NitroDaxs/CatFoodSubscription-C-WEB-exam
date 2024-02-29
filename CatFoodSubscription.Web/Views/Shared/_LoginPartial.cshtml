@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using CatFoodSubscription.Data.Models
+@inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
 
 <head>
     <link rel="stylesheet" href="css/site.css" asp-append-version="true" />

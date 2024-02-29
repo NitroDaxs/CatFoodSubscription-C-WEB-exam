@@ -1,0 +1,26 @@
+﻿@model CatFoodSubscription.Web.ViewModels.Product.ProductDetailViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Product/styles.css" />
+    <title>Product Details</title>
+</head>
+<body>
+
+<h1>Product Details</h1>
+
+<div>
+        <img src="@Model.ImageUrl" alt="Product Image" class="product-image">
+    <h2>@Model.Name</h2>
+    <p>Description: @Model.Description</p>
+    <p>Price: $@Model.Price</p>
+    <p>Category: @Model.Category</p>
+    @* Include other property access as needed *@
+
+</div>
+
+</body>
+</html>

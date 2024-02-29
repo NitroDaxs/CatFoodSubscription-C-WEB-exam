@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model List<CatFoodSubscription.Web.ViewModels.Home.SubscriptionBoxAllViewModel>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="~/css/Home/index.css" />
@@ -25,72 +27,37 @@
                         </span>
                     </div>
                     <div class="home-container02">
-                        <div class="freePricingCard home-pricing-card">
-                            <div>
-                                <div class="image-container">
-                                    <a href="https://imgbb.com/"><img src="https://i.ibb.co/WFf7qFb/1.png" alt="Free Plan Image" class="card-image"></a>
+                        @foreach (var subscriptionBox in Model)
+                        {
+                            <div class="home-pricing-card">
+                                <div>
+                                    <div class="image-container">
+                                        <a href="#">
+                                            <img src="@subscriptionBox.ImageUrl" alt="@($"SubscriptionBox {subscriptionBox.Id} Image")" class="card-image">
+                                        </a>
+                                    </div>
+                                    <h1 class="m-lg-2">@subscriptionBox.Name</h1>
+                                    <ul class="list-unstyled m-lg-3">
+                                        <li>
+                                            <p>@subscriptionBox.Description</p>
+                                        </li>
+                                        <li>$@subscriptionBox.Price</li>
+                                        @foreach (var product in subscriptionBox.ProductSubscriptionBoxes)
+                                        {
+                                            <li>✔ @product.ProductName</li>
+                                            <!-- Include additional product information as needed -->
+                                        }
+                                    </ul>
                                 </div>
-                                <h1 class="m-lg-2">Bone heath</h1>
-                                <ul class="list-unstyled m-lg-3">
-                                    <li>
-                                        <p>Perfect for cat owners looking to try out our service</p>
-                                    </li>
-                                    <li>$ 25</li>
-                                    <li>✔ Access to basic cat food recipes</li>
-                                    <li>✔ Limited monthly cat food recommendations</li>
-                                    <li>✔ Community forum access</li>
-                                    <li>✔ Monthly newsletter</li>
-                                </ul>
+                                <button class="buyButton">
+                                    Buy Now
+                                </button>
                             </div>
-                            <button class="buyButton">
-                                Buy Now
-                            </button>
-                        </div>
-                        <div class="basicPricingCard home-pricing-card">
-                            <div>
-                                <div class="image-container">
-                                    <a href="https://imgbb.com/"><img src="https://i.ibb.co/0QMLRbh/2.png" alt="Free Plan Image" class="card-image"></a>
-                                </div>
-                                <h1 class="m-lg-2">Pretty fur</h1>
-                                <ul class="list-unstyled m-lg-3">
-                                    <li>
-                                        <p>Perfect for cat owners looking to try out our service</p>
-                                    </li>
-                                    <li>$ 25</li>
-                                    <li>✔ Access to basic cat food recipes</li>
-                                    <li>✔ Limited monthly cat food recommendations</li>
-                                    <li>✔ Community forum access</li>
-                                    <li>✔ Monthly newsletter</li>
-                                </ul>
-                            </div>
-                            <button class="buyButton">
-                                Buy Now
-                            </button>
-                        </div>
-                        <div class="proPricingCard home-pricing-card">
-                            <div>
-                                <div class="image-container">
-                                    <a href="https://imgbb.com/"><img src="https://i.ibb.co/GQQBknL/3.png" alt="Free Plan Image" class="card-image"></a>
-                                </div>
-                                <h1 class="m-lg-2">Peeing heath</h1>
-                                <ul class="list-unstyled m-lg-3">
-                                    <li>
-                                        <p>Perfect for cat owners looking to try out our service</p>
-                                    </li>
-                                    <li>$ 25</li>
-                                    <li>✔ Access to basic cat food recipes</li>
-                                    <li>✔ Limited monthly cat food recommendations</li>
-                                    <li>✔ Community forum access</li>
-                                    <li>✔ Monthly newsletter</li>
-                                </ul>
-                            </div>
-                            <button class="buyButton">
-                                Buy Now
-                            </button>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+</html>

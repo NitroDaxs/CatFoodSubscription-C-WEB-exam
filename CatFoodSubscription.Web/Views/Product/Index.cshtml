@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<CatFoodSubscription.Web.ViewModels.Product.ProductAllViewModel>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,98 +10,23 @@
 </head>
 <body>
 
-    <h1>Welcome to Your Store</h1>
+<h1>Welcome to Your Store</h1>
 
-    <div id="productList">
+<div id="productList">
+    @foreach (var product in Model)
+    {
         <div class="product-card">
             <div class="image-container">
                 <a href="#">
-                    <img src="https://i5.walmartimages.com/seo/Meow-Mix-Original-Choice-Dry-Cat-Food-16-Pounds_adb2eb13-19ff-435a-9c0a-ea74272defac.1cfc4312511024d2e9a2609c4e0d3625.jpeg" alt="Product 1 Image" class="card-image">
+                    <img src="@product.ImageUrl" alt="@($"Product {product.Id} Image")" class="card-image">
                 </a>
             </div>
-            <h2>Wet Fish</h2>
-            <p>Price: $19.99</p>
-            <button>Add to Cart</button>
+            <h2>@product.Name</h2>
+            <p>Price: $@product.Price</p>
+            <!-- Update button to a link pointing to the Details action -->
+            <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" class="button">Details</a>
         </div>
-
-        <div class="product-card">
-            <div class="image-container">
-                <a href="#">
-                    <img src="https://i.ibb.co/6PNYp8Q/Catio-com-1.pngE" alt="Product 2 Image" class="card-image">
-                </a>
-            </div>
-            <h2>Wet chicken</h2>
-            <p>Price: $29.99</p>
-            <button>Add to Cart</button>
-        </div>
-
-        <div class="product-card">
-            <div class="image-container">
-                <a href="#">
-                    <img src="URL_FOR_PRODUCT_3_IMAGE" alt="Product 3 Image" class="card-image">
-                </a>
-            </div>
-            <h2>Product 3</h2>
-            <p>Price: $29.99</p>
-            <button>Add to Cart</button>
-        </div>
-        <div class="product-card">
-            <div class="image-container">
-                <a href="#">
-                    <img src="URL_FOR_PRODUCT_3_IMAGE" alt="Product 3 Image" class="card-image">
-                </a>
-            </div>
-            <h2>Product 3</h2>
-            <p>Price: $29.99</p>
-            <button>Add to Cart</button>
-        </div>
-        <div class="product-card">
-            <div class="image-container">
-                <a href="#">
-                    <img src="URL_FOR_PRODUCT_3_IMAGE" alt="Product 3 Image" class="card-image">
-                </a>
-            </div>
-            <h2>Product 3</h2>
-            <p>Price: $29.99</p>
-            <button>Add to Cart</button>
-        </div>
-        <div class="product-card">
-            <div class="image-container">
-                <a href="#">
-                    <img src="URL_FOR_PRODUCT_3_IMAGE" alt="Product 3 Image" class="card-image">
-                </a>
-            </div>
-            <h2>Product 3</h2>
-            <p>Price: $29.99</p>
-            <p>Description for Product 3</p>
-            <button>Add to Cart</button>
-            <hr>
-        </div>
-        <div class="product-card">
-            <div class="image-container">
-                <a href="#">
-                    <img src="URL_FOR_PRODUCT_3_IMAGE" alt="Product 3 Image" class="card-image">
-                </a>
-            </div>
-            <h2>Product 3</h2>
-            <p>Price: $29.99</p>
-            <p>Description for Product 3</p>
-            <button>Add to Cart</button>
-            <hr>
-        </div>
-        <div class="product-card">
-            <div class="image-container">
-                <a href="#">
-                    <img src="URL_FOR_PRODUCT_3_IMAGE" alt="Product 3 Image" class="card-image">
-                </a>
-            </div>
-            <h2>Product 3</h2>
-            <p>Price: $29.99</p>
-            <p>Description for Product 3</p>
-            <button>Add to Cart</button>
-            <hr>
-        </div>
-        <!-- Add more product cards as needed -->
-    </div>
+    }
+</div>
 </body>
 </html>
