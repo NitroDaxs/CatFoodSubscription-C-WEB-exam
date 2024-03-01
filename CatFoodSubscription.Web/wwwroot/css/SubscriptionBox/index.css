@@ -1,4 +1,8 @@
-﻿.home-pricing-card {
+﻿.body {
+    font-family: 'Brush Script MT', cursive;
+}
+
+.home-pricing-card {
     background: wheat;
     margin: 1rem;
     border-radius: 10px;
@@ -9,6 +13,7 @@
     padding: 1rem;
     flex-grow: 1;
     box-sizing: border-box;
+    position: relative;
 }
 .home-container {
     width: 100%;
@@ -25,12 +30,14 @@
 }
 
 .buyButton {
-    color: black;
-    background: lightgreen;
+    color: white;
+    font-size: 18px;
+    background: green;
     border: none; /* Remove button border */
     border-radius: 3px;
-    margin-top: 1rem;
+    margin-top: auto; /* Push the button to the bottom */
     cursor: pointer; /* Add pointer cursor to button */
+    align-self: center; /* Center the button horizontally */
 }
 
 .image-container {

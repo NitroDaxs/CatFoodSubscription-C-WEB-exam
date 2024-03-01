@@ -11,20 +11,44 @@
 <body>
 
 <h1>Welcome to Your Store</h1>
+<div class="filter">
+    <form method="get" asp-action="Index" asp-controller="Product">
+        <label for="category">Category:</label>
+        <select id="category" class ="sort" name="category">
+            <option value="">All</option>
+            <option value="Wet Food">Wet Food</option>
+            <option value="Dry Food">Dry Food</option>
+            <option value="Supplement">Supplements</option>
+            <option value="Toy">Toy</option>
+        </select>
+
+        <label for="sortOrder">Sort Order:</label>
+        <select name="sortOrder" class="sort">
+            <option value="name_asc">Name (A-Z)</option>
+            <option value="name_desc">Name (Z-A)</option>
+            <option value="price_asc">Price (Low to High)</option>
+            <option value="price_desc">Price (High to Low)</option>
+        </select>
+
+            <button type="submit" class="filter-button">Apply</button>
+    </form>
+</div>
 
 <div id="productList">
     @foreach (var product in Model)
     {
         <div class="product-card">
             <div class="image-container">
-                <a href="#">
+                <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">
                     <img src="@product.ImageUrl" alt="@($"Product {product.Id} Image")" class="card-image">
                 </a>
             </div>
             <h2>@product.Name</h2>
             <p>Price: $@product.Price</p>
-            <!-- Update button to a link pointing to the Details action -->
-            <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id" class="button">Details</a>
+            <form asp-controller="Product" asp-action="Detail" method="get">
+                <input type="hidden" name="id" value="@product.Id" />
+                <button type="submit" class="button details-button">Details</button>
+            </form>
         </div>
     }
 </div>

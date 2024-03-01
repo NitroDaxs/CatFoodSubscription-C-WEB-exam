@@ -13,7 +13,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.27" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.27" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.27" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.27">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.24">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -23,8 +23,13 @@
   <ItemGroup>
     <ProjectReference Include="..\CatFoodSubscription.Common\CatFoodSubscription.Common.csproj" />
     <ProjectReference Include="..\CatFoodSubscription.Data.Models\CatFoodSubscription.Data.Models.csproj" />
+    <ProjectReference Include="..\CatFoodSubscription.Services.Data\CatFoodSubscription.Services.Data.csproj" />
     <ProjectReference Include="..\CatFoodSubscription.Web.ViewModels\CatFoodSubscription.Web.ViewModels.csproj" />
     <ProjectReference Include="..\CatFoodSubsctiptio.Data\CatFoodSubscription.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\Home\" />
   </ItemGroup>
 
 </Project>

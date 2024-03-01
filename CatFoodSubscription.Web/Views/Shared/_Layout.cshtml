@@ -27,8 +27,9 @@
                                 <span class="subscription-icon">Products🐾</span>
                             </a>
                         </li>
+
                         <li class="nav-item-pages">
-                            <a class="nav-link custom-color" asp-area="" asp-controller="Home" asp-action="Product">
+                            <a class="nav-link custom-color" asp-area="" asp-controller="Subscription" asp-action="Index">
                                 <span class="subscription-icon">Subsctiptions🐾</span>
                             </a>
                         </li>
@@ -37,19 +38,26 @@
                                 <span class="subscription-icon">About Us🐾</span>
                             </a>
                         </li>
+                        <li class="nav-item-pages">
+                            <a class="nav-link custom-color" asp-area="" asp-controller="Order" asp-action="Index">
+                                <span class="subscription-icon">Cart🐾</span>
+                            </a>
+                        </li>
 
                     </ul>
                     <ul class="nav navbar-nav ms-auto">
                         <li class="nav-item ">
-                            <form id="searchBar" class="d-flex ">
-                                <div class="input-group ">
-                                    <input type="search" id="query" name="q" class="form-control" placeholder="Search...">
+                            <form id="searchBar" class="d-flex" asp-controller="Product" asp-action="SearchResult" method="get">
+                                <div class="input-group">
+                                    <input type="search" id="query" name="query" class="form-control" placeholder="Search..." oninput="showSuggestions()">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-outline-secondary" type="button">
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </div>
                                 </div>
+                                <!-- Add a container for search results -->
+                                <div id="searchResults" class="search-results"></div>
                             </form>
                         </li>
                     </ul>

@@ -1,7 +1,7 @@
 ﻿/* styles.css */
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: cursive;
     margin: 0;
     padding: 0;
 }
@@ -14,28 +14,47 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-  }
+}
 
 .product-card {
     padding: 10px;
     margin: 10px;
-    width: 250px; /* Adjust as needed */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box; /* Include padding and border in the total width/height */
     background: wheat;
     border-radius: 10px;
+    color: black;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 250px; /* Adjust as needed */
+    width: 100%; /* Take full width on smaller screens */
+
+
+
+    width: calc(30% - 2rem);
 }
 
-button {
-    background-color: #4caf50;
-    color: white;
+    .product-card:hover {
+        transform: scale(1.05); /* Grow by 5% on hover */
+    }
+
+button.details-button {
+    background-color: #910A67;
+    color: wheat;
     padding: 8px 16px;
     border: none;
     cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid orange;
 }
 
-button:hover {
-    background-color: #45a049;
+.details-button:hover {
+    background-color: orange;
+    border: 2px solid #910A67;
+    color: black;
 }
 
 .card-image {
@@ -45,3 +64,52 @@ button:hover {
     border-radius: 10px;
 }
 
+.product-card h2 {
+    font-size: 1.5rem;
+}
+
+.product-card p {
+    font-size: 16px;
+}
+
+.filter {
+    flex-wrap: wrap;
+    justify-content: center;
+    display: flex;
+    color: black;
+}
+
+.sort {
+    background: white;
+    color: gray;
+    font-size: 18px;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.filter button {
+    background: #910A67;
+    color: wheat;
+    border: 2px solid orange;
+    border-radius: 7px;
+}
+
+    .filter button:hover {
+        background: orange;
+        color: black;
+        border: 2px solid #910A67;
+    }
+
+@media screen and (max-width: 576px) {
+    .sort {
+        font-size: 14px; /* Adjust the font size for phones */
+    }
+}
+
+/* Media query for tablets */
+@media screen and (min-width: 577px) and (max-width: 1024px) {
+    .sort {
+        font-size: 16px; /* Adjust the font size for tablets */
+    }
+}

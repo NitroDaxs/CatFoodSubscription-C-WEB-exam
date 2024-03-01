@@ -148,10 +148,40 @@ a.navbar-brand {
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #888;
-    hei
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.search-results {
+    display: none;
+    position: absolute;
+    top: 100%; /* Adjust the offset as needed */
+    left: 0;
+    width: 100%;
+    border-radius: 5px;
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.search-result-item {
+    padding: 10px;
+    background: wheat;
+    border-bottom: 1px solid #ccc;
+    width: 100%; /* Make the result item as wide as the container */
+    box-sizing: border-box; /* Include padding and border in the total width/height */
+}
+
+.search-result-item a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.search-result-item img {
+    width: 60px; /* Adjust as needed */
+    height: 60px; /* Adjust as needed */
+    margin-right: 10px;
 }

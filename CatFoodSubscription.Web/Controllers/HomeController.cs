@@ -1,51 +1,26 @@
-﻿using CatFoodSubscription.Data;
-using CatFoodSubscription.Web.ViewModels.Home;
+﻿using CatFoodSubscription.Web.ViewModels.Home;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace CatFoodSubscription.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly CatFoodSubscriptionDbContext dbContext;
 
-        public HomeController(ILogger<HomeController> logger, CatFoodSubscriptionDbContext _dbContext)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            dbContext = _dbContext;
+
         }
 
         //Home page with all subscriptionBoxes
         [HttpGet]
-        public async Task<IActionResult> Index()
+        [AllowAnonymous]
+        public IActionResult Index()
         {
-            var subscriptionBoxes = await dbContext.SubscriptionBoxes
-                .Include(sb => sb.ProductSubscriptionBoxes)
-                .ThenInclude(psb => psb.Product)
-                .AsNoTracking()
-                .ToListAsync();
-
-            var model = subscriptionBoxes
-                .Select(sb => new SubscriptionBoxAllViewModel()
-                {
-                    Id = sb.Id,
-                    Name = sb.Name,
-                    ImageUrl = sb.ImageUrl,
-                    Description = sb.Description,
-                    Price = sb.Price,
-                    ProductSubscriptionBoxes = sb.ProductSubscriptionBoxes
-                        .Select(psb => new ProductSubscriptionBoxViewModel()
-                        {
-                            ProductId = psb.ProductId,
-                            ProductName = psb.Product.Name,
-                        })
-                        .ToList()
-                })
-                .ToList();
-
-            return View(model);
+            return RedirectToAction("Index", "SubscriptionBox");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
