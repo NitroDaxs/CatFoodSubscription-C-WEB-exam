@@ -25,10 +25,6 @@ namespace CatFoodSubscription.Data.Models
         [Comment("Date of the shipment")]
         public DateTime? ShippedDate { get; set; }
 
-        [Comment("Indicates whether the order is a subscription")]
-        [Required]
-        public bool IsSubscription { get; set; } = false;
-
         [Required]
         public int StatusId { get; set; }
 

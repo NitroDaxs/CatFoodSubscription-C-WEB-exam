@@ -21,6 +21,14 @@ namespace CatFoodSubscription.Data.Models
         [MaxLength(ProductDescriptionMaxLength)]
         public string Description { get; set; } = string.Empty;
 
+        [Comment("Quantity of the product")]
+        [Required]
+        public int Quantity { get; set; }
+
+        [Comment("Indicates whether the product is a subscription")]
+        [Required]
+        public bool IsSubscription { get; set; } = false;
+
         [Comment("Price of the product")]
         [Required]
         public decimal Price { get; set; }
