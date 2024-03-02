@@ -2,6 +2,7 @@
 using CatFoodSubscription.Data.Models;
 using CatFoodSubscription.Services.Data.Interfaces;
 using CatFoodSubscription.Web.ViewModels.Order;
+using CatFoodSubscription.Web.ViewModels.SubscriptionBox;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatFoodSubscription.Services.Data
@@ -21,11 +22,9 @@ namespace CatFoodSubscription.Services.Data
         {
             var orders = await context.Orders
                 .Where(o => o.Customer.Id == id)
-                .Include(o => o.Status)
                 .Include(o => o.SubscriptionBox)
                 .Include(o => o.ProductsOrders)
                 .ThenInclude(po => po.Product)
-                .ThenInclude(p => p.Category)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -33,7 +32,6 @@ namespace CatFoodSubscription.Services.Data
             {
                 Id = o.Id,
                 CustomerId = id,
-                StatusId = o.StatusId,
                 SubscriptionBox = new OrderSubscriptionBoxViewModel
                 {
                     Id = o.SubscriptionBox?.Id ?? 0,
@@ -72,7 +70,7 @@ namespace CatFoodSubscription.Services.Data
             return product;
         }
 
-        public async Task AddToCartAsync(OrderProductViewModel product, bool purchaseType, string id)
+        public async Task AddToCartAsync(OrderProductViewModel product, string id)
         {
             var order = await context.Orders
                 .Where(o => o.CustomerId == id)
@@ -101,23 +99,12 @@ namespace CatFoodSubscription.Services.Data
             }
             else
             {
-                var productOrder = new ProductOrder();
-                if (purchaseType == true)
+                var productOrder = new ProductOrder
                 {
-                    productOrder = new ProductOrder
-                    {
-                        ProductId = product.Id,
-                        OrderId = order.Id,
-                    };
-                }
-                else
-                {
-                    productOrder = new ProductOrder
-                    {
-                        ProductId = product.Id,
-                        OrderId = order.Id,
-                    };
-                }
+                    ProductId = product.Id,
+                    OrderId = order.Id,
+                };
+
                 context.ProductsOrders.Add(productOrder);
             }
 
@@ -158,32 +145,95 @@ namespace CatFoodSubscription.Services.Data
             }
         }
 
+        public async Task AddSubscriptionBoxToCartAsync(SubscriptionBoxAllViewModel subscriptionBox, string id)
+        {
+            var order = await context.Orders
+                .Where(o => o.CustomerId == id)
+                .Include(o => o.SubscriptionBox) // Make sure to include the SubscriptionBox
+                .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                order = new Order
+                {
+                    CustomerId = id,
+                    StatusId = 1,
+                    SubscriptionBox = new SubscriptionBox
+                    {
+                        Id = subscriptionBox.Id,
+                        Name = subscriptionBox.Name,
+                        ImageUrl = subscriptionBox.ImageUrl,
+                        Price = subscriptionBox.Price,
+                        Description = subscriptionBox.Description,
+                    }
+                };
+
+                context.Orders.Add(order);
+            }
+            else
+            {
+                if (order.SubscriptionBox == null)
+                {
+                    order.SubscriptionBox = new SubscriptionBox
+                    {
+                        Id = subscriptionBox.Id,
+                        Name = subscriptionBox.Name,
+                        ImageUrl = subscriptionBox.ImageUrl,
+                        Price = subscriptionBox.Price,
+                        Description = subscriptionBox.Description,
+                    };
+                }
+                else
+                {
+                    // Handle the case where a subscription box is already in the order (optional)
+                    // You may want to update the existing subscription box or handle it as needed
+                }
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task RemoveSubscriptionBoxAsync(int orderId)
+        {
+            var order = await context.Orders
+                .Where(o => o.Id == orderId)
+                .Include(o => o.SubscriptionBox)
+                .FirstOrDefaultAsync();
+
+            if (order != null)
+            {
+                order.SubscriptionBoxId = null;
+
+                await context.SaveChangesAsync();
+            }
+        }
     }
-
-
-    //public async Task AddToCartAsync(SubscriptionBox subscriptionBox, string purchaseType)
-    //{
-
-    //    var cart = await dbContext.Carts
-    //        .Include(c => c.CartSubscriptionBoxes)
-    //        .FirstOrDefaultAsync();
-
-    //    if (cart == null)
-    //    {
-    //        cart = new Cart();
-    //        dbContext.Carts.Add(cart);
-    //    }
-
-    //    var cartSubscriptionBox = new CartSubscriptionBox
-    //    {
-    //        SubscriptionBox = subscriptionBox,
-    //        PurchaseType = purchaseType
-    //    };
-
-    //    cart.CartSubscriptionBoxes.Add(cartSubscriptionBox);
-
-    //    await dbContext.SaveChangesAsync();
-    //}
 }
+
+
+//public async Task AddToCartAsync(SubscriptionBox subscriptionBox, string purchaseType)
+//{
+
+//    var cart = await dbContext.Carts
+//        .Include(c => c.CartSubscriptionBoxes)
+//        .FirstOrDefaultAsync();
+
+//    if (cart == null)
+//    {
+//        cart = new Cart();
+//        dbContext.Carts.Add(cart);
+//    }
+
+//    var cartSubscriptionBox = new CartSubscriptionBox
+//    {
+//        SubscriptionBox = subscriptionBox,
+//        PurchaseType = purchaseType
+//    };
+
+//    cart.CartSubscriptionBoxes.Add(cartSubscriptionBox);
+
+//    await dbContext.SaveChangesAsync();
+//}
+
 
 

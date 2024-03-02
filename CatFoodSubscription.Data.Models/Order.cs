@@ -46,8 +46,6 @@ namespace CatFoodSubscription.Data.Models
         public SubscriptionBox? SubscriptionBox { get; set; } = null!;
 
         [Comment("Collection of orders containing the product")]
-
-        public ICollection<SubscriptionProductOrder> SubscriptionProductsOrders { get; set; } = new HashSet<SubscriptionProductOrder>();
         public ICollection<ProductOrder> ProductsOrders { get; set; } = new HashSet<ProductOrder>();
     }
 }

@@ -3,6 +3,12 @@
     height: 100%; /* Adjust the height to your preference */
 }
 
-.card-body {
+.body {
+    display: flex;
+}
+
+.media-body {
+    
+    overflow-wrap: break-word;
     
 }

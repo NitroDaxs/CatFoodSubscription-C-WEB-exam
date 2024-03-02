@@ -39,7 +39,6 @@ namespace CatFoodSubscription.Data.Models
         [Comment("Collection of orders containing the product")]
         public ICollection<ProductOrder> ProductsOrders { get; set; } = new HashSet<ProductOrder>();
 
-        public ICollection<SubscriptionProductOrder> SubscriptionProductsOrders { get; set; } = new HashSet<SubscriptionProductOrder>();
 
         [Comment("Collection for the mapping table")]
         public ICollection<ProductSubscriptionBox> ProductSubscriptionBoxes { get; set; } = new HashSet<ProductSubscriptionBox>();

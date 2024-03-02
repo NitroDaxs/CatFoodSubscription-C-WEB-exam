@@ -49,9 +49,12 @@
                                         }
                                     </ul>
                                 </div>
-                                <button class="buyButton">
-                                    Add to Cart
-                                </button>
+                                <form asp-controller="Order" asp-action="AddToCartSubscription" method="post">
+                                    <input type="hidden" name="subscriptionBoxId" value="@subscriptionBox.Id" />
+                                    <button class="buyButton">
+                                        Add to Cart
+                                    </button>
+                                </form>
                             </div>
                         }
                     </div>

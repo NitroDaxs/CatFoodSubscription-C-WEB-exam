@@ -18,22 +18,24 @@
                         <div class="col-md-5">
                             <div class="card border-0">
                                 <div class="card-header pb-0">
-                                    <h2 class="card-title space">One-Time Purchase</h2>
+                                    <h2 class="card-title space">Subscription</h2>
                                     <p class="card-text text-muted mt-4 space">PRODUCTS</p>
                                     <hr class="my-0">
                                 </div>
                                 <div class="card-body">
                                     <!-- Display one-time purchase products -->
-                                    @foreach (var product in Model.SelectMany(o => o.Products).Where(po => po.IsSubscription == false))
+                                    @foreach (var product in Model.SelectMany(o => o.Products))
                                     {
                                         <!-- Render one-time purchase product information here -->
                                         <form asp-controller="Order" asp-action="UpdateQuantity" method="post">
                                             <input type="hidden" name="productId" value="@product.Id" />
                                             <div class="row justify-content-between">
                                                 <div class="col-auto">
-                                                    <img class="img-fluid" src="@product.ImageUrl" width="62" height="62">
+                                                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">
+                                                        <img class="img-fluid" src="@product.ImageUrl" width="62" height="62">
+                                                    </a>
                                                     <div class="media-body my-auto">
-                                                        <div class="row ">
+                                                        <div class="row">
                                                             <div class="col-auto">
                                                                 <p class="mb-0"><b>@product.Name</b></p>
                                                             </div>
@@ -59,41 +61,40 @@
                         <div class="col-md-5">
                             <div class="card border-0">
                                 <div class="card-header pb-0">
-                                    <h2 class="card-title space">Subscription Purchase</h2>
-                                    <p class="card-text text-muted mt-4 space">SUBSCRIPTION PRODUCTS</p>
+                                    <h2 class="card-title space">Subscription </h2>
+                                    <p class="card-text text-muted mt-4 space">BOX</p>
                                     <hr class="my-0">
                                 </div>
                                 <div class="card-body">
-                                    <!-- Display subscription purchase products -->
-                                    @foreach (var product in Model.SelectMany(o => o.Products).Where(po => po.IsSubscription == true))
+                                    @{
+                                        var subscriptionBox = Model.FirstOrDefault()?.SubscriptionBox;
+                                    }
+
+                                    @if (subscriptionBox.Id != 0)
                                     {
-                                        <!-- Render one-time purchase product information here -->
-                                        <form asp-controller="Order" asp-action="UpdateQuantity" method="post">
-                                            <input type="hidden" name="productId" value="@product.Id" />
-                                            <div class="row justify-content-between">
-                                                <div class="col-auto">
-                                                    <img class="img-fluid" src="@product.ImageUrl" width="62" height="62">
-                                                    <div class="media-body my-auto">
-                                                        <div class="row ">
-                                                            <div class="col-auto">
-                                                                <p class="mb-0"><b>@product.Name</b></p>
-                                                            </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-auto">
+                                                <img class="img-fluid" src="@subscriptionBox.ImageUrl" width="62" height="62">
+                                                <div class="media-body my-auto">
+                                                    <div class="row ">
+                                                        <div class="col-auto">
+                                                            <p class="mb-0"><b>@subscriptionBox.Name</b></p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="pl-0  col-auto my-auto">
-                                                    <div class="quantity-box">
-                                                        <button type="submit" name="action" value="increase" class="quantity-btn">+</button>
-                                                        <p class="boxed-1">@product.Quantity</p>
-                                                        <button type="submit" name="action" value="decrease" class="quantity-btn">-</button>
-                                                    </div>
-                                                </div>
-                                                <div class="pl-0  col-auto my-auto">
-                                                    <p><b>@(product.Quantity * product.Price) BGN</b></p>
-                                                </div>
                                             </div>
-                                        </form>
+                                            <div class="pl-0  col-auto my-auto">
+                                                <p><b>@(subscriptionBox.Price) BGN</b></p>
+                                            </div>
+                                            <div class="pl-0 col-auto my-auto">
+                                                <form asp-controller="Order" asp-action="RemoveSubscriptionBox" method="post">
+                                                    <input type="hidden" name="orderId" value="@Model.First().Id" />
+                                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     }
+
                                 </div>
                             </div>
                         </div>
