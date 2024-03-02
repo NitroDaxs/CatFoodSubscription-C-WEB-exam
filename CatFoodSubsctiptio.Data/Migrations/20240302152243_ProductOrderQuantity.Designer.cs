@@ -4,6 +4,7 @@ using CatFoodSubscription.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatFoodSubscription.Data.Migrations
 {
     [DbContext(typeof(CatFoodSubscriptionDbContext))]
-    partial class CatFoodSubscriptionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240302152243_ProductOrderQuantity")]
+    partial class ProductOrderQuantity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,6 +250,10 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Path leading to the product's image");
 
+                    b.Property<bool>("IsSubscription")
+                        .HasColumnType("bit")
+                        .HasComment("Indicates whether the product is a subscription");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -271,6 +277,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 3,
                             Description = "Essential cat calcium supplement for strong bones and teeth.",
                             ImageUrl = "https://i.ibb.co/frhS8TM/Catio-com-2.png",
+                            IsSubscription = false,
                             Name = "Calcium",
                             Price = 8.99m
                         },
@@ -280,6 +287,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 3,
                             Description = "Boost your cat's coat and skin health with our Omega-3 supplement. Promotes a shiny coat and supports overall well-being.",
                             ImageUrl = "https://i.ibb.co/DzdTWbZ/6.png",
+                            IsSubscription = false,
                             Name = "Omega-3",
                             Price = 9.99m
                         },
@@ -289,6 +297,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 3,
                             Description = "Maintain healthy digestion for your cat with our fiber supplement. Supports bowel regularity and digestive balance.",
                             ImageUrl = "https://i.ibb.co/wLCVbkz/Catio-com-3.png",
+                            IsSubscription = false,
                             Name = "Fiber",
                             Price = 7.99m
                         },
@@ -298,6 +307,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 1,
                             Description = "Delicious wet cat food with real chicken for a savory dining experience.",
                             ImageUrl = "https://i.ibb.co/6PNYp8Q/Wet-Chicken.png",
+                            IsSubscription = false,
                             Name = "Wet Chicken",
                             Price = 2.99m
                         },
@@ -307,6 +317,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 2,
                             Description = "Nutritious dry cat food with chicken as the main ingredient. Supports overall health.",
                             ImageUrl = "https://i.ibb.co/vjHdjs2/Dry-Chicken.png",
+                            IsSubscription = false,
                             Name = "Dry Chicken",
                             Price = 2.50m
                         },
@@ -316,6 +327,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 1,
                             Description = "Tasty wet cat food featuring real fish to satisfy your cat's seafood cravings.",
                             ImageUrl = "https://i.ibb.co/vVXjkg7/Wet-Fish.png",
+                            IsSubscription = false,
                             Name = "Wet Fish",
                             Price = 3.99m
                         },
@@ -325,6 +337,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 2,
                             Description = "High-quality dry cat food with fish for a protein-rich and flavorful meal.",
                             ImageUrl = "https://i.ibb.co/JshpRy2/Dry-Fish.png",
+                            IsSubscription = false,
                             Name = "Dry Fish",
                             Price = 3.50m
                         },
@@ -334,6 +347,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 1,
                             Description = "Irresistible wet cat food with real beef, providing a source of premium protein.",
                             ImageUrl = "https://i.ibb.co/thzxbh1/Wet-Beef.png",
+                            IsSubscription = false,
                             Name = "Wet Beef",
                             Price = 3.99m
                         },
@@ -343,6 +357,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 2,
                             Description = "Wholesome dry cat food featuring beef for a balanced and tasty diet.",
                             ImageUrl = "https://i.ibb.co/0FSfBhf/Dry-Beef.png",
+                            IsSubscription = false,
                             Name = "Dry Beef",
                             Price = 3.50m
                         },
@@ -352,6 +367,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 2,
                             Description = "Perfectly balanced dry cat food with a blend of chicken and turkey for optimal nutrition.",
                             ImageUrl = "https://i.ibb.co/XL7NV1D/Dry-Chicken-And-Turkey.png",
+                            IsSubscription = false,
                             Name = "Dry Chicken & Turkey",
                             Price = 4.99m
                         },
@@ -361,6 +377,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 1,
                             Description = "Indulge your cat with wet food featuring a delightful combination of salmon and chicken.",
                             ImageUrl = "https://i.ibb.co/WK3QYZ5/Wet-Chicken-And-Salmon.png",
+                            IsSubscription = false,
                             Name = "Wet Salmon & Chicken",
                             Price = 3.99m
                         });
@@ -547,27 +564,6 @@ namespace CatFoodSubscription.Data.Migrations
                             Name = "Bowl Movement",
                             Price = 15.99m
                         });
-                });
-
-            modelBuilder.Entity("CatFoodSubscription.Data.Models.SubscriptionProductOrder", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int")
-                        .HasComment("Identification of the order");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasComment("Identification of the product");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasComment("Quantity of the product");
-
-                    b.HasKey("OrderId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("SubscriptionProductsOrders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
@@ -787,25 +783,6 @@ namespace CatFoodSubscription.Data.Migrations
                     b.Navigation("SubscriptionBox");
                 });
 
-            modelBuilder.Entity("CatFoodSubscription.Data.Models.SubscriptionProductOrder", b =>
-                {
-                    b.HasOne("CatFoodSubscription.Data.Models.Order", "Order")
-                        .WithMany("SubscriptionProductsOrders")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("CatFoodSubscription.Data.Models.Product", "Product")
-                        .WithMany("SubscriptionProductsOrders")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
@@ -865,8 +842,6 @@ namespace CatFoodSubscription.Data.Migrations
             modelBuilder.Entity("CatFoodSubscription.Data.Models.Order", b =>
                 {
                     b.Navigation("ProductsOrders");
-
-                    b.Navigation("SubscriptionProductsOrders");
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.Product", b =>
@@ -874,8 +849,6 @@ namespace CatFoodSubscription.Data.Migrations
                     b.Navigation("ProductSubscriptionBoxes");
 
                     b.Navigation("ProductsOrders");
-
-                    b.Navigation("SubscriptionProductsOrders");
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.SubscriptionBox", b =>

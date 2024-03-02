@@ -21,14 +21,6 @@ namespace CatFoodSubscription.Data.Models
         [MaxLength(ProductDescriptionMaxLength)]
         public string Description { get; set; } = string.Empty;
 
-        [Comment("Quantity of the product")]
-        [Required]
-        public int Quantity { get; set; }
-
-        [Comment("Indicates whether the product is a subscription")]
-        [Required]
-        public bool IsSubscription { get; set; } = false;
-
         [Comment("Price of the product")]
         [Required]
         public decimal Price { get; set; }
@@ -43,6 +35,11 @@ namespace CatFoodSubscription.Data.Models
         [Comment("Category of the product")]
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; } = null!;
+
+        [Comment("Collection of orders containing the product")]
+        public ICollection<ProductOrder> ProductsOrders { get; set; } = new HashSet<ProductOrder>();
+
+        public ICollection<SubscriptionProductOrder> SubscriptionProductsOrders { get; set; } = new HashSet<SubscriptionProductOrder>();
 
         [Comment("Collection for the mapping table")]
         public ICollection<ProductSubscriptionBox> ProductSubscriptionBoxes { get; set; } = new HashSet<ProductSubscriptionBox>();

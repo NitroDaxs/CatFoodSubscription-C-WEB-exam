@@ -1,4 +1,4 @@
-﻿@model CatFoodSubscription.Web.ViewModels.Order.OrderSummaryViewModel
+﻿@model IEnumerable<CatFoodSubscription.Web.ViewModels.Order.OrderSummaryViewModel>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,83 +6,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/Order/index.css" />
-    <title>Product Details</title>
+    <link rel="stylesheet" href="~/js/site.js" />
+    <title>Order Summary</title>
 </head>
 <body>
-
-<h1>Product Details</h1>
-
-<div>
-        <div class="container-fluid my-5">
-            <div class="row justify-content-center">
-                <div class="col-xl-10">
-                    <div class="card shadow-lg">
-                        <div class="row justify-content-around">
-                            <div class="col-md-5">
-                                <div class="card border-0">
-                                    <div class="card-header pb-0">
-                                        <h2 class="card-title space">Checkout</h2>
-                                        <p class="card-text text-muted mt-4 space">SHIPPING DETAILS</p>
-                                        <hr class="my-0">
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row justify-content-between">
-                                            <div class="col-auto mt-0">
-                                                <p><b>@Model.Address.Country @Model.Address.City @Model.Address.Street @Model.Address.PostalCode</b></p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <p><b>@Model.CustomerId</b></p>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-md-5">
-                                            <div class="col">
-                                                <button type="button" name="" id="" class="btn btn-lg btn-block">PURCHASE @(Model.Products.Sum(p =>p.Price) ) BGN</button>
-                                            </div>
-                                        </div>
-                                    </div>
+    <div class="container-fluid my-5">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="card shadow-lg">
+                    <div class="row justify-content-around">
+                        <div class="col-md-5">
+                            <div class="card border-0">
+                                <div class="card-header pb-0">
+                                    <h2 class="card-title space">One-Time Purchase</h2>
+                                    <p class="card-text text-muted mt-4 space">PRODUCTS</p>
+                                    <hr class="my-0">
                                 </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="card border-0">
-                                    <div class="card-header card-2">
-                                        <p class="card-text text-muted mt-md-4 mb-2 space">YOUR ORDER <span class="small text-muted ml-2 cursor-pointer">EDIT SHOPPING BAG</span> </p>
-                                        <hr class="my-2">
-                                    </div>
-                                    <div class="card-body pt-0">
-                                        @foreach (var product in Model.Products)
-                                        {
+                                <div class="card-body">
+                                    <!-- Display one-time purchase products -->
+                                    @foreach (var product in Model.SelectMany(o => o.Products).Where(po => po.IsSubscription == false))
+                                    {
+                                        <!-- Render one-time purchase product information here -->
+                                        <form asp-controller="Order" asp-action="UpdateQuantity" method="post">
+                                            <input type="hidden" name="productId" value="@product.Id" />
                                             <div class="row justify-content-between">
-                                                <div class="col-auto col-md-7">
-                                                    <div class="media flex-column flex-sm-row">
-                                                        <img class="img-fluid" src="@product.Id" width="62" height="62">
-                                                        <div class="media-body my-auto">
-                                                            <div class="row ">
-                                                                <div class="col-auto">
-                                                                    <p class="mb-0"><b>@product.Name</b></p>
-                                                                    <small class="text-muted">@product.Price</small>
-                                                                </div>
+                                                <div class="col-auto">
+                                                    <img class="img-fluid" src="@product.ImageUrl" width="62" height="62">
+                                                    <div class="media-body my-auto">
+                                                        <div class="row ">
+                                                            <div class="col-auto">
+                                                                <p class="mb-0"><b>@product.Name</b></p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="pl-0 flex-sm-col col-auto my-auto">
-                                                    <p class="boxed-1">@product</p>
+                                                <div class="pl-0  col-auto my-auto">
+                                                    <div class="quantity-box">
+                                                        <button type="submit" name="action" value="increase" class="quantity-btn">+</button>
+                                                        <p class="boxed-1">@product.Quantity</p>
+                                                        <button type="submit" name="action" value="decrease" class="quantity-btn">-</button>
+                                                    </div>
                                                 </div>
-                                                <div class="pl-0 flex-sm-col col-auto my-auto">
-                                                    <p><b>@product.Price SEK</b></p>
+                                                <div class="pl-0  col-auto my-auto">
+                                                    <p><b>@(product.Quantity * product.Price) BGN</b></p>
                                                 </div>
                                             </div>
-                                        }
-                                    </div>
+                                        </form>
+                                    }
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card border-0">
+                                <div class="card-header pb-0">
+                                    <h2 class="card-title space">Subscription Purchase</h2>
+                                    <p class="card-text text-muted mt-4 space">SUBSCRIPTION PRODUCTS</p>
+                                    <hr class="my-0">
+                                </div>
+                                <div class="card-body">
+                                    <!-- Display subscription purchase products -->
+                                    @foreach (var product in Model.SelectMany(o => o.Products).Where(po => po.IsSubscription == true))
+                                    {
+                                        <!-- Render one-time purchase product information here -->
+                                        <form asp-controller="Order" asp-action="UpdateQuantity" method="post">
+                                            <input type="hidden" name="productId" value="@product.Id" />
+                                            <div class="row justify-content-between">
+                                                <div class="col-auto">
+                                                    <img class="img-fluid" src="@product.ImageUrl" width="62" height="62">
+                                                    <div class="media-body my-auto">
+                                                        <div class="row ">
+                                                            <div class="col-auto">
+                                                                <p class="mb-0"><b>@product.Name</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pl-0  col-auto my-auto">
+                                                    <div class="quantity-box">
+                                                        <button type="submit" name="action" value="increase" class="quantity-btn">+</button>
+                                                        <p class="boxed-1">@product.Quantity</p>
+                                                        <button type="submit" name="action" value="decrease" class="quantity-btn">-</button>
+                                                    </div>
+                                                </div>
+                                                <div class="pl-0  col-auto my-auto">
+                                                    <p><b>@(product.Quantity * product.Price) BGN</b></p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-md-5">
+                        <div class="col">
+                            <!-- Add Checkout button that redirects to the Checkout action -->
+                            <a href="@Url.Action("CheckOut", "Order")" class="btn btn-lg btn-block btn-primary">CHECKOUT</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-</div>
-
+    </div>
 </body>
+
 </html>

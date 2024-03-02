@@ -4,6 +4,7 @@ using CatFoodSubscription.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatFoodSubscription.Data.Migrations
 {
     [DbContext(typeof(CatFoodSubscriptionDbContext))]
-    partial class CatFoodSubscriptionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240302153345_ProductOrderIsSubscription")]
+    partial class ProductOrderIsSubscription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -376,6 +378,10 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("Identification of the product");
 
+                    b.Property<bool>("IsSubscription")
+                        .HasColumnType("bit")
+                        .HasComment("Indicates whether the product is a subscription");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasComment("Quantity of the product");
@@ -547,27 +553,6 @@ namespace CatFoodSubscription.Data.Migrations
                             Name = "Bowl Movement",
                             Price = 15.99m
                         });
-                });
-
-            modelBuilder.Entity("CatFoodSubscription.Data.Models.SubscriptionProductOrder", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int")
-                        .HasComment("Identification of the order");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasComment("Identification of the product");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasComment("Quantity of the product");
-
-                    b.HasKey("OrderId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("SubscriptionProductsOrders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<string>", b =>
@@ -787,25 +772,6 @@ namespace CatFoodSubscription.Data.Migrations
                     b.Navigation("SubscriptionBox");
                 });
 
-            modelBuilder.Entity("CatFoodSubscription.Data.Models.SubscriptionProductOrder", b =>
-                {
-                    b.HasOne("CatFoodSubscription.Data.Models.Order", "Order")
-                        .WithMany("SubscriptionProductsOrders")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("CatFoodSubscription.Data.Models.Product", "Product")
-                        .WithMany("SubscriptionProductsOrders")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<string>", null)
@@ -865,8 +831,6 @@ namespace CatFoodSubscription.Data.Migrations
             modelBuilder.Entity("CatFoodSubscription.Data.Models.Order", b =>
                 {
                     b.Navigation("ProductsOrders");
-
-                    b.Navigation("SubscriptionProductsOrders");
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.Product", b =>
@@ -874,8 +838,6 @@ namespace CatFoodSubscription.Data.Migrations
                     b.Navigation("ProductSubscriptionBoxes");
 
                     b.Navigation("ProductsOrders");
-
-                    b.Navigation("SubscriptionProductsOrders");
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.SubscriptionBox", b =>

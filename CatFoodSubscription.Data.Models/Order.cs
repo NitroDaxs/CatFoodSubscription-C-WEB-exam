@@ -32,20 +32,22 @@ namespace CatFoodSubscription.Data.Models
         public Status Status { get; set; } = null!;
 
         [Comment("Identification of the address")]
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
 
         [Comment("Address of the order")]
         [ForeignKey(nameof(AddressId))]
-        public Address Address { get; set; } = null!;
+        public Address? Address { get; set; }
 
         [Comment("Identification of the subscriptionBox")]
-        public int SubscriptionBoxId { get; set; }
+        public int? SubscriptionBoxId { get; set; }
 
         [Comment("The subscriptionBox")]
         [ForeignKey(nameof(SubscriptionBoxId))]
-        public SubscriptionBox SubscriptionBox { get; set; } = null!;
+        public SubscriptionBox? SubscriptionBox { get; set; } = null!;
 
-        [Comment("Collection of products in the order")]
-        public ICollection<Product> Products { get; set; } = new HashSet<Product>();
+        [Comment("Collection of orders containing the product")]
+
+        public ICollection<SubscriptionProductOrder> SubscriptionProductsOrders { get; set; } = new HashSet<SubscriptionProductOrder>();
+        public ICollection<ProductOrder> ProductsOrders { get; set; } = new HashSet<ProductOrder>();
     }
 }

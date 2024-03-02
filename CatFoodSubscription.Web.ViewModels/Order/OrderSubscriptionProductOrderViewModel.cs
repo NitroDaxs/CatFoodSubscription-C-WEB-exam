@@ -1,6 +1,6 @@
 ﻿namespace CatFoodSubscription.Web.ViewModels.Order
 {
-    public class OrderSummaryViewModel
+    public class OrderSubscriptionProductOrderViewModel
     {
         public int Id { get; set; }
 
