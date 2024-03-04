@@ -1,6 +1,6 @@
 ﻿using CatFoodSubscription.Services.Data.Interfaces;
+using CatFoodSubscription.Web.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace CatFoodSubscription.Web.Controllers
 {
@@ -18,7 +18,7 @@ namespace CatFoodSubscription.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var summary = await orderService.GetOrderSummaryAsync(GetUserId());
+            var summary = await orderService.GetOrderSummaryAsync(User.GetId());
 
             return View(summary);
         }
@@ -26,7 +26,7 @@ namespace CatFoodSubscription.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateQuantity(int productId, string action)
         {
-            await orderService.UpdateProductQuantityAsync(productId, action, GetUserId());
+            await orderService.UpdateProductQuantityAsync(productId, action, User.GetId());
 
             return RedirectToAction("Index");
         }
@@ -34,7 +34,8 @@ namespace CatFoodSubscription.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> CheckOut()
         {
-            return View();
+            var summary = await orderService.GetOrderSummaryAsync(User.GetId());
+            return View(summary);
         }
 
         // Action to add a product to the cart
@@ -45,7 +46,7 @@ namespace CatFoodSubscription.Web.Controllers
 
             if (product != null)
             {
-                await orderService.AddToCartAsync(product, GetUserId());
+                await orderService.AddToCartAsync(product, User.GetId());
             }
 
             return RedirectToAction("Index", "Order"); // Redirect to the cart page
@@ -60,7 +61,7 @@ namespace CatFoodSubscription.Web.Controllers
 
             if (subscriptionBox != null)
             {
-                await orderService.AddSubscriptionBoxToCartAsync(subscriptionBox, GetUserId());
+                await orderService.AddSubscriptionBoxToCartAsync(subscriptionBox, User.GetId());
             }
 
             return RedirectToAction("Index", "Order"); // Redirect to the cart page
@@ -74,9 +75,5 @@ namespace CatFoodSubscription.Web.Controllers
 
             return RedirectToAction("Index");
         }
-
-        private string GetUserId()
-            => User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? String.Empty;
-
     }
 }

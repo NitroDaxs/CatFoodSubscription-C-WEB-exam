@@ -54,6 +54,7 @@
                                                 </div>
                                             </div>
                                         </form>
+                                        <hr style="color: #910A67; height: 2px;">
                                     }
                                 </div>
                             </div>
@@ -89,18 +90,18 @@
                                             <div class="pl-0 col-auto my-auto">
                                                 <form asp-controller="Order" asp-action="RemoveSubscriptionBox" method="post">
                                                     <input type="hidden" name="orderId" value="@Model.First().Id" />
-                                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                                    <button type="submit" class="btn-remove btn-danger">Remove</button>
                                                 </form>
                                             </div>
                                         </div>
+                                        <hr style="color: #910A67; height: 2px;">
                                     }
-
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-md-5">
-                        <div class="col">
+                        <div class="col text-center">
                             <!-- Add Checkout button that redirects to the Checkout action -->
                             <a href="@Url.Action("CheckOut", "Order")" class="btn btn-lg btn-block btn-primary">CHECKOUT</a>
                         </div>

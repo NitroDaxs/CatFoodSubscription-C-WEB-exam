@@ -12,3 +12,24 @@
     overflow-wrap: break-word;
     
 }
+
+.card-header {
+    background: wheat;
+}
+
+.btn {
+    background: #910A67;
+    border:2px solid orange;
+    color: wheat
+}
+
+    .btn:hover {
+        background: orange;
+        border: 2px solid #910A67;
+        color: black
+    }
+
+.btn-remove {
+    border: none;
+    border-radius: 5px;
+}

@@ -1,33 +1,19 @@
-using CatFoodSubscription.Data;
-using CatFoodSubscription.Data.Models;
-using CatFoodSubscription.Services.Data;
 using CatFoodSubscription.Services.Data.Interfaces;
 using CatFoodSubscription.Web.ModelBinders;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services
-    .AddDbContext<CatFoodSubscriptionDbContext>(options => options
-        .UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<Customer>(options =>
-    {
-        options.SignIn.RequireConfirmedAccount = false;
-        options.Password.RequireDigit = false;
-        options.Password.RequireNonAlphanumeric = false;
-        options.Password.RequireLowercase = false;
-        options.Password.RequireUppercase = false;
-        options.Password.RequiredLength = 3;
-    })
-    .AddRoles<IdentityRole<string>>()
-    .AddEntityFrameworkStores<CatFoodSubscriptionDbContext>();
+builder.Services.AddApplicationDbContext(connectionString);
+builder.Services.AddApplicationIdentity();
+
+builder.Services.AddApplicationServices(typeof(IOrderService));
 
 builder.Services
     .AddControllersWithViews()
@@ -37,9 +23,7 @@ builder.Services
         options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
     });
 
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ISubscriptionBoxService, SubscriptionBoxService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
+
 
 var app = builder.Build();
 
