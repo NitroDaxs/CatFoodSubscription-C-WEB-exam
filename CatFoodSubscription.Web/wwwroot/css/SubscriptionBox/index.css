@@ -15,6 +15,7 @@
     box-sizing: border-box;
     position: relative;
 }
+
 .home-container {
     width: 100%;
     display: flex;
@@ -55,6 +56,20 @@
 .home-pricing-card h1 {
     font-size: 2.5vw;
 }
+
 .home-pricing-card p {
     font-size: 1.6vw;
 }
+
+.welcome-title {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    background: #A54A86;
+    padding: 1rem;
+    color: black;
+}
+
+        

@@ -72,12 +72,14 @@ namespace CatFoodSubscription.Services.Data
 
         public async Task AddToCartAsync(OrderProductViewModel product, string id)
         {
+            // Find the order associated with the customer
             var order = await context.Orders
                 .Where(o => o.CustomerId == id)
                 .Include(o => o.ProductsOrders)
                 .ThenInclude(po => po.Product)
                 .FirstOrDefaultAsync();
 
+            // If the order doesn't exist, create a new order
             if (order == null)
             {
                 order = new Order
@@ -91,25 +93,31 @@ namespace CatFoodSubscription.Services.Data
                 await context.SaveChangesAsync();
             }
 
+            // Check if the product is already in the order
             var existingProductOrder = order.ProductsOrders.FirstOrDefault(po => po.ProductId == product.Id);
 
             if (existingProductOrder != null)
             {
+                // If the product is already in the order, increment the quantity
                 existingProductOrder.Quantity++;
             }
             else
             {
+                // If the product is not in the order, create a new ProductOrder entry
                 var productOrder = new ProductOrder
                 {
                     ProductId = product.Id,
                     OrderId = order.Id,
+                    Quantity = 1 // Assuming initial quantity is 1
                 };
 
                 context.ProductsOrders.Add(productOrder);
             }
 
+            // Save changes to the database
             await context.SaveChangesAsync();
         }
+
 
 
         public async Task UpdateProductQuantityAsync(int productId, string action, string id)

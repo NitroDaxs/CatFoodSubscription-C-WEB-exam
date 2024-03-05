@@ -28,6 +28,10 @@ namespace CatFoodSubscription.Data.Models
         [Comment("Path leading to the product's image")]
         public string? ImageUrl { get; set; }
 
+        [Comment("Indicates if the product is subscription based")]
+        [Required]
+        public bool IsSubscription { get; set; } = true;
+
         [Comment("Identification for the category of the product")]
         [Required]
         public int CategoryId { get; set; }

@@ -4,6 +4,7 @@ using CatFoodSubscription.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatFoodSubscription.Data.Migrations
 {
     [DbContext(typeof(CatFoodSubscriptionDbContext))]
-    partial class CatFoodSubscriptionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240305171514_OrderAddressProductChanges")]
+    partial class OrderAddressProductChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,11 +104,6 @@ namespace CatFoodSubscription.Data.Migrations
                         {
                             Id = 4,
                             Name = "Toy"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Accessory"
                         });
                 });
 
@@ -392,36 +389,6 @@ namespace CatFoodSubscription.Data.Migrations
                             IsSubscription = true,
                             Name = "Wet Salmon & Chicken",
                             Price = 3.99m
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CategoryId = 4,
-                            Description = "A multi-level cat tree designed to keep your feline friend entertained and comfortable.",
-                            ImageUrl = "https://i.ibb.co/Jy1fQrV/Cat-Tree.png",
-                            IsSubscription = false,
-                            Name = "Cat Tree",
-                            Price = 25.99m
-                        },
-                        new
-                        {
-                            Id = 13,
-                            CategoryId = 5,
-                            Description = "A stylish food bowl perfect for serving your cat's favorite wet and dry food.",
-                            ImageUrl = "https://i.ibb.co/yy4md2H/Food-Bowl.png",
-                            IsSubscription = false,
-                            Name = "Food Bowl",
-                            Price = 5.45m
-                        },
-                        new
-                        {
-                            Id = 14,
-                            CategoryId = 4,
-                            Description = "An interactive fishing rod toy that will engage your cat in playful antics for hours.",
-                            ImageUrl = "https://i.ibb.co/tm04yZf/Fishing-Rod-Toy.png",
-                            IsSubscription = false,
-                            Name = "Fishing Rod Toy",
-                            Price = 2.99m
                         });
                 });
 
@@ -529,26 +496,21 @@ namespace CatFoodSubscription.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Not finalized"
-                        },
-                        new
-                        {
-                            Id = 2,
                             Name = "In Progress"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 2,
                             Name = "Shipped"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 3,
                             Name = "In Delivery Center"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 4,
                             Name = "Picked up"
                         });
                 });

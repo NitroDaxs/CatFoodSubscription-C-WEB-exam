@@ -38,6 +38,13 @@ namespace CatFoodSubscription.Data.SeedDb
             };
             categories.Add(category);
 
+            category = new Category()
+            {
+                Id = 5,
+                Name = "Accessory"
+            };
+            categories.Add(category);
+
             return categories;
         }
 
@@ -49,27 +56,33 @@ namespace CatFoodSubscription.Data.SeedDb
             status = new Status()
             {
                 Id = 1,
+                Name = "Not finalized"
+            };
+            statuses.Add(status);
+            status = new Status()
+            {
+                Id = 2,
                 Name = "In Progress"
             };
             statuses.Add(status);
 
             status = new Status()
             {
-                Id = 2,
+                Id = 3,
                 Name = "Shipped"
             };
             statuses.Add(status);
 
             status = new Status()
             {
-                Id = 3,
+                Id = 4,
                 Name = "In Delivery Center"
             };
             statuses.Add(status);
 
             status = new Status()
             {
-                Id = 4,
+                Id = 5,
                 Name = "Picked up"
             };
             statuses.Add(status);
@@ -90,7 +103,7 @@ namespace CatFoodSubscription.Data.SeedDb
                 ImageUrl = "https://i.ibb.co/frhS8TM/Catio-com-2.png",
                 Description = "Essential cat calcium supplement for strong bones and teeth.",
                 Price = 8.99m,
-                CategoryId = 3
+                CategoryId = 3,
             };
             products.Add(product);
 
@@ -201,6 +214,42 @@ namespace CatFoodSubscription.Data.SeedDb
                 Description = "Indulge your cat with wet food featuring a delightful combination of salmon and chicken.",
                 Price = 3.99m,
                 CategoryId = 1
+            };
+            products.Add(product);
+
+            product = new Product()
+            {
+                Id = 12,
+                Name = "Cat Tree",
+                ImageUrl = "https://i.ibb.co/Jy1fQrV/Cat-Tree.png",
+                Description = "A multi-level cat tree designed to keep your feline friend entertained and comfortable.",
+                Price = 25.99m,
+                CategoryId = 4,
+                IsSubscription = false
+            };
+            products.Add(product);
+
+            product = new Product()
+            {
+                Id = 13,
+                Name = "Food Bowl",
+                ImageUrl = "https://i.ibb.co/yy4md2H/Food-Bowl.png",
+                Description = "A stylish food bowl perfect for serving your cat's favorite wet and dry food.",
+                Price = 5.45m,
+                CategoryId = 5,
+                IsSubscription = false
+            };
+            products.Add(product);
+
+            product = new Product()
+            {
+                Id = 14,
+                Name = "Fishing Rod Toy",
+                ImageUrl = "https://i.ibb.co/tm04yZf/Fishing-Rod-Toy.png",
+                Description = "An interactive fishing rod toy that will engage your cat in playful antics for hours.",
+                Price = 2.99m,
+                CategoryId = 4,
+                IsSubscription = false
             };
             products.Add(product);
 

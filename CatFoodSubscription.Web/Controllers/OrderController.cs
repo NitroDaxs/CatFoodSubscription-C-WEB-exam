@@ -38,7 +38,6 @@ namespace CatFoodSubscription.Web.Controllers
             return View(summary);
         }
 
-        // Action to add a product to the cart
         [HttpPost]
         public async Task<IActionResult> AddToCart(int productId, bool purchaseType)
         {
@@ -47,11 +46,13 @@ namespace CatFoodSubscription.Web.Controllers
             if (product != null)
             {
                 await orderService.AddToCartAsync(product, User.GetId());
+
+                TempData["SuccessMessage"] = $"Product added to the cart successfully!";
+                TempData["ProductImageUrl"] = product.ImageUrl;
             }
 
-            return RedirectToAction("Index", "Order"); // Redirect to the cart page
+            return RedirectToAction("Index", "Product");
         }
-
 
         //Action to add a subscription box to the cart
         [HttpPost]

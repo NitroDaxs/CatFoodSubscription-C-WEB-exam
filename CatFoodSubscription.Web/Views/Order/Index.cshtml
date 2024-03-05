@@ -37,10 +37,13 @@
                                                     <div class="media-body my-auto">
                                                         <div class="row">
                                                             <div class="col-auto">
-                                                                <p class="mb-0"><b>@product.Name</b></p>
+                                                                <p class="mb-0" style="word-break:break-word"><b>@product.Name</b></p>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="pl-0  col-auto my-auto">
+                                                    <p><b>@(product.Quantity * product.Price) BGN</b></p>
                                                 </div>
                                                 <div class="pl-0  col-auto my-auto">
                                                     <div class="quantity-box">
@@ -48,9 +51,6 @@
                                                         <p class="boxed-1">@product.Quantity</p>
                                                         <button type="submit" name="action" value="decrease" class="quantity-btn">-</button>
                                                     </div>
-                                                </div>
-                                                <div class="pl-0  col-auto my-auto">
-                                                    <p><b>@(product.Quantity * product.Price) BGN</b></p>
                                                 </div>
                                             </div>
                                         </form>
@@ -100,6 +100,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row mb-md-5">
                         <div class="col text-center">
                             <!-- Add Checkout button that redirects to the Checkout action -->

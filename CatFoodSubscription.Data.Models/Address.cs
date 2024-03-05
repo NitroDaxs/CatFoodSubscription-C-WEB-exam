@@ -13,19 +13,23 @@ namespace CatFoodSubscription.Data.Models
         [Comment("Country of the address")]
         [Required]
         [MaxLength(AddressCountryMaxLength)]
-        public string Country { get; set; } = string.Empty;
+        public string Country { get; set; } = null!;
 
         [Comment("City of the address")]
         [Required]
         [MaxLength(AddressCityMaxLength)]
-        public string City { get; set; } = string.Empty;
+        public string City { get; set; } = null!;
 
         [Comment("Street of the address")]
         [Required]
         [MaxLength(AddressStreetMaxLength)]
-        public string Street { get; set; } = string.Empty;
+        public string Street { get; set; } = null!;
 
         [Comment("PostalCode of the address")]
         public int PostalCode { get; set; }
+
+
+        [Comment("PhoneNumber for the address")]
+        public string PhoneNumber { get; set; } = null!;
     }
 }

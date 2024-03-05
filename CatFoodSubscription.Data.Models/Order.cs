@@ -25,6 +25,9 @@ namespace CatFoodSubscription.Data.Models
         [Comment("Date of the shipment")]
         public DateTime? ShippedDate { get; set; }
 
+        [Comment("Date of the arrival")]
+        public DateTime? ArrivalDate { get; set; }
+
         [Required]
         public int StatusId { get; set; }
 

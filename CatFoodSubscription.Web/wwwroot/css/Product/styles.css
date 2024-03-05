@@ -101,15 +101,32 @@ button.details-button {
         border: 2px solid #910A67;
     }
 
-@media screen and (max-width: 576px) {
-    .sort {
-        font-size: 14px; /* Adjust the font size for phones */
-    }
+.popup {
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #910A67;
+    color: wheat;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
 }
 
-/* Media query for tablets */
-@media screen and (min-width: 577px) and (max-width: 1024px) {
-    .sort {
-        font-size: 16px; /* Adjust the font size for tablets */
-    }
+.popup img {
+    max-width: 60px;
+    margin: 5px;
+    margin-right: 10px;
 }
+@media screen and (max-width: 576px) {
+        .sort {
+            font-size: 14px; /* Adjust the font size for phones */
+        }
+    }
+    /* Media query for tablets */
+    @media screen and (min-width: 577px) and (max-width: 1024px) {
+        .sort {
+            font-size: 16px; /* Adjust the font size for tablets */
+        }
+    }

@@ -13,6 +13,11 @@ html {
     min-height: 100%;
 }
 
+.home-pricing-card:hover {
+
+    transform: scale(1.01); /* Grow by 5% on hover */
+}
+
 
 .navbar-brand {
     font-family: 'Brush Script MT', cursive;
@@ -185,3 +190,10 @@ a.navbar-brand {
     height: 60px; /* Adjust as needed */
     margin-right: 10px;
 }
+
+
+.navbar-header {
+    background: red;
+    height: 100px;
+}
+

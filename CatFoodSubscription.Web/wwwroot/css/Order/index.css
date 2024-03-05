@@ -1,18 +1,12 @@
-﻿.quantity-btn {
-    width: 100%; /* Adjust the width to your preference */
-    height: 100%; /* Adjust the height to your preference */
-}
-
+﻿
 .body {
     display: flex;
 }
 
 .media-body {
-    
-    overflow-wrap: break-word;
-    
+    word-wrap: break-word;
+    flex: 1; /* Allow the media-body to take up remaining space */
 }
-
 .card-header {
     background: wheat;
 }
@@ -32,4 +26,45 @@
 .btn-remove {
     border: none;
     border-radius: 5px;
+}
+
+.quantity-box {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Allow flex items to wrap to the next line */
+}
+
+.quantity-btn {
+    background: #e6deca;
+    color: #000;
+    padding: 10px;
+    height: 35px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.boxed-1 {
+    margin: 0 10px;
+}
+
+.card-body {
+    padding: 0; /* Remove default padding in the card-body */
+}
+
+.card-body form {
+    padding: 10px; /* Add padding to the form for spacing */
+}
+
+.card-body hr {
+    margin-top: 5px; /* Adjust margin for spacing between products */
+}
+
+/* Optional: Adjust the height of the image container to maintain consistency */
+.img-fluid {
+    height: 62px;
+    border-radius: 5px;
+    margin-right: 10px; /* Add margin to the right for spacing between image and text */
 }

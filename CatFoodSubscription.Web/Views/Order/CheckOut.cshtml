@@ -61,7 +61,11 @@
                     Cart
                     <span class="price" style="color:black">
                         <i class="fa fa-shopping-cart"></i>
-                        <b>4</b>
+                        @{
+                            var subscriptionBoxCount = 1;
+                            var totalProducts = Model.Sum(o => o.Products.Sum(p => p.Quantity) + subscriptionBoxCount);
+                        }
+                        <b>@totalProducts</b>
                     </span>
                 </h4>
                 <div class="subscription-box">
@@ -81,11 +85,6 @@
                                             <p class="mb-0"><b>@subscriptionBox.Name</b></p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="pl-0  col-auto my-auto">
-                                <div class="quantity-box">
-                                    <p><span class="quantity"><b>1</b></span></p>
                                 </div>
                             </div>
                             <div class="pl-0  col-auto my-auto">
