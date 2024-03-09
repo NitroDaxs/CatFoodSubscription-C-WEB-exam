@@ -4,6 +4,7 @@ using CatFoodSubscription.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatFoodSubscription.Data.Migrations
 {
     [DbContext(typeof(CatFoodSubscriptionDbContext))]
-    partial class CatFoodSubscriptionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240309134626_AddressChanges")]
+    partial class AddressChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,11 +44,6 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasMaxLength(56)
                         .HasColumnType("nvarchar(56)")
                         .HasComment("Country of the address");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasComment("Email for the address");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(50)
@@ -192,25 +189,6 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b",
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = true,
-                            IsDeleted = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGbHi/jzbU75vzCwv5OmmNwFZd19EQw0sRP1BDJur9DPkUJkeTlyYFgSPc7ZRaY8Ig==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "ADMIN@GMAIL.COM",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.Order", b =>
@@ -646,10 +624,6 @@ namespace CatFoodSubscription.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -666,8 +640,6 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole<string>");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -778,29 +750,6 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole<string>");
-
-                    b.HasDiscriminator().HasValue("IdentityRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "7fdd7ad5-d514-4c65-b694-701efef64472",
-                            ConcurrencyStamp = "f3828f51-89f7-47ad-940a-15fbe21a9377",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "cb78c4b9-38ad-4f91-ae98-dc7b504870c2",
-                            ConcurrencyStamp = "b25d9063-ffc5-43bb-8081-f5c9b765fe1b",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("CatFoodSubscription.Data.Models.Order", b =>

@@ -18,36 +18,49 @@ namespace CatFoodSubscription.Services.Data
             context = _context;
         }
 
-        public async Task<IEnumerable<OrderSummaryViewModel>> GetOrderSummaryAsync(string id)
+        public async Task<OrderSummaryViewModel> GetOrderSummaryAsync(string id)
         {
-            var orders = await context.Orders
-                .Where(o => o.Customer.Id == id)
+            var user = await context.Customers.FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user.Orders.Count == 0)
+            {
+                await this.AddOrderAsync(id);
+            }
+
+            Order? order = await context.Orders
+                .Where(o => o.Customer.Id == id && o.StatusId == 1)
                 .Include(o => o.SubscriptionBox)
                 .Include(o => o.ProductsOrders)
                 .ThenInclude(po => po.Product)
                 .AsNoTracking()
-                .ToListAsync();
+                .FirstOrDefaultAsync();
 
-            var orderSummary = orders.Select(o => new OrderSummaryViewModel
+            if (order == null)
             {
-                Id = o.Id,
-                CustomerId = id,
+                throw new NullReferenceException();
+            }
+
+            var orderSummary = new OrderSummaryViewModel()
+            {
+                Id = order.Id,
+                CustomerId = order.CustomerId,
                 SubscriptionBox = new OrderSubscriptionBoxViewModel
                 {
-                    Id = o.SubscriptionBox?.Id ?? 0,
-                    Name = o.SubscriptionBox?.Name ?? "",
-                    Price = o.SubscriptionBox?.Price ?? 0,
-                    ImageUrl = o.SubscriptionBox?.ImageUrl ?? ""
+                    Id = order.SubscriptionBox?.Id ?? 0,
+                    Name = order.SubscriptionBox?.Name ?? "",
+                    Price = order.SubscriptionBox?.Price ?? 0,
+                    ImageUrl = order.SubscriptionBox?.ImageUrl ?? ""
                 },
-                Products = o.ProductsOrders.Select(po => new OrderProductViewModel
+                Products = order.ProductsOrders.Select(po => new OrderProductViewModel
                 {
                     Id = po.Product.Id,
                     Name = po.Product.Name,
                     Price = po.Product.Price,
                     ImageUrl = po.Product.ImageUrl,
-                    Quantity = po.Quantity
+                    Quantity = po.Quantity,
+                    IsSubscription = po.Product.IsSubscription
                 }).ToList()
-            });
+            };
 
             return orderSummary;
         }
@@ -70,11 +83,89 @@ namespace CatFoodSubscription.Services.Data
             return product;
         }
 
+        public async Task<OrderCheckOutFormViewModel> GetCheckOutSummaryAsync(string id)
+        {
+            var order = await context.Orders
+                .Where(o => o.Customer.Id == id && o.Status.Id == 1)
+                .Include(o => o.SubscriptionBox)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                return null; // or throw an exception, or return a default OrderCheckOutFormViewModel
+            }
+
+
+            var products = await context.ProductsOrders
+                .Where(po => po.OrderId == order.Id)
+                .Include(po => po.Product)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var orderSummary = new OrderCheckOutFormViewModel()
+            {
+                OrderId = order.Id,
+                CustomerId = id,
+                SubscriptionBox = new OrderSubscriptionBoxViewModel
+                {
+                    Id = order.SubscriptionBox?.Id ?? 0,
+                    Name = order.SubscriptionBox?.Name ?? "",
+                    Price = order.SubscriptionBox?.Price ?? 0,
+                    ImageUrl = order.SubscriptionBox?.ImageUrl ?? ""
+                },
+                Address = new OrderAddressViewModel(),
+                Products = products.Select(po => new OrderProductViewModel
+                {
+                    Id = po.Product.Id,
+                    Name = po.Product.Name,
+                    Price = po.Product.Price,
+                    ImageUrl = po.Product.ImageUrl,
+                    Quantity = po.Quantity,
+                    IsSubscription = po.Product.IsSubscription
+                }).ToList()
+            };
+
+            return orderSummary;
+        }
+
+
+        public async Task ProcessOrderAsync(OrderCheckOutFormViewModel model, string id)
+        {
+            var address = new Address()
+            {
+                Country = model.Address.Country,
+                City = model.Address.City,
+                Street = model.Address.Street,
+                PostalCode = model.Address.PostalCode,
+                PhoneNumber = model.Address.PhoneNumber,
+                FirstName = model.Address.FirstName,
+                LastName = model.Address.LastName,
+                Email = model.Address.Email
+            };
+
+            context.Addresses.Add(address);
+            await context.SaveChangesAsync();
+
+            var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == model.OrderId);
+
+            if (order != null)
+            {
+                order.StatusId = 2;
+                order.OrderDate = DateTime.Now;
+                order.AddressId = address.Id;
+
+                await context.SaveChangesAsync();
+            }
+
+            await this.AddOrderAsync(id);
+        }
+
         public async Task AddToCartAsync(OrderProductViewModel product, string id)
         {
             // Find the order associated with the customer
             var order = await context.Orders
-                .Where(o => o.CustomerId == id)
+                .Where(o => o.CustomerId == id && o.StatusId == 1)
                 .Include(o => o.ProductsOrders)
                 .ThenInclude(po => po.Product)
                 .FirstOrDefaultAsync();
@@ -82,15 +173,7 @@ namespace CatFoodSubscription.Services.Data
             // If the order doesn't exist, create a new order
             if (order == null)
             {
-                order = new Order
-                {
-                    CustomerId = id,
-                    StatusId = 1,
-                    ProductsOrders = new List<ProductOrder>()
-                };
-
-                context.Orders.Add(order);
-                await context.SaveChangesAsync();
+                order = await AddOrderAsync(id);
             }
 
             // Check if the product is already in the order
@@ -118,12 +201,26 @@ namespace CatFoodSubscription.Services.Data
             await context.SaveChangesAsync();
         }
 
+        private async Task<Order> AddOrderAsync(string id)
+        {
+            Order order;
+            order = new Order
+            {
+                CustomerId = id,
+                StatusId = 1,
+                ProductsOrders = new List<ProductOrder>()
+            };
+
+            await context.Orders.AddAsync(order);
+            await context.SaveChangesAsync();
+            return order;
+        }
 
 
         public async Task UpdateProductQuantityAsync(int productId, string action, string id)
         {
             var order = await context.Orders
-                .Where(o => o.CustomerId == id && o.StatusId != 4)
+                .Where(o => o.CustomerId == id && o.StatusId == 1)
                 .Include(o => o.ProductsOrders)
                 .ThenInclude(po => po.Product)
                 .FirstOrDefaultAsync();
@@ -156,7 +253,7 @@ namespace CatFoodSubscription.Services.Data
         public async Task AddSubscriptionBoxToCartAsync(SubscriptionBoxAllViewModel subscriptionBox, string id)
         {
             var order = await context.Orders
-                .Where(o => o.CustomerId == id)
+                .Where(o => o.CustomerId == id && o.StatusId == 1)
                 .Include(o => o.SubscriptionBox) // Make sure to include the SubscriptionBox
                 .FirstOrDefaultAsync();
 
@@ -219,29 +316,6 @@ namespace CatFoodSubscription.Services.Data
 }
 
 
-//public async Task AddToCartAsync(SubscriptionBox subscriptionBox, string purchaseType)
-//{
-
-//    var cart = await dbContext.Carts
-//        .Include(c => c.CartSubscriptionBoxes)
-//        .FirstOrDefaultAsync();
-
-//    if (cart == null)
-//    {
-//        cart = new Cart();
-//        dbContext.Carts.Add(cart);
-//    }
-
-//    var cartSubscriptionBox = new CartSubscriptionBox
-//    {
-//        SubscriptionBox = subscriptionBox,
-//        PurchaseType = purchaseType
-//    };
-
-//    cart.CartSubscriptionBoxes.Add(cartSubscriptionBox);
-
-//    await dbContext.SaveChangesAsync();
-//}
 
 
 

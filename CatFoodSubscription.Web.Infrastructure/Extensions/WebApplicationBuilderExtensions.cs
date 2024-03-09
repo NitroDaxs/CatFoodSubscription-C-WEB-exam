@@ -1,8 +1,10 @@
 ﻿using CatFoodSubscription.Data;
 using CatFoodSubscription.Data.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using static CatFoodSubscription.Common.ValidationConstants.Roles;
 
 namespace Microsoft.Extensions.DependencyInjection.Extensions
 {
@@ -66,6 +68,30 @@ namespace Microsoft.Extensions.DependencyInjection.Extensions
                 })
                 .AddRoles<IdentityRole<string>>()
                 .AddEntityFrameworkStores<CatFoodSubscriptionDbContext>();
+        }
+
+        public static IApplicationBuilder AsignAdmin(this IApplicationBuilder app)
+        {
+            using IServiceScope scopedServices = app.ApplicationServices.CreateScope();
+
+            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+
+            UserManager<Customer> userManager =
+                serviceProvider.GetRequiredService<UserManager<Customer>>();
+            RoleManager<IdentityRole<string>> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole<string>>>();
+
+            Task.Run(async () =>
+                {
+                    Customer adminUser =
+                        await userManager.FindByEmailAsync("admin@gmail.com");
+
+                    await userManager.AddToRoleAsync(adminUser, AdminRoleName);
+                })
+                .GetAwaiter()
+                .GetResult();
+
+            return app;
         }
     }
 }

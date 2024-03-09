@@ -5,7 +5,10 @@ namespace CatFoodSubscription.Services.Data.Interfaces
 {
     public interface IOrderService
     {
-        Task<IEnumerable<OrderSummaryViewModel>> GetOrderSummaryAsync(string id);
+        Task<OrderSummaryViewModel> GetOrderSummaryAsync(string id);
+
+        Task<OrderCheckOutFormViewModel> GetCheckOutSummaryAsync(string id);
+        Task ProcessOrderAsync(OrderCheckOutFormViewModel orderViewModel, string id);
 
         Task AddToCartAsync(OrderProductViewModel product, string id);
 

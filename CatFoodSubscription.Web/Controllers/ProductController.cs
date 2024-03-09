@@ -17,8 +17,10 @@ namespace CatFoodSubscription.Web.Controllers
         //Returns all products
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string category, string sortOrder)
+        public async Task<IActionResult> Index(string category, string sortOrder, int page = 1)
         {
+            const int pageSize = 8;
+
             var products = await productService.GetProductAllAsync();
 
             if (!products.Any())
@@ -28,7 +30,24 @@ namespace CatFoodSubscription.Web.Controllers
 
             products = SortProducts(category, sortOrder, products);
 
-            return View(products);
+            var paginatedProducts = products.Skip((page - 1) * pageSize).Take(pageSize);
+
+            var viewModel = new PaginatedProductsViewModel
+            {
+                Products = paginatedProducts,
+                PaginationInfo = new ProductListViewModel()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    TotalItems = products.Count()
+                }
+            };
+
+            // Set ViewBag properties for category and sortOrder if needed
+            ViewBag.Category = category;
+            ViewBag.SortOrder = sortOrder;
+
+            return View(viewModel);
         }
 
         //Returns all valid entities from search bar
@@ -36,14 +55,14 @@ namespace CatFoodSubscription.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SearchResult(string query)
         {
-            var results = await productService.GetProductSearchAsync(query);
+            var result = await productService.GetProductSearchAsync(query);
 
-            if (!results.Any())
+            if (!result.Products.Any())
             {
                 return RedirectToAction("Index");
             }
 
-            return View("Index", results);
+            return View("Index", result);
         }
 
 

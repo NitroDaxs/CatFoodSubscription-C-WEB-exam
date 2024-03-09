@@ -3,6 +3,7 @@ using CatFoodSubscription.Data.SeedDb;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using static CatFoodSubscription.Common.ValidationConstants.Roles;
 
 namespace CatFoodSubscription.Data
 {
@@ -57,6 +58,51 @@ namespace CatFoodSubscription.Data
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new SubscriptionBoxConfiguration());
             modelBuilder.ApplyConfiguration(new ProductSubscriptionBoxConfiguration());
+
+            modelBuilder.Entity<IdentityRole>(r =>
+            {
+                r.HasData(new List<IdentityRole>()
+                {
+                    new IdentityRole()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        ConcurrencyStamp = Guid.NewGuid().ToString(),
+                        Name = UserRoleName,
+                        NormalizedName = UserRoleName.ToUpper()
+                    },
+                    new IdentityRole()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        ConcurrencyStamp = Guid.NewGuid().ToString(),
+                        Name = AdminRoleName,
+                        NormalizedName = AdminRoleName.ToUpper()
+                    }
+                });
+            });
+
+            const string adminGuid = "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b";
+            const string adminEmail = "admin@gmail.com";
+            const string adminPassword = "admin123456789";
+            var hasher = new PasswordHasher<Customer>();
+
+            var adminCustomer = new Customer()
+            {
+                Id = adminGuid,
+                UserName = adminEmail,
+                NormalizedUserName = adminEmail.ToUpper(),
+                Email = adminEmail,
+                NormalizedEmail = adminEmail.ToUpper(),
+                EmailConfirmed = true,
+                SecurityStamp = adminEmail.ToUpper(),
+                PhoneNumber = null,
+                IsDeleted = false,
+                ConcurrencyStamp = adminGuid,
+            };
+
+            adminCustomer.PasswordHash = hasher.HashPassword(adminCustomer, adminPassword);
+
+            modelBuilder.Entity<Customer>()
+                .HasData(adminCustomer);
 
             base.OnModelCreating(modelBuilder);
         }

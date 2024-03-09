@@ -28,8 +28,18 @@ namespace CatFoodSubscription.Data.Models
         [Comment("PostalCode of the address")]
         public int PostalCode { get; set; }
 
+        [Comment("First name of the customer")]
+        [MaxLength(CustomerFirstNameMaxLength)]
+        public string? FirstName { get; set; }
+
+        [Comment("Last name of the customer")]
+        [MaxLength(CustomerLastNameMaxLength)]
+        public string? LastName { get; set; }
 
         [Comment("PhoneNumber for the address")]
         public string PhoneNumber { get; set; } = null!;
+
+        [Comment("Email for the address")]
+        public string Email { get; set; } = null!;
     }
 }

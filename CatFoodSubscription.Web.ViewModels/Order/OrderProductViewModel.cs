@@ -11,5 +11,7 @@
         public string ImageUrl { get; set; }
 
         public int Quantity { get; set; }
+
+        public bool IsSubscription { get; set; }
     }
 }

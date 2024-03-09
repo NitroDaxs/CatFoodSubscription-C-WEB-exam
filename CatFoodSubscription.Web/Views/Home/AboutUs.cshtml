@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps Example</title>
+</head>
+
+<body>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    #map {
+        height: 60vh;
+        width: 80%;
+        border: 3px solid orange;
+    }
+</style>
+<h1>Google Maps Example</h1>
+
+<div id="map"></div>
+
+<script>
+        // Function to initialize the map
+        function initMap() {
+            // Specify the initial coordinates for Antarctica
+            var initialCoordinates = { lat: 42.34475564539314, lng: 27.1831458975568 };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: initialCoordinates,
+                zoom: 12 // You may adjust the zoom level as needed
+            });
+
+            // Add a marker to the map
+            var marker = new google.maps.Marker({
+                position: initialCoordinates,
+                map: map,
+                title: 'Hello World!'
+            });
+
+            // Add an info window to the marker
+            var infowindow = new google.maps.InfoWindow({
+                content: 'Welcome to Antarctica!'
+            });
+
+            // Open the info window when the marker is clicked
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+    </script>
+
+<!-- Include the Google Maps JavaScript API with your API key -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASP4feiV7j5tAz1XOu28in-n7UIQmbJqY&callback=initMap" async></script>
+</body>
+</html>  
+

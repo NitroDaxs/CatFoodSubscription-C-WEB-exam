@@ -1,5 +1,6 @@
 ﻿using CatFoodSubscription.Services.Data.Interfaces;
 using CatFoodSubscription.Web.Infrastructure.Extensions;
+using CatFoodSubscription.Web.ViewModels.Order;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatFoodSubscription.Web.Controllers
@@ -34,8 +35,20 @@ namespace CatFoodSubscription.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> CheckOut()
         {
-            var summary = await orderService.GetOrderSummaryAsync(User.GetId());
+            var summary = await orderService.GetCheckOutSummaryAsync(User.GetId());
+
             return View(summary);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CheckOut(OrderCheckOutFormViewModel model)
+        {
+            var userId = User.GetId();
+            if (ModelState.IsValid)
+            {
+                await orderService.ProcessOrderAsync(model, userId);
+            }
+            return RedirectToAction("Index", "SubscriptionBox");
         }
 
         [HttpPost]

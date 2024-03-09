@@ -31,7 +31,7 @@ namespace CatFoodSubscription.Services.Data
             return products;
         }
 
-        public async Task<IEnumerable<ProductAllViewModel>> GetProductSearchAsync(string query)
+        public async Task<PaginatedProductsViewModel> GetProductSearchAsync(string query)
         {
 
             var products = await context.Products
@@ -47,7 +47,12 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .ToListAsync();
 
-            return products;
+            var result = new PaginatedProductsViewModel()
+            {
+                Products = products
+            };
+
+            return result;
         }
 
         public async Task<ProductDetailViewModel> GetProductByIdAsync(int id)

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CatFoodSubscription.Web.ViewModels.Order.OrderSummaryViewModel>
+﻿@model CatFoodSubscription.Web.ViewModels.Order.OrderCheckOutFormViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,47 +13,54 @@
     <div class="row">
         <div class="col-75">
             <div class="container-checkout">
-                <form action="/action_page.php">
-
+                <form method="post" asp-controller="Order" asp-action="CheckOut" asp-area="">
                     <div class="row">
                         <div class="col-50">
                             <h3>Shipping Address</h3>
-                            <label for="fname"><i class="fa fa-user"></i> First Name</label>
-                            <input type="text" id="fname" name="firstname" placeholder="Kon">
-                            <label for="fname"><i class="fa fa-user"></i> Last Name</label>
-                            <input type="text" id="fname" name="firstname" placeholder="Konev">
-                            <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                            <input type="text" id="email" name="email" placeholder="kon@example.com">
-                            <label for="adr"><i class="fa fa-address-card-o"></i> Street</label>
-                            <input type="text" id="adr" name="address" placeholder="3 Gancho Karamazdhrakov str., BB 110">
-                            <label for="city"><i class="fa fa-institution"></i> City</label>
-                            <input type="text" id="city" name="city" placeholder="Ruse">
+                            <label asp-for="@Model.Address.FirstName"><i class="fa fa-user"></i> First Name</label>
+                            <input asp-for="@Model.Address.FirstName" class="form-control" aria-required="true" placeholder="Kon" />
+
+                            <label asp-for="@Model.Address.LastName"><i class="fa fa-user"></i> Last Name</label>
+                            <input asp-for="@Model.Address.LastName" class="form-control" aria-required="true" placeholder="Konev" />
+
+                            <label asp-for="@Model.Address.Email"><i class="fa fa-envelope"></i> Email</label>
+                            <input asp-for="@Model.Address.Email" class="form-control" aria-required="true" placeholder="kon@example.com" />
+
+                            <label asp-for="@Model.Address.PhoneNumber"><i class="fa fa-phone"></i> Phone Number</label>
+                            <input asp-for="@Model.Address.PhoneNumber" class="form-control" aria-required="true" placeholder="087 999 9999" />
+
+                            <label asp-for="@Model.Address.Street"><i class="fa fa-address-card-o"></i> Street</label>
+                            <input asp-for="@Model.Address.Street" class="form-control" aria-required="true" placeholder="3 Gancho Karamazdhrakov str., BB 110" />
+
+                            <label asp-for="@Model.Address.City"><i class="fa fa-institution"></i> City</label>
+                            <input asp-for="@Model.Address.City" class="form-control" aria-required="true" placeholder="Ruse" />
+
+                            <input asp-for="@Model.CustomerId" class="form-control" aria-required="true" value="@Model.CustomerId" hidden="true" />
+                            <input asp-for="@Model.OrderId" class="form-control" aria-required="true" value="@Model.OrderId" hidden="true" />
+
 
                             <div class="row">
                                 <div class="col-50">
-                                    <label for="state">Country</label>
-                                    <input type="text" id="state" name="state" placeholder="Bulgaria">
+                                    <label asp-for="@Model.Address.Country"><i class="fa fa-globe"></i>Country</label>
+                                    <input asp-for="@Model.Address.Country" class="form-control" aria-required="true" placeholder="Bulgaria" />
                                 </div>
                                 <div class="col-50">
-                                    <label for="zip">Zip</label>
-                                    <input type="text" id="zip" name="zip" placeholder="7019">
+                                    <label asp-for="@Model.Address.PostalCode">PostalCode</label>
+                                    <input asp-for="@Model.Address.PostalCode" class="form-control" aria-required="true" placeholder="7019" />
                                 </div>
                             </div>
+                            <button type="submit" class="btn-checkout">Finalize order</button>
                         </div>
 
                         <div class="col-50">
                             <h3>Payment</h3>
-                            <p>Unfortunately for the moment we accept ont cash at delivery!</p>
+                            <p>Unfortunately for the moment we accept only cash at delivery!</p>
                         </div>
-
                     </div>
-                    <label>
-                        <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-                    </label>
-                    <input type="submit" value="Continue to checkout" class="btn-checkout">
                 </form>
             </div>
         </div>
+
 
         <div class="col-25">
             <div class="container-checkout">
@@ -63,42 +70,70 @@
                         <i class="fa fa-shopping-cart"></i>
                         @{
                             var subscriptionBoxCount = 1;
-                            var totalProducts = Model.Sum(o => o.Products.Sum(p => p.Quantity) + subscriptionBoxCount);
+                            var totalProducts = Model.Products.Sum(p => p.Quantity) + subscriptionBoxCount;
                         }
                         <b>@totalProducts</b>
                     </span>
                 </h4>
                 <div class="subscription-box">
-                    @{
-                        var subscriptionBox = Model.FirstOrDefault()?.SubscriptionBox;
-                    }
-
-                    @if (subscriptionBox.Id != 0)
+                    @if (Model.SubscriptionBox.Id != 0)
                     {
                         <h5>Subscription Box</h5>
                         <div class="row justify-content-between">
                             <div class="col-auto">
-                                <img class="img-fluid" src="@subscriptionBox.ImageUrl" width="62" height="62">
+                                <img class="img-fluid" src="@Model.SubscriptionBox.ImageUrl" width="62" height="62">
                                 <div class="media-body my-auto">
                                     <div class="row ">
                                         <div class="col-auto">
-                                            <p class="mb-0"><b>@subscriptionBox.Name</b></p>
+                                            <p class="mb-0"><b>@Model.SubscriptionBox.Name</b></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="pl-0  col-auto my-auto">
-                                <p><span class="price"><b>@(subscriptionBox.Price)</b> BGN</span></p>
+                                <p><span class="price"><b>@(Model.SubscriptionBox.Price)</b> BGN</span></p>
                             </div>
                         </div>
                         <hr style="color: #910A67; height: 2px;">
                     }
                 </div>
                 <div class="subscription-products">
-                    @if (Model.Any(o => o.Products.Any()))
+                    @if (Model.Products.Any())
                     {
                         <h5>Subscription Products</h5>
-                        @foreach (var product in Model.SelectMany(o => o.Products))
+                        @foreach (var product in Model.Products.Where(p => p.IsSubscription == true))
+                        {
+                            <div class="row justify-content-between">
+                                <div class="col-auto">
+                                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">
+                                        <img class="img-fluid" src="@product.ImageUrl" width="62" height="62">
+                                    </a>
+                                    <div class="media-body my-auto">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <p class="mb-0"><b>@product.Name</b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pl-0  col-auto my-auto">
+                                    <div class="quantity-box">
+                                        <p><span class="quantity"><b>@product.Quantity</b></span></p>
+                                    </div>
+                                </div>
+                                <div class="pl-0  col-auto my-auto">
+                                    <p><span class="price"><b>@(product.Quantity * product.Price)</b> BGN</span></p>
+                                </div>
+                            </div>
+                            <hr style="color: #910A67; height: 2px;">
+                        }
+                    }
+                </div>
+                <div class="one-time-products">
+                    @if (Model.Products.Any())
+                    {
+                        <h5>Subscription Products</h5>
+                        @foreach (var product in Model.Products.Where(p => p.IsSubscription == false))
                         {
                             <div class="row justify-content-between">
                                 <div class="col-auto">
@@ -127,11 +162,12 @@
                     }
                 </div>
                 @{
-                    var totalPrice = Model.Sum(o => o.Products.Sum(p => p.Quantity * p.Price) + o.SubscriptionBox.Price);
+                    var totalPrice = Model.Products.Sum(p => p.Quantity * p.Price) + Model.SubscriptionBox.Price;
                 }
                 <p>Total <span class="price"><b>@totalPrice</b> BGN</span></p>
             </div>
         </div>
+
     </div>
 </body>
 </html>

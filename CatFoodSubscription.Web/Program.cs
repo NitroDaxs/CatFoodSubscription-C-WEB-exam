@@ -23,8 +23,6 @@ builder.Services
         options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
     });
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,6 +43,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.AsignAdmin();
 
 app.MapDefaultControllerRoute();
 app.MapRazorPages();

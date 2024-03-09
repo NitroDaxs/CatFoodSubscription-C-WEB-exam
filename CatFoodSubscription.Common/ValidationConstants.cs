@@ -4,17 +4,6 @@
     {
         private const string projectStart = "01/22/2024";
 
-        public class CustomerConstants
-        {
-            //FirstName
-            public const int CustomerFirstNameMinLength = 3;
-            public const int CustomerFirstNameMaxLength = 50;
-
-            //LastName
-            public const int CustomerLastNameMinLength = 3;
-            public const int CustomerLastNameMaxLength = 50;
-        }
-
         public class AddressConstants
         {
             //Country
@@ -28,6 +17,14 @@
             //Street
             public const int AddressStreetMinLength = 3;
             public const int AddressStreetMaxLength = 250;
+
+            //FirstName
+            public const int CustomerFirstNameMinLength = 3;
+            public const int CustomerFirstNameMaxLength = 50;
+
+            //LastName
+            public const int CustomerLastNameMinLength = 3;
+            public const int CustomerLastNameMaxLength = 50;
         }
 
         public class ProductConstants
@@ -64,6 +61,12 @@
             //Name
             public const int StatusNameMinLength = 3;
             public const int StatusNameMaxLength = 50;
+        }
+
+        public class Roles
+        {
+            public const string UserRoleName = "User";
+            public const string AdminRoleName = "Admin";
         }
     }
 }
