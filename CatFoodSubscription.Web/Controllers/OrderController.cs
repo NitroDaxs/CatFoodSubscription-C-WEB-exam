@@ -37,6 +37,11 @@ namespace CatFoodSubscription.Web.Controllers
         {
             var summary = await orderService.GetCheckOutSummaryAsync(User.GetId());
 
+            if (!summary.Products.Any() && summary.SubscriptionBox.Id == 0)
+            {
+                return RedirectToAction("Index", "Product");
+            }
+
             return View(summary);
         }
 
@@ -44,10 +49,14 @@ namespace CatFoodSubscription.Web.Controllers
         public async Task<IActionResult> CheckOut(OrderCheckOutFormViewModel model)
         {
             var userId = User.GetId();
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
-                await orderService.ProcessOrderAsync(model, userId);
+                var summary = await orderService.GetCheckOutSummaryAsync(userId);
+                return View("CheckOut", summary);
             }
+
+            await orderService.ProcessOrderAsync(model, userId);
             return RedirectToAction("Index", "SubscriptionBox");
         }
 

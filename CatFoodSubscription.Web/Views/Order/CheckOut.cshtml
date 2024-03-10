@@ -19,21 +19,27 @@
                             <h3>Shipping Address</h3>
                             <label asp-for="@Model.Address.FirstName"><i class="fa fa-user"></i> First Name</label>
                             <input asp-for="@Model.Address.FirstName" class="form-control" aria-required="true" placeholder="Kon" />
+                            <span asp-validation-for="@Model.Address.FirstName" class="text-danger"></span>
 
                             <label asp-for="@Model.Address.LastName"><i class="fa fa-user"></i> Last Name</label>
                             <input asp-for="@Model.Address.LastName" class="form-control" aria-required="true" placeholder="Konev" />
+                            <span asp-validation-for="@Model.Address.LastName" class="text-danger"></span>
 
                             <label asp-for="@Model.Address.Email"><i class="fa fa-envelope"></i> Email</label>
                             <input asp-for="@Model.Address.Email" class="form-control" aria-required="true" placeholder="kon@example.com" />
+                            <span asp-validation-for="@Model.Address.Email" class="text-danger"></span>
 
                             <label asp-for="@Model.Address.PhoneNumber"><i class="fa fa-phone"></i> Phone Number</label>
                             <input asp-for="@Model.Address.PhoneNumber" class="form-control" aria-required="true" placeholder="087 999 9999" />
+                            <span asp-validation-for="@Model.Address.PhoneNumber" class="text-danger"></span>
 
                             <label asp-for="@Model.Address.Street"><i class="fa fa-address-card-o"></i> Street</label>
                             <input asp-for="@Model.Address.Street" class="form-control" aria-required="true" placeholder="3 Gancho Karamazdhrakov str., BB 110" />
+                            <span asp-validation-for="@Model.Address.Street" class="text-danger"></span>
 
                             <label asp-for="@Model.Address.City"><i class="fa fa-institution"></i> City</label>
                             <input asp-for="@Model.Address.City" class="form-control" aria-required="true" placeholder="Ruse" />
+                            <span asp-validation-for="@Model.Address.City" class="text-danger"></span>
 
                             <input asp-for="@Model.CustomerId" class="form-control" aria-required="true" value="@Model.CustomerId" hidden="true" />
                             <input asp-for="@Model.OrderId" class="form-control" aria-required="true" value="@Model.OrderId" hidden="true" />
@@ -43,10 +49,12 @@
                                 <div class="col-50">
                                     <label asp-for="@Model.Address.Country"><i class="fa fa-globe"></i>Country</label>
                                     <input asp-for="@Model.Address.Country" class="form-control" aria-required="true" placeholder="Bulgaria" />
+                                    <span asp-validation-for="@Model.Address.Country" class="text-danger"></span>
                                 </div>
                                 <div class="col-50">
                                     <label asp-for="@Model.Address.PostalCode">PostalCode</label>
                                     <input asp-for="@Model.Address.PostalCode" class="form-control" aria-required="true" placeholder="7019" />
+                                    <span asp-validation-for="@Model.Address.PostalCode" class="text-danger"></span>
                                 </div>
                             </div>
                             <button type="submit" class="btn-checkout">Finalize order</button>

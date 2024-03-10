@@ -29,8 +29,4 @@
     <ProjectReference Include="..\CatFoodSubsctiptio.Data\CatFoodSubscription.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\css\Home\" />
-  </ItemGroup>
-
 </Project>

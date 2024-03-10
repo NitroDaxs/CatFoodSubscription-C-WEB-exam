@@ -1,4 +1,8 @@
-﻿.row {
+﻿.body {
+    font-family: 'Brush Script MT', cursive;
+}
+
+.row {
     display: -ms-flexbox; /* IE10 */
     display: flex;
     -ms-flex-wrap: wrap; /* IE10 */

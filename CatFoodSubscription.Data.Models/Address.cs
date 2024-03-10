@@ -26,7 +26,7 @@ namespace CatFoodSubscription.Data.Models
         public string Street { get; set; } = null!;
 
         [Comment("PostalCode of the address")]
-        public int PostalCode { get; set; }
+        public string PostalCode { get; set; }
 
         [Comment("First name of the customer")]
         [MaxLength(CustomerFirstNameMaxLength)]

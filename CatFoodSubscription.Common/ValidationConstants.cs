@@ -3,7 +3,8 @@
     public static class ValidationConstants
     {
         private const string projectStart = "01/22/2024";
-
+        public const string errorLengthMessage = "{0} must be between {2} and {1} characters!";
+        public const string errorRequiredMessage = "The field {0} is requiered!";
         public class AddressConstants
         {
             //Country
@@ -18,6 +19,14 @@
             public const int AddressStreetMinLength = 3;
             public const int AddressStreetMaxLength = 250;
 
+            //Street
+            public const int AddressPostalCodeMinLength = 3;
+            public const int AddressPostalCodeMaxLength = 10;
+
+            //PhoneNumber
+            public const string PhoneNumberRegEx = @"^(?:\+359|0)\s?[87-9][0-9]\s?\d{3}\s?\d{4}$";
+            public const string PhoneNumberErrorMessage = "The phone number format is incorrect. Example: +359 87 999 9999 or 087 999 9999";
+
             //FirstName
             public const int CustomerFirstNameMinLength = 3;
             public const int CustomerFirstNameMaxLength = 50;
@@ -25,6 +34,10 @@
             //LastName
             public const int CustomerLastNameMinLength = 3;
             public const int CustomerLastNameMaxLength = 50;
+
+            //Email
+            public const string EmailRegEx = @"^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$";
+            public const string EmailErrorMessage = "The email format is incorrect. Example: email@example.com";
         }
 
         public class ProductConstants

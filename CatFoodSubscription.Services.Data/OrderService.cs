@@ -20,13 +20,6 @@ namespace CatFoodSubscription.Services.Data
 
         public async Task<OrderSummaryViewModel> GetOrderSummaryAsync(string id)
         {
-            var user = await context.Customers.FirstOrDefaultAsync(u => u.Id == id);
-
-            if (user.Orders.Count == 0)
-            {
-                await this.AddOrderAsync(id);
-            }
-
             Order? order = await context.Orders
                 .Where(o => o.Customer.Id == id && o.StatusId == 1)
                 .Include(o => o.SubscriptionBox)
@@ -34,6 +27,12 @@ namespace CatFoodSubscription.Services.Data
                 .ThenInclude(po => po.Product)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                order = await this.AddOrderAsync(id);
+            }
+
 
             if (order == null)
             {

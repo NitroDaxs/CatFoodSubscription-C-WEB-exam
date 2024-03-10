@@ -3,31 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Maps Example</title>
+    <link rel="stylesheet" href="~/css/Home/aboutus.css" />
+    <title>AboutUs</title>
 </head>
 
 <body>
-<style>
-    body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin: 0;
-    }
+    <div class="map-container">
 
-    #map {
-        height: 60vh;
-        width: 80%;
-        border: 3px solid orange;
-    }
-</style>
-<h1>Google Maps Example</h1>
+        <div c="brand">
+            <h1>Our products YOUR choice!</h1>
+        </div>
+        <div class="prg">
+            <p >Discover a world of feline luxury with our premium cat products and exclusive subscription services. We are dedicated to delivering top-notch quality, ensuring your beloved feline companions receive the finest treats, toys, and essentials. Join our community of cat enthusiasts and indulge your pets in a life of comfort and joy. Elevate their experience with our carefully curated selection, where passion for cats meets unparalleled craftsmanship. Your cats deserve the best, and we're here to provide it. Welcome to a realm of quality cat care and subscriptions that celebrate the essence of feline living.</p>
+        </div>
 
-<div id="map"></div>
-
-<script>
+        <div id="map"></div> 
+       
+    </div>
+<div class="location">
+    <h2>Location: Sredec/Grudovo</h2>
+    <p>Our first in person store opened during 2023 in the small town of Sredec.</p>
+    <table>
+        <thead>
+        <tr>
+            <th>Day</th>
+            <th>Opening Time</th>
+            <th>Closing Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Monday - Friday</td>
+            <td>9:00 AM</td>
+            <td>5:00 PM</td>
+        </tr>
+        <tr>
+            <td>Sunday</td>
+            <td>Closed</td>
+            <td>Closed</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    <script>
         // Function to initialize the map
         function initMap() {
             // Specify the initial coordinates for Antarctica
@@ -41,12 +59,11 @@
             var marker = new google.maps.Marker({
                 position: initialCoordinates,
                 map: map,
-                title: 'Hello World!'
             });
 
             // Add an info window to the marker
             var infowindow = new google.maps.InfoWindow({
-                content: 'Welcome to Antarctica!'
+                content: 'Welcome to Gruduu!'
             });
 
             // Open the info window when the marker is clicked
@@ -56,8 +73,8 @@
         }
     </script>
 
-<!-- Include the Google Maps JavaScript API with your API key -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASP4feiV7j5tAz1XOu28in-n7UIQmbJqY&callback=initMap" async></script>
+    <!-- Include the Google Maps JavaScript API with your API key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASP4feiV7j5tAz1XOu28in-n7UIQmbJqY&callback=initMap" async></script>
 </body>
-</html>  
+</html>
 

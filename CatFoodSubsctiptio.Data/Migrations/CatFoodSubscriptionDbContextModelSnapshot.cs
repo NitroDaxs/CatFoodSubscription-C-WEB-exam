@@ -63,8 +63,9 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("PhoneNumber for the address");
 
-                    b.Property<int>("PostalCode")
-                        .HasColumnType("int")
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
                         .HasComment("PostalCode of the address");
 
                     b.Property<string>("Street")
@@ -205,7 +206,7 @@ namespace CatFoodSubscription.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGbHi/jzbU75vzCwv5OmmNwFZd19EQw0sRP1BDJur9DPkUJkeTlyYFgSPc7ZRaY8Ig==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKUOwKwcvBO5OgwmpilXVWtmfoB2zzWgxdqZ7sDJkNKZNSBCdUSZg+ugXmChVH7fHQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ADMIN@GMAIL.COM",
                             TwoFactorEnabled = false,
@@ -789,15 +790,15 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7fdd7ad5-d514-4c65-b694-701efef64472",
-                            ConcurrencyStamp = "f3828f51-89f7-47ad-940a-15fbe21a9377",
+                            Id = "ef0e9a4e-10f1-42cb-b8a0-5c239dc25c66",
+                            ConcurrencyStamp = "e2ad2ddb-6aa3-4e0e-ba22-83b98abd346f",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "cb78c4b9-38ad-4f91-ae98-dc7b504870c2",
-                            ConcurrencyStamp = "b25d9063-ffc5-43bb-8081-f5c9b765fe1b",
+                            Id = "fd3fa4f5-ac49-48de-ba75-bfe43c46e481",
+                            ConcurrencyStamp = "b77c6225-9037-41ab-b540-a4e81af84916",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
