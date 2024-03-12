@@ -18,5 +18,8 @@ namespace CatFoodSubscription.Services.Data.Interfaces
         Task AddSubscriptionBoxToCartAsync(SubscriptionBoxAllViewModel subscriptionBox, string id);
 
         Task RemoveSubscriptionBoxAsync(int orderId);
+        Task<IEnumerable<OrderAllViewModel>> GetAllOrdersByIdAsync(string id);
+
+        Task<OrderSummaryViewModel> OrderSummaryAsync(int id);
     }
 }

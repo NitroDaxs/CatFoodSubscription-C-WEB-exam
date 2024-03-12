@@ -98,5 +98,20 @@ namespace CatFoodSubscription.Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Orders()
+        {
+            var orders = await orderService.GetAllOrdersByIdAsync(User.GetId());
+            return View(orders);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Summary(int id)
+        {
+            var order = await orderService.OrderSummaryAsync(id);
+
+            return View(order);
+        }
     }
 }

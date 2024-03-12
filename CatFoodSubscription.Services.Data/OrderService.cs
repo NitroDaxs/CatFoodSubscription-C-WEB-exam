@@ -4,6 +4,7 @@ using CatFoodSubscription.Services.Data.Interfaces;
 using CatFoodSubscription.Web.ViewModels.Order;
 using CatFoodSubscription.Web.ViewModels.SubscriptionBox;
 using Microsoft.EntityFrameworkCore;
+using static CatFoodSubscription.Common.ValidationConstants;
 
 namespace CatFoodSubscription.Services.Data
 {
@@ -310,6 +311,64 @@ namespace CatFoodSubscription.Services.Data
 
                 await context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<OrderAllViewModel>> GetAllOrdersByIdAsync(string id)
+        {
+            var orders = await context.Orders
+                .Where(o => o.CustomerId == id && o.StatusId != 1)
+                .Select(o => new OrderAllViewModel()
+                {
+                    Id = o.Id,
+                    OrderDate = o.OrderDate.ToString(DateTimeFormat),
+                    TotalPrice = o.ProductsOrders.Sum(p => p.Product.Price),
+                    FirstName = o.Address.FirstName,
+                    LastName = o.Address.LastName
+                })
+                .AsNoTracking()
+                .ToListAsync();
+
+            return orders;
+        }
+
+        public async Task<OrderSummaryViewModel> OrderSummaryAsync(int id)
+        {
+            Order? order = await context.Orders
+                .Where(o => o.Id == id && o.StatusId != 1)
+                .Include(o => o.SubscriptionBox)
+                .Include(o => o.ProductsOrders)
+                .ThenInclude(po => po.Product)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            var orderSummary = new OrderSummaryViewModel()
+            {
+                Id = order.Id,
+                CustomerId = order.CustomerId,
+                SubscriptionBox = new OrderSubscriptionBoxViewModel
+                {
+                    Id = order.SubscriptionBox?.Id ?? 0,
+                    Name = order.SubscriptionBox?.Name ?? "",
+                    Price = order.SubscriptionBox?.Price ?? 0,
+                    ImageUrl = order.SubscriptionBox?.ImageUrl ?? ""
+                },
+                Products = order.ProductsOrders.Select(po => new OrderProductViewModel
+                {
+                    Id = po.Product.Id,
+                    Name = po.Product.Name,
+                    Price = po.Product.Price,
+                    ImageUrl = po.Product.ImageUrl,
+                    Quantity = po.Quantity,
+                    IsSubscription = po.Product.IsSubscription
+                }).ToList()
+            };
+
+            return orderSummary;
         }
     }
 }
