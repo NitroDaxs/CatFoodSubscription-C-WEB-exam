@@ -1,80 +1,15 @@
-﻿body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+﻿.body {
+    margin-top: 100px;
+    font-family: 'Brush Script MT', cursive;
 }
 
-.container {
+.container-orders {
     margin-top: 3rem;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-.text-charcoal {
-    color: #333; /* or any other desired color */
-}
-
-.text-pebble {
-    color: #999; /* or any other desired color */
-}
-
-.bg-snow {
-    background-color: #fff; /* or any other desired color */
-}
-
-.list-group-item {
-    padding: 1.5rem;
-    position: relative;
-}
-
-.row {
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.no-gutters {
-    margin-right: 0;
-    margin-left: 0;
-}
-
-.col-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
-}
-
-.col-md {
-    flex: 0 0 50%;
-    max-width: 50%;
-}
-
-.col-12 {
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-
-.mb-0 {
-    margin-bottom: 0;
-}
-
-.mb-2 {
-    margin-bottom: 0.5rem;
-}
-
-.mb-md-0 {
-    margin-bottom: 0;
-}
-
-.mt-3 {
-    margin-top: 1rem;
-}
-
-.mt-md-5 {
-    margin-top: 3rem;
-}
-
-.w-100 {
-    width: 100%;
-}
-
 .btn {
     display: inline-block;
     font-weight: 400;
@@ -90,7 +25,13 @@
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    color: wheat;
+    background-color: #910A67;
+    border-color: orange;
 }
+
+    .btn-primary:hover {
+        color: black;
+        background-color: orange;
+        border-color: #910A67;
+    }

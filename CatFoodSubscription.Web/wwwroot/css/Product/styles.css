@@ -6,7 +6,11 @@
 }
 
 h1 {
-    text-align: center;
+    background: wheat;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
 }
 
 #productList {
@@ -151,6 +155,7 @@ button.details-button {
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
 }
+
 
 @media screen and (max-width: 576px) {
     .sort {

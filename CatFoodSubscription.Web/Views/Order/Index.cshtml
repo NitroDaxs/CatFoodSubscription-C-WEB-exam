@@ -146,11 +146,11 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row mb-md-5">
                         <div class="col text-center">
-                            <!-- Add Checkout button that redirects to the Checkout action -->
-                            <a href="@Url.Action("CheckOut", "Order")" class="btn btn-lg btn-block btn-primary">CHECKOUT</a>
+                            <a asp-controller="Order" asp-action="CheckOut">
+                                <button class="btn-checkout">CHECKOUT</button>
+                            </a>
                         </div>
                     </div>
                 </div>

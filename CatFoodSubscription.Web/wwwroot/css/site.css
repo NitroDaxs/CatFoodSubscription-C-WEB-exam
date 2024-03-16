@@ -45,6 +45,7 @@ html {
 .dropdown {
     position: relative;
     display: inline-block;
+    color: black;
 }
 
 

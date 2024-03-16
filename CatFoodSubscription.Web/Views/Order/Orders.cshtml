@@ -3,21 +3,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="~/css/Home/orders.css" />
+    <link rel="stylesheet" href="~/css/Order/orders.css" />
 </head>
-<body class="body">
-    <div class="container">
+<body>
+    <div class="container-orders">
         <h2 class="title">Your Orders</h2>
         @foreach (var order in Model)
         {
             <div class="row">
                 <div class="col-12">
                     <div class="list-group mb-5">
-                        <div class="list-group-item p-3 bg-snow" style="position: relative;">
+                        <div class="list-group-item p-3 bg-snow" style="position: relative; background: wheat">
                             <div class="row w-100 no-gutters">
                                 <div class="col-6 col-md">
                                     <h6 class="text-charcoal mb-0 w-100">Order Number</h6>
-                                    <a href="" class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Id</a>
+                                    <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Id</p>
                                 </div>
                                 <div class="col-6 col-md">
                                     <h6 class="text-charcoal mb-0 w-100">Date</h6>

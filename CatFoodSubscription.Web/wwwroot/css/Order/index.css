@@ -11,13 +11,16 @@
     background: wheat;
 }
 
-.btn {
+.btn-checkout {
     background: #910A67;
-    border:2px solid orange;
-    color: wheat
+    border: 2px solid orange;
+    color: wheat;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
-    .btn:hover {
+    .btn-checkout:hover {
         background: orange;
         border: 2px solid #910A67;
         color: black

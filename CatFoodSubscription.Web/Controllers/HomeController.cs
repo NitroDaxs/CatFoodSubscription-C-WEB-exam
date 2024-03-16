@@ -23,6 +23,8 @@ namespace CatFoodSubscription.Web.Controllers
             return RedirectToAction("Index", "SubscriptionBox");
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult AboutUs()
         {
             return View();

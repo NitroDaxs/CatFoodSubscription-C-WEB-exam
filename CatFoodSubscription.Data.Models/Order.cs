@@ -44,6 +44,9 @@ namespace CatFoodSubscription.Data.Models
         [Comment("Identification of the subscriptionBox")]
         public int? SubscriptionBoxId { get; set; }
 
+        [Comment("Indicates if the subscription is canceled")]
+        public bool IsSubscriptionCanceled { get; set; } = false;
+
         [Comment("The subscriptionBox")]
         [ForeignKey(nameof(SubscriptionBoxId))]
         public SubscriptionBox? SubscriptionBox { get; set; } = null!;

@@ -338,6 +338,7 @@ namespace CatFoodSubscription.Services.Data
                 .Include(o => o.SubscriptionBox)
                 .Include(o => o.ProductsOrders)
                 .ThenInclude(po => po.Product)
+                .Include(o => o.Address)
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
@@ -356,6 +357,17 @@ namespace CatFoodSubscription.Services.Data
                     Name = order.SubscriptionBox?.Name ?? "",
                     Price = order.SubscriptionBox?.Price ?? 0,
                     ImageUrl = order.SubscriptionBox?.ImageUrl ?? ""
+                },
+                Address = new OrderAddressViewModel()
+                {
+                    Country = order.Address.Country,
+                    City = order.Address.City,
+                    Street = order.Address.Street,
+                    Email = order.Address.Email,
+                    PhoneNumber = order.Address.PhoneNumber,
+                    FirstName = order.Address.FirstName,
+                    LastName = order.Address.LastName,
+                    PostalCode = order.Address.PostalCode,
                 },
                 Products = order.ProductsOrders.Select(po => new OrderProductViewModel
                 {
