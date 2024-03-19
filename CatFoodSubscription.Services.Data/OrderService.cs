@@ -323,7 +323,8 @@ namespace CatFoodSubscription.Services.Data
                     OrderDate = o.OrderDate.ToString(DateTimeFormat),
                     TotalPrice = o.ProductsOrders.Sum(p => p.Product.Price),
                     FirstName = o.Address.FirstName,
-                    LastName = o.Address.LastName
+                    LastName = o.Address.LastName,
+                    Status = o.Status.Name
                 })
                 .AsNoTracking()
                 .ToListAsync();

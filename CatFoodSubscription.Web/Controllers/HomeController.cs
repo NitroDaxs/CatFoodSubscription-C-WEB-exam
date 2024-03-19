@@ -1,7 +1,5 @@
-﻿using CatFoodSubscription.Web.ViewModels.Home;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace CatFoodSubscription.Web.Controllers
 {
@@ -31,9 +29,19 @@ namespace CatFoodSubscription.Web.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(int statusCode)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (statusCode == 404)
+            {
+                return View("Error404");
+            }
+
+            if (statusCode == 500)
+            {
+                return View("Error500");
+            }
+
+            return View();
         }
     }
 }
