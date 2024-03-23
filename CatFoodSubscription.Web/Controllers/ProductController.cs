@@ -20,34 +20,36 @@ namespace CatFoodSubscription.Web.Controllers
         public async Task<IActionResult> Index(string category, string sortOrder, int page = 1)
         {
             const int pageSize = 8;
-
-            var products = await productService.GetProductAllAsync();
-
-            if (!products.Any())
+            try
             {
-                return BadRequest();
+                var products = await productService.GetProductAllAsync();
+
+                products = SortProducts(category, sortOrder, products);
+
+                var paginatedProducts = products.Skip((page - 1) * pageSize).Take(pageSize);
+
+                var viewModel = new PaginatedProductsViewModel
+                {
+                    Products = paginatedProducts,
+                    PaginationInfo = new ProductListViewModel()
+                    {
+                        CurrentPage = page,
+                        ItemsPerPage = pageSize,
+                        TotalItems = products.Count()
+                    }
+                };
+
+                // Set ViewBag properties for category and sortOrder if needed
+                ViewBag.Category = category;
+                ViewBag.SortOrder = sortOrder;
+
+                return View(viewModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "SubscriptionBox");
             }
 
-            products = SortProducts(category, sortOrder, products);
-
-            var paginatedProducts = products.Skip((page - 1) * pageSize).Take(pageSize);
-
-            var viewModel = new PaginatedProductsViewModel
-            {
-                Products = paginatedProducts,
-                PaginationInfo = new ProductListViewModel()
-                {
-                    CurrentPage = page,
-                    ItemsPerPage = pageSize,
-                    TotalItems = products.Count()
-                }
-            };
-
-            // Set ViewBag properties for category and sortOrder if needed
-            ViewBag.Category = category;
-            ViewBag.SortOrder = sortOrder;
-
-            return View(viewModel);
         }
 
         //Returns all valid entities from search bar
@@ -55,14 +57,15 @@ namespace CatFoodSubscription.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SearchResult(string query)
         {
-            var result = await productService.GetProductSearchAsync(query);
-
-            if (!result.Products.Any())
+            try
             {
-                return RedirectToAction("Index");
+                var result = await productService.GetProductSearchAsync(query);
+                return View("Index", result);
             }
-
-            return View("Index", result);
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Product");
+            }
         }
 
 
@@ -71,14 +74,16 @@ namespace CatFoodSubscription.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Detail(int id)
         {
-            var product = await productService.GetProductByIdAsync(id);
-
-            if (product == null)
+            try
             {
-                return NotFound();
-            }
+                var product = await productService.GetProductByIdAsync(id);
 
-            return View(product);
+                return View(product);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Product");
+            }
         }
 
         //Result for dropdown search bar products

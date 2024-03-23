@@ -28,6 +28,12 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .ToListAsync();
 
+
+            if (!products.Any())
+            {
+                throw new NullReferenceException();
+            }
+
             return products;
         }
 
@@ -52,6 +58,11 @@ namespace CatFoodSubscription.Services.Data
                 Products = products
             };
 
+            if (!result.Products.Any())
+            {
+                throw new NullReferenceException();
+            }
+
             return result;
         }
 
@@ -71,6 +82,11 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .FirstOrDefaultAsync();
 
+            if (product == null)
+            {
+                throw new Exception();
+            }
+
             return product;
         }
 
@@ -85,6 +101,11 @@ namespace CatFoodSubscription.Services.Data
                     ImageUrl = p.ImageUrl
                 })
                 .ToListAsync();
+
+            if (results == null)
+            {
+                throw new NullReferenceException();
+            }
 
             return results;
         }
