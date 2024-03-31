@@ -51,6 +51,11 @@ namespace CatFoodSubscription.Services.Data
                     .ToListAsync()
             };
 
+            if (subscriptionViewModel == null)
+            {
+                throw new NullReferenceException();
+            }
+
             return subscriptionViewModel;
         }
 

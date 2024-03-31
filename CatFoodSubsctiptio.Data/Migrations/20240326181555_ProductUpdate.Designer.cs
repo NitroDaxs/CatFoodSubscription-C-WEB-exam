@@ -4,6 +4,7 @@ using CatFoodSubscription.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatFoodSubscription.Data.Migrations
 {
     [DbContext(typeof(CatFoodSubscriptionDbContext))]
-    partial class CatFoodSubscriptionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240326181555_ProductUpdate")]
+    partial class ProductUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,7 +208,7 @@ namespace CatFoodSubscription.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECCuf/NafX73DSFIGCjRVw1fXVOaavIOks2a2n7EBuvkXOboi+BCovd+QEOArUnGAw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEI64t2aC8WvxLBglAbbOXar5ITBi6E6shPkSOXlWujNM1DbG1As45T7yHEX8cMrjYg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ADMIN@GMAIL.COM",
                             TwoFactorEnabled = false,
@@ -812,15 +814,15 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "71f65851-1f23-459f-8b67-a6a00324fd39",
-                            ConcurrencyStamp = "3b50f8ab-e84e-4133-a7c6-7f7cfcb1bd95",
+                            Id = "20c48bc6-4a7f-4114-b014-b75f9dd0a4d1",
+                            ConcurrencyStamp = "1e916de3-c501-47fa-b331-6f357a89ccba",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "8ac1f2a2-6638-4ef3-866d-b2b19c2ce92c",
-                            ConcurrencyStamp = "e161d944-7465-492d-b94d-7a7813c0d39e",
+                            Id = "878a3e7a-6e62-454b-ab45-9251c5818c6f",
+                            ConcurrencyStamp = "b28bd2c3-e124-44f7-b43e-82bdd52230c2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

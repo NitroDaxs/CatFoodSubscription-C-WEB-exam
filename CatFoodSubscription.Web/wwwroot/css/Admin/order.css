@@ -1,0 +1,31 @@
+﻿.body {
+    font-family: 'Brush Script MT', cursive;
+    margin-top: 100px;
+}
+
+.list-group {
+    margin-top: 10px;
+}
+
+.list-group-item {
+    background: wheat
+}
+
+.group-element {
+    margin-top: 10px;
+}
+
+.product-image {
+    width: 100px;
+    border-radius: 7px;
+}
+
+.search-bar {
+    width: 500px;
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.search-box {
+    margin-right: 10px;
+}

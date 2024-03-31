@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error/500");
+    app.UseExceptionHandler("/Home/Error");
     app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
 
     app.UseHsts();
@@ -49,7 +49,14 @@ app.UseAuthorization();
 
 app.AsignAdmin();
 
-app.MapDefaultControllerRoute();
-app.MapRazorPages();
+app.UseEndpoints(config =>
+{
+    config.MapControllerRoute(
+        name: "areas",
+        pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+    app.MapDefaultControllerRoute();
+    app.MapRazorPages();
+});
 
 app.Run();

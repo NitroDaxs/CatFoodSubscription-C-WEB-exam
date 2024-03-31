@@ -35,11 +35,6 @@ namespace CatFoodSubscription.Services.Data
             }
 
 
-            if (order == null)
-            {
-                throw new NullReferenceException();
-            }
-
             var orderSummary = new OrderSummaryViewModel()
             {
                 Id = order.Id,
@@ -62,6 +57,10 @@ namespace CatFoodSubscription.Services.Data
                 }).ToList()
             };
 
+            if (orderSummary == null)
+            {
+                throw new InvalidOperationException();
+            }
             return orderSummary;
         }
 
@@ -80,6 +79,11 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .FirstOrDefaultAsync();
 
+            if (product == null)
+            {
+                throw new InvalidOperationException();
+            }
+
             return product;
         }
 
@@ -93,7 +97,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (order == null)
             {
-                return null; // or throw an exception, or return a default OrderCheckOutFormViewModel
+                throw new InvalidOperationException();
             }
 
 
@@ -125,6 +129,11 @@ namespace CatFoodSubscription.Services.Data
                     IsSubscription = po.Product.IsSubscription
                 }).ToList()
             };
+
+            if (orderSummary == null)
+            {
+                throw new InvalidOperationException();
+            }
 
             return orderSummary;
         }
@@ -163,6 +172,11 @@ namespace CatFoodSubscription.Services.Data
 
         public async Task AddToCartAsync(OrderProductViewModel product, string id)
         {
+            if (product == null)
+            {
+                throw new InvalidOperationException();
+            }
+
             // Find the order associated with the customer
             var order = await context.Orders
                 .Where(o => o.CustomerId == id && o.StatusId == 1)
@@ -195,6 +209,11 @@ namespace CatFoodSubscription.Services.Data
                 };
 
                 context.ProductsOrders.Add(productOrder);
+            }
+
+            if (existingProductOrder == null)
+            {
+                throw new InvalidOperationException();
             }
 
             // Save changes to the database

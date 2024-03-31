@@ -1,10 +1,14 @@
-﻿@using CatFoodSubscription.Web.ViewModels.Order
-@model CatFoodSubscription.Web.ViewModels.Subscription.SubscriptionAllViewModel
+﻿@model CatFoodSubscription.Web.ViewModels.Subscription.SubscriptionAllViewModel
+
+@{
+    ViewData["Title"] = "Subscriptions";
+}
 
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="~/css/Subscription/styles.css" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Subscription/styles.css"/>
 </head>
 <body>
     <div class="subscription-order">

@@ -1,0 +1,31 @@
+﻿.body {
+    font-family: 'Brush Script MT', cursive;
+    margin-top: 100px;
+}
+
+.admin-container {
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-button {
+    background: #910a67;
+    color: wheat;
+    border: orange 2px solid;
+    border-radius: 7px;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .admin-button:hover {
+        background: orange;
+        color: black;
+        border: #910a67 2px solid;
+        border-radius: 7px;
+    }
+
+
+.button-legend {
+    text-align: left;
+    font-size: 1.2rem;
+}

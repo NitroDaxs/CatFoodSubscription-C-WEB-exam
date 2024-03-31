@@ -18,6 +18,7 @@ namespace CatFoodSubscription.Services.Data
         {
             var products = await context.Products
                 .AsNoTracking()
+                .Where(p => p.IsDeleted == false)
                 .Select(p => new ProductAllViewModel()
                 {
                     Id = p.Id,

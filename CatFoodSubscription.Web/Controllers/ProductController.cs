@@ -82,7 +82,7 @@ namespace CatFoodSubscription.Web.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Error", "Home", new { statusCode = 404 });
             }
         }
 
@@ -97,6 +97,7 @@ namespace CatFoodSubscription.Web.Controllers
         }
 
 
+        //Product sorting method
         private static IEnumerable<ProductAllViewModel> SortProducts(string category, string sortOrder, IEnumerable<ProductAllViewModel> products)
         {
             if (!string.IsNullOrEmpty(category))

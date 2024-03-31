@@ -1,0 +1,37 @@
+﻿.body {
+    font-family: 'Brush Script MT', cursive;
+    margin-top:100px;
+}
+
+.edit-container {
+    justify-content: center;
+    align-items: center;
+    background: wheat;
+    border-radius: 20px;
+    padding: 1rem;
+    max-width: 45%;
+    margin: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.form-group {
+    padding: 1rem;
+    margin: auto;
+}
+
+.btn-save {
+    background: #910a67;
+    color: wheat;
+    border: orange 2px solid;
+    border-radius: 7px;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .btn-save:hover {
+        background: orange;
+        color: black;
+        border: #910a67 2px solid;
+        border-radius: 7px;
+    }

@@ -10,7 +10,6 @@ namespace CatFoodSubscription.Web.Controllers
         private readonly IOrderService orderService;
         private readonly ISubscriptionBoxService subscriptionBoxService;
 
-
         public OrderController(IOrderService _orderService, ISubscriptionBoxService _subscriptionBoxService)
         {
             orderService = _orderService;
@@ -19,9 +18,16 @@ namespace CatFoodSubscription.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var summary = await orderService.GetOrderSummaryAsync(User.GetId());
+            try
+            {
+                var summary = await orderService.GetOrderSummaryAsync(User.GetId());
 
-            return View(summary);
+                return View(summary);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "SubscriptionBox");
+            }
         }
 
         [HttpPost]

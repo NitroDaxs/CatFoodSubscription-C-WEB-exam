@@ -16,17 +16,31 @@ namespace CatFoodSubscription.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var subscriptionViewModel = await subscriptionService.GetOrderSubscriptionProductAsync(User.GetId());
+            try
+            {
+                var subscriptionViewModel = await subscriptionService.GetOrderSubscriptionProductAsync(User.GetId());
 
-            return View(subscriptionViewModel);
+                return View(subscriptionViewModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "SubscriptionBox");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> CancelSubscription(int id)
         {
-            await subscriptionService.CancelSubscription(id);
+            try
+            {
+                await subscriptionService.CancelSubscription(id);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "SubscriptionBox");
+            }
         }
     }
 }

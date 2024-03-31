@@ -10,6 +10,8 @@
 
         public string? ImageUrl { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public string Category { get; set; } = null!;
     }
 }

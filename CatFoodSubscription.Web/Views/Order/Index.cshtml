@@ -1,4 +1,7 @@
 ﻿@model CatFoodSubscription.Web.ViewModels.Order.OrderSummaryViewModel
+@{
+    ViewData["Title"] = "Cart";
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/css/Order/index.css" />
     <link rel="stylesheet" href="~/js/site.js" />
-    <title>Order Summary</title>
+    <title>@ViewData["Title"]</title>
 </head>
 <body>
     <div class="container-fluid my-5">
