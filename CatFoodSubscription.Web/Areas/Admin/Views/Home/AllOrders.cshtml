@@ -1,0 +1,63 @@
+﻿@using Microsoft.CodeAnalysis.CSharp.Syntax
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<CatFoodSubscription.Web.ViewModels.Admin.AdminAllOrdersViewModel>
+
+@{
+    ViewData["Title"] = "All Products";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Admin/order.css" />
+</head>
+<body>
+    <form asp-controller="Home" asp-action="SearchedOrders" method="post">
+        <div class="search-bar">
+            <div class="search-box">
+                <input type="text" name="id" class="form-control" placeholder="Search order id...">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    @if (Model.Any())
+    {
+        foreach (var order in Model)
+        {
+            <div>
+                <div>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="group col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Id</b></h6>
+                                    <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Id</p>
+                                </div>
+                                <div class="group  col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Customer Name</b></h6>
+                                    <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@order.FirstName @order.LastName</p>
+                                </div>
+                                <div class="group col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Status</b></h6>
+                                    <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Status</p>
+                                </div>
+                                <div class="group-element  col-12 col-md-3">
+                                    <form asp-area="Admin" asp-controller="Order" asp-action="ChangeStatus" method="get">
+                                        <input type="hidden" name="id" value="@order.Id" />
+                                        <button type="submit" class="btn btn-primary w-100">Change Status</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p style="font-size: 3rem">No order with the searched parameters.</p>
+    }
+</body>
+</html>

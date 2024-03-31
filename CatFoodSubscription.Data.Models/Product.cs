@@ -40,9 +40,11 @@ namespace CatFoodSubscription.Data.Models
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; } = null!;
 
+        [Comment("Indicates if the product is deleted")]
+        public bool IsDeleted { get; set; } = false;
+
         [Comment("Collection of orders containing the product")]
         public ICollection<ProductOrder> ProductsOrders { get; set; } = new HashSet<ProductOrder>();
-
 
         [Comment("Collection for the mapping table")]
         public ICollection<ProductSubscriptionBox> ProductSubscriptionBoxes { get; set; } = new HashSet<ProductSubscriptionBox>();
