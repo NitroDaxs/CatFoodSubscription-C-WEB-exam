@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Products";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,31 +15,34 @@
 </head>
 <body>
     <div class="popup" style="display: none"></div>
-    <h1 class="product-title">Products</h1>
-<div class="filter">
-    <form method="get" asp-action="Index" asp-controller="Product">
-        <label for="category">Category:</label>
-        <select id="category" class="sort" name="category">
-            <option value="">All</option>
-            <option value="Wet Food">Wet Food</option>
-            <option value="Dry Food">Dry Food</option>
-            <option value="Supplement">Supplements</option>
-            <option value="Toy">Toy</option>
-            <option value="Accessory">Accessory</option>
-        </select>
+    @section DynamicContent {
+        <!-- Content specific to this view -->
+        <h1 class="product-title">Products</h1>
+    }
+    <div class="filter">
+        <form method="get" asp-action="Index" asp-controller="Product">
+            <label for="category">Category:</label>
+            <select id="category" class="sort" name="category">
+                <option value="">All</option>
+                <option value="Wet Food">Wet Food</option>
+                <option value="Dry Food">Dry Food</option>
+                <option value="Supplement">Supplements</option>
+                <option value="Toy">Toy</option>
+                <option value="Accessory">Accessory</option>
+            </select>
 
-        <label for="sortOrder">Sort Order:</label>
-        <select name="sortOrder" class="sort">
-            <option value="name_asc">Name (A-Z)</option>
-            <option value="name_desc">Name (Z-A)</option>
-            <option value="price_asc">Price (Low to High)</option>
-            <option value="price_desc">Price (High to Low)</option>
-        </select>
+            <label for="sortOrder">Sort Order:</label>
+            <select name="sortOrder" class="sort">
+                <option value="name_asc">Name (A-Z)</option>
+                <option value="name_desc">Name (Z-A)</option>
+                <option value="price_asc">Price (Low to High)</option>
+                <option value="price_desc">Price (High to Low)</option>
+            </select>
 
-        <button type="submit" class="filter-button">Apply</button>
+            <button type="submit" class="filter-button">Apply</button>
 
-    </form>
-</div>
+        </form>
+    </div>
 
     <div id="productList">
         @foreach (var product in Model.Products.Where(p => p.IsDeleted == false))

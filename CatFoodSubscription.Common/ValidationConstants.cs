@@ -4,6 +4,7 @@
     {
         private const string projectStart = "01/22/2024";
         public const string errorLengthMessage = "{0} must be between {2} and {1} characters!";
+        public const string errorNotification = "An error has occurred!";
         public const string errorRequiredMessage = "The field {0} is requiered!";
         public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         public class AddressConstants

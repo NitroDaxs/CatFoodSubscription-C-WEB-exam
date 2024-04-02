@@ -1,5 +1,5 @@
 ﻿using CatFoodSubscription.Services.Data.Interfaces;
-using CatFoodSubscription.Web.ViewModels.Admin;
+using CatFoodSubscription.Web.ViewModels.Admin.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatFoodSubscription.Web.Areas.Admin.Controllers
@@ -81,5 +81,6 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
 
             return RedirectToAction("AllProducts", "Home");
         }
+
     }
 }

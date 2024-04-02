@@ -5,6 +5,7 @@
 .home-pricing-card {
     background: wheat;
     margin: 1rem;
+    margin-top: -1rem;
     border-radius: 10px;
     width: calc(30% - 2rem);
     display: flex;
@@ -70,7 +71,6 @@
     padding: 1rem;
     color: black;
     background: wheat;
-    border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

@@ -1,6 +1,6 @@
-﻿namespace CatFoodSubscription.Web.ViewModels.Admin
+﻿namespace CatFoodSubscription.Web.ViewModels.Admin.Product
 {
-    public class AdminRestoreViewModel
+    public class AdminDeleteViewModel
     {
         public int Id { get; set; }
 

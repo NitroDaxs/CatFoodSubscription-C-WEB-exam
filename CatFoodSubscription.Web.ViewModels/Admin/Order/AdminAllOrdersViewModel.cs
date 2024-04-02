@@ -1,4 +1,4 @@
-﻿namespace CatFoodSubscription.Web.ViewModels.Admin
+﻿namespace CatFoodSubscription.Web.ViewModels.Admin.Order
 {
     public class AdminAllOrdersViewModel
     {
@@ -9,7 +9,6 @@
         public string LastName { get; set; }
 
         public string Status { get; set; }
-
 
     }
 }

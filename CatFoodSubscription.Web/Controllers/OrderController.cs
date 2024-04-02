@@ -2,6 +2,7 @@
 using CatFoodSubscription.Web.Infrastructure.Extensions;
 using CatFoodSubscription.Web.ViewModels.Order;
 using Microsoft.AspNetCore.Mvc;
+using static CatFoodSubscription.Common.ValidationConstants;
 
 namespace CatFoodSubscription.Web.Controllers
 {
@@ -67,19 +68,27 @@ namespace CatFoodSubscription.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(int productId, bool purchaseType)
+        public async Task<IActionResult> AddToCart(int productId)
         {
-            var product = await orderService.GetProductByIdAsync(productId);
-
-            if (product != null)
+            try
             {
-                await orderService.AddToCartAsync(product, User.GetId());
+                var product = await orderService.GetProductByIdAsync(productId);
 
-                TempData["SuccessMessage"] = $"Product added to the cart successfully!";
-                TempData["ProductImageUrl"] = product.ImageUrl;
+                if (product != null)
+                {
+                    await orderService.AddToCartAsync(product, User.GetId());
+
+                    TempData["SuccessMessage"] = $"Product added to the cart successfully!";
+                    TempData["ProductImageUrl"] = product.ImageUrl;
+                }
+
+                return RedirectToAction("Index", "Product");
             }
-
-            return RedirectToAction("Index", "Product");
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = errorNotification;
+                return RedirectToAction("Index", "SubscriptionBox");
+            }
         }
 
         //Action to add a subscription box to the cart

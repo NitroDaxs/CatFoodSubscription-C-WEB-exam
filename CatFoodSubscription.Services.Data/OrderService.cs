@@ -210,12 +210,6 @@ namespace CatFoodSubscription.Services.Data
 
                 context.ProductsOrders.Add(productOrder);
             }
-
-            if (existingProductOrder == null)
-            {
-                throw new InvalidOperationException();
-            }
-
             // Save changes to the database
             await context.SaveChangesAsync();
         }

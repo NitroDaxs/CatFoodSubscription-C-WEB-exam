@@ -1,5 +1,7 @@
-﻿using CatFoodSubscription.Web.Areas.Admin.ViewModels;
-using CatFoodSubscription.Web.ViewModels.Admin;
+﻿using CatFoodSubscription.Web.ViewModels.Admin.Category;
+using CatFoodSubscription.Web.ViewModels.Admin.Order;
+using CatFoodSubscription.Web.ViewModels.Admin.Product;
+using CatFoodSubscription.Web.ViewModels.Admin.Status;
 
 namespace CatFoodSubscription.Services.Data.Interfaces
 {
@@ -16,5 +18,12 @@ namespace CatFoodSubscription.Services.Data.Interfaces
         Task ConfirmAdminDeleteProductAsync(AdminDeleteViewModel model);
         Task ConfirmAdminRestoreProductAsync(AdminRestoreViewModel model);
         Task<IEnumerable<AdminAllOrdersViewModel>> GetAdminOrderByIdAsync(int id);
+        Task<AdminOrderChangeStatusViewModel> GetAdminOrderByIdChangeStatusAsync(int id);
+        Task UpdateAdminOrderStatus(AdminOrderChangeStatusViewModel model);
+
+        Task<IEnumerable<AdminStatusViewModel>> GetAdminOrderStatusesAsync();
+        Task<IEnumerable<AdminCategoryViewModel>> GetAdminProductCategoriesAsync();
+
+        Task<AdminOrderSummaryViewModel> OrderSummaryByIdAsync(int id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿@using Microsoft.CodeAnalysis.CSharp.Syntax
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model IEnumerable<CatFoodSubscription.Web.ViewModels.Admin.AdminAllOrdersViewModel>
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<CatFoodSubscription.Web.ViewModels.Admin.Order.AdminAllOrdersViewModel>
 
 @{
     ViewData["Title"] = "All Products";
@@ -18,7 +19,7 @@
             <div class="search-box">
                 <input type="text" name="id" class="form-control" placeholder="Search order id...">
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn-search btn btn-primary">Search</button>
         </div>
     </form>
     @if (Model.Any())
@@ -43,9 +44,15 @@
                                     <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Status</p>
                                 </div>
                                 <div class="group-element  col-12 col-md-3">
+                                    <form asp-area="Admin" asp-controller="Order" asp-action="Info" method="get">
+                                        <input type="hidden" name="id" value="@order.Id" />
+                                        <button type="submit" class="btn-change-status btn btn-primary w-100">View info</button>
+                                    </form>
+                                </div>
+                                <div class="group-element  col-12 col-md-3">
                                     <form asp-area="Admin" asp-controller="Order" asp-action="ChangeStatus" method="get">
                                         <input type="hidden" name="id" value="@order.Id" />
-                                        <button type="submit" class="btn btn-primary w-100">Change Status</button>
+                                        <button type="submit" class="btn-change-status btn btn-primary w-100">Change Status</button>
                                     </form>
                                 </div>
                             </div>

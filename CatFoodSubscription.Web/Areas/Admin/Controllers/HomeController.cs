@@ -1,4 +1,5 @@
 ﻿using CatFoodSubscription.Services.Data.Interfaces;
+using CatFoodSubscription.Web.ViewModels.Admin.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatFoodSubscription.Web.Areas.Admin.Controllers
@@ -49,7 +50,9 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
         }
         public async Task<IActionResult> AddProduct()
         {
-            return View();
+            AdminAddProductViewModel viewModel = new AdminAddProductViewModel();
+            viewModel.Status = await adminService.GetAdminProductCategoriesAsync();
+            return View(viewModel);
         }
         public async Task<IActionResult> AllOrders()
         {

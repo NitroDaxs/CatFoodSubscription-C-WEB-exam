@@ -29,3 +29,8 @@
 .search-box {
     margin-right: 10px;
 }
+
+.btn-change-status,
+.btn-search {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

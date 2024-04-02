@@ -2,7 +2,7 @@
 using static CatFoodSubscription.Common.ValidationConstants;
 using static CatFoodSubscription.Common.ValidationConstants.ProductConstants;
 
-namespace CatFoodSubscription.Web.ViewModels.Admin
+namespace CatFoodSubscription.Web.ViewModels.Admin.Product
 {
     public class AdminProductEditViewModel
     {

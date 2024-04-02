@@ -1,7 +1,12 @@
 ﻿using CatFoodSubscription.Data;
+using CatFoodSubscription.Data.Models;
 using CatFoodSubscription.Services.Data.Interfaces;
-using CatFoodSubscription.Web.Areas.Admin.ViewModels;
-using CatFoodSubscription.Web.ViewModels.Admin;
+using CatFoodSubscription.Web.ViewModels.Admin.Address;
+using CatFoodSubscription.Web.ViewModels.Admin.Category;
+using CatFoodSubscription.Web.ViewModels.Admin.Order;
+using CatFoodSubscription.Web.ViewModels.Admin.Product;
+using CatFoodSubscription.Web.ViewModels.Admin.Status;
+using CatFoodSubscription.Web.ViewModels.Admin.SubsctiptionBox;
 using Microsoft.EntityFrameworkCore;
 
 namespace CatFoodSubscription.Services.Data
@@ -171,6 +176,121 @@ namespace CatFoodSubscription.Services.Data
                 .ToListAsync();
 
             return order;
+        }
+
+        public async Task<AdminOrderChangeStatusViewModel> GetAdminOrderByIdChangeStatusAsync(int id)
+        {
+            var order = await context.Orders
+                .Where(o => o.Id == id && o.StatusId != 1)
+                .AsNoTracking()
+                .Select(o => new AdminOrderChangeStatusViewModel()
+                {
+                    Id = o.Id,
+                    CustomerId = o.CustomerId,
+                })
+                .FirstOrDefaultAsync();
+
+            return order;
+        }
+
+        public async Task UpdateAdminOrderStatus(AdminOrderChangeStatusViewModel model)
+        {
+            var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == model.Id);
+
+            if (order == null)
+            {
+                throw new Exception();
+            }
+
+            var status = await context.Statuses.FirstOrDefaultAsync(s => s.Id == model.StatusId);
+
+            if (status == null)
+            {
+                throw new Exception();
+            }
+
+            order.Status = status;
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<AdminStatusViewModel>> GetAdminOrderStatusesAsync()
+        {
+            var statuses = await context.Statuses
+                .Where(s => s.Id != 1)
+                .Select(s => new AdminStatusViewModel()
+                {
+                    Id = s.Id,
+                    Name = s.Name
+                })
+                .ToListAsync();
+
+            return statuses;
+        }
+
+        public async Task<IEnumerable<AdminCategoryViewModel>> GetAdminProductCategoriesAsync()
+        {
+            var categories = await context.Categories
+                .Select(c => new AdminCategoryViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                })
+                .ToListAsync();
+
+            return categories;
+        }
+
+        public async Task<AdminOrderSummaryViewModel> OrderSummaryByIdAsync(int id)
+        {
+            Order? order = await context.Orders
+                .Where(o => o.Id == id && o.StatusId != 1)
+                .Include(o => o.SubscriptionBox)
+                .Include(o => o.ProductsOrders)
+                .ThenInclude(po => po.Product)
+                .Include(o => o.Address)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            if (order == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            var orderSummary = new AdminOrderSummaryViewModel()
+            {
+                Id = order.Id,
+                CustomerId = order.CustomerId,
+                SubscriptionBox = new AdminSubscriptionBoxViewModel()
+                {
+                    Id = order.SubscriptionBox?.Id ?? 0,
+                    Name = order.SubscriptionBox?.Name ?? "",
+                    Price = order.SubscriptionBox?.Price ?? 0,
+                    ImageUrl = order.SubscriptionBox?.ImageUrl ?? ""
+                },
+                Address = new AdminAddressViewModel()
+                {
+                    Country = order.Address.Country,
+                    City = order.Address.City,
+                    Street = order.Address.Street,
+                    Email = order.Address.Email,
+                    PhoneNumber = order.Address.PhoneNumber,
+                    FirstName = order.Address.FirstName,
+                    LastName = order.Address.LastName,
+                    PostalCode = order.Address.PostalCode,
+                },
+                Products = order.ProductsOrders.Select(po => new AdminAllProductsViewModel()
+                {
+                    Id = po.Product.Id,
+                    Name = po.Product.Name,
+                    Price = po.Product.Price,
+                    ImageUrl = po.Product.ImageUrl,
+                    Quantity = po.Quantity,
+                    IsSubscription = po.Product.IsSubscription
+                }).ToList()
+            };
+
+            return orderSummary;
         }
     }
 }
