@@ -24,7 +24,7 @@
                                     <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Id</p>
                                 </div>
                                 <div class="col-6 col-md">
-                                    <h6 class="text-charcoal mb-0 w-100"><b>Date</b></h6>
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Date and Time</b></h6>
                                     <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.OrderDate</p>
                                 </div>
                                 <div class="col-6 col-md">
@@ -40,7 +40,7 @@
                                     <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Status</p>
                                 </div>
                                 <div class="col-12 col-md-3">
-                                    <form asp-controller="Order" asp-action="Summary" method="post">
+                                    <form asp-controller="Order" asp-action="Summary" method="get">
                                         <input type="hidden" name="id" value="@order.Id" />
                                         <button type="submit" class="btn btn-primary w-100">View Order</button>
                                     </form>
