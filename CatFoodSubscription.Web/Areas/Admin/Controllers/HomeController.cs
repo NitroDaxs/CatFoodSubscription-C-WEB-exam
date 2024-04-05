@@ -1,5 +1,4 @@
 ﻿using CatFoodSubscription.Services.Data.Interfaces;
-using CatFoodSubscription.Web.ViewModels.Admin.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatFoodSubscription.Web.Areas.Admin.Controllers
@@ -48,12 +47,9 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
 
             return RedirectToAction("AllOrders");
         }
-        public async Task<IActionResult> AddProduct()
-        {
-            AdminAddProductViewModel viewModel = new AdminAddProductViewModel();
-            viewModel.Status = await adminService.GetAdminProductCategoriesAsync();
-            return View(viewModel);
-        }
+
+
+        [HttpGet]
         public async Task<IActionResult> AllOrders()
         {
             var orders = await adminService.GetAdminOrderAllAsync();

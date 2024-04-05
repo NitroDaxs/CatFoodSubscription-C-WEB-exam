@@ -12,7 +12,7 @@
 <body>
     <div>
         <div class="add-container">
-            <form asp-controller="Product" asp-action="Add" asp-area="Admin" method="post">
+            <form asp-controller="Product" asp-action="AddProduct" asp-area="Admin" method="post">
                 <div class="form-group">
                     <label asp-for="@Model.Name" class="control-label" aria-required="true"></label>
                     <input asp-for="@Model.Name" class="form-control" />
@@ -62,7 +62,7 @@
             </form>
         </div>
     </div>
-<script>
+    <script>
 
         function toggleTooltip(event) {
             const tooltip = event.currentTarget.nextElementSibling;
@@ -70,6 +70,6 @@
             tooltip.style.visibility = isVisible ? 'hidden' : 'visible';
         }
 
-</script>
+    </script>
 </body>
 </html>

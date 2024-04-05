@@ -21,6 +21,7 @@ namespace CatFoodSubscription.Web.ViewModels.Admin.Product
         public string Description { get; set; } = null!;
 
         [DisplayName("Product Price:")]
+        [Range(double.Epsilon, double.MaxValue, ErrorMessage = ProductPriceMoreThan0ErrorMsg)]
         [Required(ErrorMessage = errorRequiredMessage)]
         public decimal Price { get; set; }
 
@@ -33,7 +34,7 @@ namespace CatFoodSubscription.Web.ViewModels.Admin.Product
 
         [DisplayName("Select Category:")]
         [Required(ErrorMessage = errorRequiredMessage)]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public IEnumerable<AdminCategoryViewModel> Status { get; set; } = new HashSet<AdminCategoryViewModel>();
     }
 }
