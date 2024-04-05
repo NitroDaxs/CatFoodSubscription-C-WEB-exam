@@ -1,6 +1,7 @@
 ﻿using CatFoodSubscription.Services.Data.Interfaces;
 using CatFoodSubscription.Web.ViewModels.Admin.Product;
 using Microsoft.AspNetCore.Mvc;
+using static CatFoodSubscription.Common.ValidationConstants;
 
 namespace CatFoodSubscription.Web.Areas.Admin.Controllers
 {
@@ -81,6 +82,32 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
 
             return RedirectToAction("AllProducts", "Home");
         }
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            AdminAddProductViewModel viewModel = new AdminAddProductViewModel();
+            viewModel.Status = await adminService.GetAdminProductCategoriesAsync();
+            return View(viewModel);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> AddProduct(AdminAddProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Status = await adminService.GetAdminProductCategoriesAsync();
+                return View("Add", model);
+            }
+            try
+            {
+                await adminService.AddNewProductAsync(model);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = errorNotification;
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }

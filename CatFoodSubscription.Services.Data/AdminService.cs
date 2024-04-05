@@ -292,5 +292,28 @@ namespace CatFoodSubscription.Services.Data
 
             return orderSummary;
         }
+
+        public async Task AddNewProductAsync(AdminAddProductViewModel model)
+        {
+            if (model.ImageUrl == null)
+            {
+                model.ImageUrl = Common.ValidationConstants.ProductConstants.ProductDefaultImage;
+            }
+
+            int categoryId = model.CategoryId ?? 0;
+
+            Product newProduct = new Product()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                ImageUrl = model.ImageUrl,
+                IsSubscription = model.IsSubscription,
+                CategoryId = categoryId
+            };
+
+            await context.Products.AddAsync(newProduct);
+            await context.SaveChangesAsync();
+        }
     }
 }

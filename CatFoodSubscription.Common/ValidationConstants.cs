@@ -44,6 +44,8 @@
 
         public class ProductConstants
         {
+            //Default Img
+            public const string ProductDefaultImage = $"https://i.ibb.co/v1skpBQ/Catio-No-Image.png";
             //Name
             public const int ProductNameMinLength = 3;
             public const int ProductNameMaxLength = 50;
@@ -51,6 +53,9 @@
             //Description
             public const int ProductDescriptionMinLength = 3;
             public const int ProductDescriptionMaxLength = 250;
+
+            //Price Error Msg
+            public const string ProductPriceMoreThan0ErrorMsg = "The price should be more than 0.00!";
         }
 
         public class CategoryConstants
@@ -80,7 +85,10 @@
 
         public class Roles
         {
+            //User role
             public const string UserRoleName = "User";
+
+            //Admin role
             public const string AdminRoleName = "Admin";
         }
     }

@@ -25,5 +25,7 @@ namespace CatFoodSubscription.Services.Data.Interfaces
         Task<IEnumerable<AdminCategoryViewModel>> GetAdminProductCategoriesAsync();
 
         Task<AdminOrderSummaryViewModel> OrderSummaryByIdAsync(int id);
+
+        Task AddNewProductAsync(AdminAddProductViewModel model);
     }
 }
