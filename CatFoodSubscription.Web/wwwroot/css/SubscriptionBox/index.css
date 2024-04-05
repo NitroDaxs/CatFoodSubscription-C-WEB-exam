@@ -1,0 +1,77 @@
+﻿.body {
+    font-family: 'Brush Script MT', cursive;
+}
+
+.home-pricing-card {
+    background: wheat;
+    margin: 1rem;
+    margin-top: -1rem;
+    border-radius: 10px;
+    width: calc(30% - 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    flex-grow: 1;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.home-container {
+    width: 100%;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+}
+
+.home-container02 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.buyButton {
+    color: white;
+    font-size: 18px;
+    background: green;
+    border: none; /* Remove button border */
+    border-radius: 3px;
+    margin-top: auto; /* Push the button to the bottom */
+    cursor: pointer; /* Add pointer cursor to button */
+    align-self: center; /* Center the button horizontally */
+}
+
+.image-container {
+    text-align: center;
+    max-width: 100%; /* Ensure the image container does not exceed its parent's width */
+}
+
+.card-image {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.home-pricing-card h1 {
+    font-size: 2.5vw;
+}
+
+.home-pricing-card p {
+    font-size: 1.6vw;
+}
+
+.welcome-title {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    padding: 1rem;
+    color: black;
+    background: wheat;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+        

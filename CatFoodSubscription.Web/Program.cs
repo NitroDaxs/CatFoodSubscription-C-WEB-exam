@@ -1,18 +1,27 @@
-using CatFoodSubscription.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using CatFoodSubscription.Services.Data.Interfaces;
+using CatFoodSubscription.Web.ModelBinders;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddApplicationDbContext(connectionString);
+builder.Services.AddApplicationIdentity();
+
+builder.Services.AddApplicationServices(typeof(IOrderService));
+
+builder.Services
+    .AddControllersWithViews()
+    .AddMvcOptions(options =>
+    {
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+        options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+    });
 
 var app = builder.Build();
 
@@ -20,11 +29,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
 }
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
+
     app.UseHsts();
 }
 
@@ -36,9 +47,16 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
+app.AsignAdmin();
+
+app.UseEndpoints(config =>
+{
+    config.MapControllerRoute(
+        name: "areas",
+        pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+    app.MapDefaultControllerRoute();
+    app.MapRazorPages();
+});
 
 app.Run();

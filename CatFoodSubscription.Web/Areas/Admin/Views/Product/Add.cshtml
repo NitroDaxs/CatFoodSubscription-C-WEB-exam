@@ -1,0 +1,75 @@
+﻿@model CatFoodSubscription.Web.ViewModels.Admin.Product.AdminAddProductViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Title</title>
+    <link rel="stylesheet" href="~/css/Admin/add.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6vP0kho8N9+9hId0+2F2jyNhxvD1V2H5TODrL5fzlZ7zvyf5IcD56qIBVzFsE32" crossorigin="anonymous" />
+
+</head>
+<body>
+    <div>
+        <div class="add-container">
+            <form asp-controller="Product" asp-action="AddProduct" asp-area="Admin" method="post">
+                <div class="form-group">
+                    <label asp-for="@Model.Name" class="control-label" aria-required="true"></label>
+                    <input asp-for="@Model.Name" class="form-control" />
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Description" class="control-label" aria-required="true"></label>
+                    <textarea asp-for="@Model.Description" class="form-control"></textarea>
+                    <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Price" class="control-label" aria-required="true"></label>
+                    <input asp-for="@Model.Price" class="form-control" />
+                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.ImageUrl" class="control-label"></label>
+                    <input asp-for="@Model.ImageUrl" class="form-control" />
+                    <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.IsSubscription" class="control-label"></label>
+                    <div>
+                        <label class="radio-inline">
+                            <input type="radio" asp-for="@Model.IsSubscription" value="true" /> Subscription
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" asp-for="@Model.IsSubscription" value="false" /> One time purchase
+                        </label>
+                    </div>
+                    <span asp-validation-for="@Model.IsSubscription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.CategoryId" class="control-label"></label>
+                    <select asp-for="@Model.CategoryId" class="form-control" aria-required="true">
+                        <option disabled selected value="">Select Category...</option>
+                        @foreach (var category in Model.Status)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
+                </div>
+                <div>
+                    <button type="submit" class="btn-add btn btn-primary">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+
+        function toggleTooltip(event) {
+            const tooltip = event.currentTarget.nextElementSibling;
+            const isVisible = tooltip.style.visibility === 'visible';
+            tooltip.style.visibility = isVisible ? 'hidden' : 'visible';
+        }
+
+    </script>
+</body>
+</html>

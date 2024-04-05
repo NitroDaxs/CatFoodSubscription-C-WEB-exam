@@ -13,6 +13,11 @@ html {
     min-height: 100%;
 }
 
+.home-pricing-card:hover {
+
+    transform: scale(1.01); /* Grow by 5% on hover */
+}
+
 
 .navbar-brand {
     font-family: 'Brush Script MT', cursive;
@@ -40,6 +45,7 @@ html {
 .dropdown {
     position: relative;
     display: inline-block;
+    color: black;
 }
 
 
@@ -49,9 +55,13 @@ html {
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    max-width: 200px; /* Set a maximum width to limit the dropdown size */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    right: auto;
+    right: 0;
 }
+
 
     /* Links inside the dropdown */
     .dropdown-content a {
@@ -66,16 +76,16 @@ html {
             background-color: #ddd;
         }
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
+    white-space: nowrap; /* Prevent the content from breaking into multiple lines */
+    overflow: hidden; /* Hide any content that overflows */
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
     color: #f9ebd1;
 }
-
 
 .navbar {
     background: #910A67;
@@ -134,3 +144,61 @@ a.navbar-brand {
     margin-bottom: 60px;
     background: #B287A3;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.search-results {
+    display: none;
+    position: absolute;
+    top: 100%; /* Adjust the offset as needed */
+    left: 0;
+    width: 100%;
+    border-radius: 5px;
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.search-result-item {
+    padding: 10px;
+    background: wheat;
+    border-bottom: 1px solid #ccc;
+    width: 100%; /* Make the result item as wide as the container */
+    box-sizing: border-box; /* Include padding and border in the total width/height */
+}
+
+.search-result-item a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.search-result-item img {
+    width: 60px; /* Adjust as needed */
+    height: 60px; /* Adjust as needed */
+    margin-right: 10px;
+}
+
+
+.navbar-header {
+    background: red;
+    height: 100px;
+}
+

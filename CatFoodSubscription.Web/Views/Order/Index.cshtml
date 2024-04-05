@@ -1,0 +1,165 @@
+﻿@model CatFoodSubscription.Web.ViewModels.Order.OrderSummaryViewModel
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Order/index.css" />
+    <link rel="stylesheet" href="~/js/site.js" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container-fluid my-5">
+        <div class="row justify-content-center">
+            <div class="col-xl-10">
+                <div class="card shadow-lg">
+                    <div class="row justify-content-around">
+                        <div class="col-md-5">
+                            <div class="card border-0">
+                                <div class="card-header pb-0">
+                                    <h2 class="card-title space">Subscription</h2>
+                                    <p class="card-text text-muted mt-4 space">PRODUCTS</p>
+                                    <hr class="my-0">
+                                </div>
+                                <div class="card-body">
+                                    <!-- Display one-time purchase products -->
+                                    @foreach (var product in Model.Products.Where(p => p.IsSubscription == true))
+                                    {
+                                        <!-- Render one-time purchase product information here -->
+                                        <form asp-controller="Order" asp-action="UpdateQuantity" method="post">
+                                        <input type="hidden" name="productId" value="@product.Id" />
+                                            <div class="row justify-content-between">
+                                                <div class="col-auto">
+                                                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">
+                                                        <img class="img-fluid" src="@product.ImageUrl" width="62" height="62">
+                                                    </a>
+                                                    <div class="media-body my-auto">
+                                                        <div class="row">
+                                                            <div class="col-auto">
+                                                                <p class="mb-0" style="word-break:break-word"><b>@product.Name</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pl-0  col-auto my-auto">
+                                                    <p><b>@(product.Quantity * product.Price) BGN</b></p>
+                                                </div>
+                                                <div class="pl-0  col-auto my-auto">
+                                                    <div class="quantity-box">
+                                                        <button type="submit" name="action" value="decrease" class="quantity-btn"><i class="fa-solid fa-circle-minus"></i></button>
+                                                        <p class="boxed-1">@product.Quantity</p>
+                                                        <button type="submit" name="action" value="increase" class="quantity-btn"><i class="fa-solid fa-circle-plus"></i></button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr style="color: #910A67; height: 2px;">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card border-0">
+                                <div class="card-header pb-0">
+                                    <h2 class="card-title space">One-time purchase</h2>
+                                    <p class="card-text text-muted mt-4 space">PRODUCTS</p>
+                                    <hr class="my-0">
+                                </div>
+                                <div class="card-body">
+                                    <!-- Display one-time purchase products -->
+                                    @foreach (var product in Model.Products.Where(p => p.IsSubscription == false))
+                                    {
+                                        <!-- Render one-time purchase product information here -->
+                                        <form asp-controller="Order" asp-action="UpdateQuantity" method="post">
+                                            <input type="hidden" name="productId" value="@product.Id" />
+                                            <div class="row justify-content-between">
+                                                <div class="col-auto">
+                                                    <a asp-controller="Product" asp-action="Detail" asp-route-id="@product.Id">
+                                                        <img class="img-fluid" src="@product.ImageUrl" width="62" height="62">
+                                                    </a>
+                                                    <div class="media-body my-auto">
+                                                        <div class="row">
+                                                            <div class="col-auto">
+                                                                <p class="mb-0" style="word-break:break-word"><b>@product.Name</b></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="pl-0  col-auto my-auto">
+                                                    <p><b>@(product.Quantity * product.Price) BGN</b></p>
+                                                </div>
+                                                <div class="pl-0  col-auto my-auto">
+                                                    <div class="quantity-box">
+                                                        <button type="submit" name="action" value="decrease" class="quantity-btn"><i class="fa-solid fa-circle-minus"></i></button>
+                                                        <p class="boxed-1">@product.Quantity</p>
+                                                        <button type="submit" name="action" value="increase" class="quantity-btn"><i class="fa-solid fa-circle-plus"></i></button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr style="color: #910A67; height: 2px;">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card border-0">
+                                <div class="card-header pb-0">
+                                    <h2 class="card-title space">Subscription </h2>
+                                    <p class="card-text text-muted mt-4 space">BOX</p>
+                                    <hr class="my-0">
+                                </div>
+                                <div class="card-body">
+                                    @{
+                                        var subscriptionBox = Model.SubscriptionBox;
+                                    }
+
+                                    @if (subscriptionBox.Id != 0)
+                                    {
+                                        <div class="row justify-content-between">
+                                            <div class="col-auto">
+                                                <img class="img-fluid" src="@subscriptionBox.ImageUrl" width="62" height="62">
+                                                <div class="media-body my-auto">
+                                                    <div class="row ">
+                                                        <div class="col-auto">
+                                                            <p class="mb-0"><b>@subscriptionBox.Name</b></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="pl-0  col-auto my-auto">
+                                                <p><b>@(subscriptionBox.Price) BGN</b></p>
+                                            </div>
+                                            <div class="pl-0 col-auto my-auto">
+                                                <form asp-controller="Order" asp-action="RemoveSubscriptionBox" method="post">
+                                                    <input type="hidden" name="orderId" value="@Model.Id" />
+                                                    <button type="submit" class="btn-remove btn-danger">Remove</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <hr style="color: #910A67; height: 2px;">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-md-5">
+                        <div class="col text-center">
+                            <a asp-controller="Order" asp-action="CheckOut">
+                                <button class="btn-checkout">CHECKOUT</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

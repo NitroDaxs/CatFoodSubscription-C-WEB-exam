@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CatFoodSubscription.Common\CatFoodSubscription.Common.csproj" />
+    <ProjectReference Include="..\CatFoodSubscription.Data.Models\CatFoodSubscription.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

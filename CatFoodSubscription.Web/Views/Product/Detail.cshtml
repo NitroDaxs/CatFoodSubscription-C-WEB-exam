@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+@{
+    ViewData["Title"] = "Product Detail";
+}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Product/details.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container-02">
+        <h1 class="product-header">Product Details</h1>
+
+        <div class="product-container">
+            <div class="image-container">
+                <img src="@Model.ImageUrl" alt="Product Image" class="product-image">
+            </div>
+            <div class="info-container">
+                <h2>@Model.Name</h2>
+                <p>Description: @Model.Description</p>
+                <p>Price: $@Model.Price</p>
+                <p>Category: @Model.Category</p>
+                <form asp-controller="Order" asp-action="AddToCart" method="post" onsubmit="return addToCart()">
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <button class="btn-add" type="submit" name="purchaseType" value="false">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

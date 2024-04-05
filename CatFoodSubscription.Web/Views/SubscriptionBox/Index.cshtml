@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CatFoodSubscription.Web.ViewModels.SubscriptionBox.SubscriptionBoxAllViewModel>
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/css/SubscriptionBox/index.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body class="body">
+    <div>
+        <div class="home-container" style="margin-top: 60px;">
+            <div class="home-pricing">
+                <div class="pricingContainer">
+                    <div class="home-container01">
+                        @section DynamicContent {
+                            <h2 class="welcome-title">
+                                Choose the Perfect Plan for Your Purrfect Companion
+                                <span>
+                                    <span>
+                                        <span>
+                                            <h5 role="navigation">
+                                                Unlock a world of premium cat food options tailored to your
+                                                feline friend&apos;s needs.
+                                            </h5>
+                                        </span>
+                                    </span>
+                                </span>
+                            </h2>
+                        }
+
+                    </div>
+                    <div class="home-container02 ">
+                        @foreach (var subscriptionBox in Model)
+                        {
+                            <div class="home-pricing-card shadow-lg">
+                                <div>
+                                    <div class="image-container">
+                                        <a>
+                                            <img src="@subscriptionBox.ImageUrl" alt="@($"SubscriptionBox {subscriptionBox.Id} Image")" class="card-image">
+                                        </a>
+                                    </div>
+                                    <h1 class="m-lg-2">@subscriptionBox.Name</h1>
+                                    <ul class="list-unstyled m-lg-3">
+                                        <li>
+                                            <p>@subscriptionBox.Description</p>
+                                        </li>
+                                        <li>$@subscriptionBox.Price</li>
+                                        @foreach (var product in subscriptionBox.ProductSubscriptionBoxes)
+                                        {
+                                            <li>✔ @product.ProductName</li>
+                                            <!-- Include additional product information as needed -->
+                                        }
+                                    </ul>
+                                </div>
+                                <form asp-controller="Order" asp-action="AddToCartSubscription" method="post">
+                                    <input type="hidden" name="subscriptionBoxId" value="@subscriptionBox.Id" />
+                                    <button class="buyButton">
+                                        Add to Cart
+                                    </button>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

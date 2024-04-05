@@ -1,0 +1,84 @@
+﻿@using Microsoft.CodeAnalysis.CSharp.Syntax
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<CatFoodSubscription.Web.ViewModels.Admin.Product.AdminAllProductsViewModel>
+
+@{
+    ViewData["Title"] = "All Products";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Admin/product.css" />
+</head>
+<body>
+    <form asp-controller="Home" asp-action="SearchedProducts" method="post">
+        <div class="search-bar">
+            <div class="search-box">
+                <input type="text" name="query" class="form-control" placeholder="Search products...">
+            </div>
+            <button type="submit" class="btn-search btn btn-primary">Search</button>
+        </div>
+    </form>
+    @if (Model.Any())
+    {
+        foreach (var product in Model)
+        {
+            <div>
+                <div>
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="row">
+                                <div class="col-md">
+                                    <img src="@product.ImageUrl" alt="Product Image" class="product-image">
+                                </div>
+                                <div class="group col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Id</b></h6>
+                                    <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@product.Id</p>
+                                </div>
+                                <div class="group  col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Name</b></h6>
+                                    <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@product.Name</p>
+                                </div>
+                                <div class="group col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Deleted</b></h6>
+                                    <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@product.IsDeleted</p>
+                                </div>
+                                <div class="group-element  col-12 col-md-3">
+                                    <form asp-area="Admin" asp-controller="Product" asp-action="Edit" method="get">
+                                        <input type="hidden" name="id" value="@product.Id" />
+                                        <button type="submit" class="btn-edit btn btn-primary w-100">Edit</button>
+                                    </form>
+                                </div>
+                                @if (product.IsDeleted == false)
+                                {
+                                    <div class="group-element  col-12 col-md-3">
+                                        <form asp-area="Admin" asp-controller="Product" asp-action="Delete" method="get">
+                                            <input type="hidden" name="id" value="@product.Id" />
+                                            <button type="submit" class="btn-delete btn btn-danger w-100">Delete</button>
+                                        </form>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="group-element  col-12 col-md-3">
+                                        <form asp-area="Admin" asp-controller="Product" asp-action="Restore" method="get">
+                                            <input type="hidden" name="id" value="@product.Id" />
+                                            <button type="submit" class="btn-restore btn btn-success w-100">Restore</button>
+                                        </form>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p style="font-size: 3rem">No products with the searched parameters.</p>
+    }
+</body>
+</html>
