@@ -1,0 +1,49 @@
+﻿/* Add this to your summary.css file or in a style tag in your HTML file */
+
+.summary-items {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Adjust the margin as needed for spacing between items */
+}
+
+.product-image {
+    max-width: 150px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    margin-left: 3rem;
+}
+
+.product-details {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.order-item {
+    margin-top: 5px;
+    /* Adjust the margin as needed for spacing between quantity and name */
+}
+
+.body {
+    margin-top: 100px;
+    font-family: 'Brush Script MT', cursive;
+}
+
+.summary-body {
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+
+.header {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shipping-address-body {
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+}

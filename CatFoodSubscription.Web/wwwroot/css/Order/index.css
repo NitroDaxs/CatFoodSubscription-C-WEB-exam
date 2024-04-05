@@ -1,0 +1,73 @@
+﻿.body {
+    display: flex;
+    font-family: 'Brush Script MT', cursive;
+}
+
+.media-body {
+    word-wrap: break-word;
+    flex: 1; /* Allow the media-body to take up remaining space */
+}
+.card-header {
+    background: wheat;
+}
+
+.btn-checkout {
+    background: #910A67;
+    border: 2px solid orange;
+    color: wheat;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+    .btn-checkout:hover {
+        background: orange;
+        border: 2px solid #910A67;
+        color: black
+    }
+
+.btn-remove {
+    border: none;
+    border-radius: 5px;
+}
+
+.quantity-box {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.quantity-btn {
+    color: #910a67;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.quantity-btn:hover {
+    color: orange;
+}
+
+.boxed-1 {
+    margin: 0 10px;
+}
+
+.card-body {
+    padding: 0; /* Remove default padding in the card-body */
+}
+
+.card-body form {
+    padding: 10px; /* Add padding to the form for spacing */
+}
+
+.card-body hr {
+    margin-top: 5px; /* Adjust margin for spacing between products */
+}
+
+/* Optional: Adjust the height of the image container to maintain consistency */
+.img-fluid {
+    height: 62px;
+    border-radius: 5px;
+    margin-right: 10px; /* Add margin to the right for spacing between image and text */
+}

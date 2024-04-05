@@ -1,0 +1,74 @@
+﻿@model CatFoodSubscription.Web.ViewModels.Order.OrderSummaryViewModel
+@{
+    ViewData["Title"] = "Summary";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/css/Order/summary.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container">
+        <div class="summary-body">
+            <h1 class="header">Order number: @Model.Id</h1>
+            <div>
+
+                @foreach (var product in Model.Products)
+                {
+                    <div class="summary-items">
+                        <img src="@product.ImageUrl" alt="Product Image" class="product-image">
+                        <div class="product-details">
+                            <h6><b>Quantity</b></h6>
+                            <p>@product.Quantity</p>
+                        </div>
+                        <div class="product-details">
+                            <h6><b>Name</b></h6>
+                            <div class="order-item">@product.Name </div>
+                        </div>
+                        <div class="product-details">
+                            <h6><b>Price</b></h6>
+                            <div class="order-item">@product.Price BGN</div>
+                        </div>
+                    </div>
+                    <hr style="color: #910A67; height: 2px;">
+                }
+                <div class="summary-items">
+                    <img src="@Model.SubscriptionBox.ImageUrl" alt="Product Image" class="product-image">
+                    <div class="product-details">
+                        <h6><b>Quantity</b></h6>
+                        <p>1</p>
+                    </div>
+                    <div class="product-details">
+                        <h6><b>Name</b></h6>
+                        <div class="order-item">@Model.SubscriptionBox.Name </div>
+                    </div>
+                    <div class="product-details">
+                        <h6><b>Price</b></h6>
+                        <div class="order-item">@Model.SubscriptionBox.Price BGN</div>
+                    </div>
+                </div>
+                <hr style="color: #910A67; height: 2px;">
+                <div class="shipping-address-body">
+                    <div>
+                        <div>
+                            <b>Shipping Address</b>
+                            <p>Name: @Model.Address.FirstName @Model.Address.LastName</p>
+                            <p>Country: @Model.Address.Country</p>
+                            <p>City: @Model.Address.City</p>
+                            <p>Street: @Model.Address.Street</p>
+                            <p>PostalCode: @Model.Address.PostalCode</p>
+                            <p>Email: @Model.Address.Email</p>
+                            <p>Phone Number: @Model.Address.PhoneNumber</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+       
+    </div>
+  
+</body>
+</html>

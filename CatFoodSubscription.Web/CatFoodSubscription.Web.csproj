@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,19 +9,23 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.24" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.27" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.24" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.27" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.27" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.27" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.27">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.24">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
+    <PackageReference Include="toastr" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CatFoodSubscription.Common\CatFoodSubscription.Common.csproj" />
+    <ProjectReference Include="..\CatFoodSubscription.Data.Models\CatFoodSubscription.Data.Models.csproj" />
+    <ProjectReference Include="..\CatFoodSubscription.Services.Data\CatFoodSubscription.Services.Data.csproj" />
+    <ProjectReference Include="..\CatFoodSubscription.Web.Infrastructure\CatFoodSubscription.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\CatFoodSubscription.Web.ViewModels\CatFoodSubscription.Web.ViewModels.csproj" />
     <ProjectReference Include="..\CatFoodSubsctiptio.Data\CatFoodSubscription.Data.csproj" />
   </ItemGroup>

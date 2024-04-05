@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Razor.Language
+@using CatFoodSubscription.Common
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,10 +8,15 @@
     <title>@ViewData["Title"] - Catio</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
 </head>
 <body class="body">
     <header>
+        <div id="dynamic-content">
+            @await RenderSectionAsync("DynamicContent", required: false)
+        </div>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light fixed-top border-bottom box-shadow mb-3 border-bottom-0">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -19,37 +26,52 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex">
+                <div class="navbar-collapse collapse d-sm-inline-flex" style="background: #910a67">
 
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav" style="margin-left: 10px;">
                         <li class="nav-item-pages">
-                            <a class="nav-link custom-color" asp-area="" asp-controller="Home" asp-action="Product">
+                            <a class="nav-link custom-color" asp-area="" asp-controller="Product" asp-action="Index">
                                 <span class="subscription-icon">Products🐾</span>
                             </a>
                         </li>
+
                         <li class="nav-item-pages">
-                            <a class="nav-link custom-color" asp-area="" asp-controller="Home" asp-action="Product">
+                            <a class="nav-link custom-color" asp-area="" asp-controller="Subscription" asp-action="Index">
                                 <span class="subscription-icon">Subsctiptions🐾</span>
                             </a>
                         </li>
                         <li class="nav-item-pages">
-                            <a class="nav-link custom-color" asp-area="" asp-controller="Home" asp-action="Product">
+                            <a class="nav-link custom-color" asp-area="" asp-controller="Home" asp-action="AboutUs">
                                 <span class="subscription-icon">About Us🐾</span>
                             </a>
                         </li>
-
+                        <li class="nav-item-pages">
+                            <a class="nav-link custom-color" asp-area="" asp-controller="Order" asp-action="Index">
+                                <span class="subscription-icon">Cart<i class="fa fa-shopping-cart"></i></span>
+                            </a>
+                        </li>
+                        @if (User.IsInRole(ValidationConstants.Roles.AdminRoleName))
+                        {
+                            <li class="nav-item-pages">
+                                <a class="nav-link custom-color" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                    <span class="subscription-icon" style="border: wheat 2px solid; border-radius: 7px; padding: 2px">Admin Panel <i class="fa-solid fa-lock"></i></span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                     <ul class="nav navbar-nav ms-auto">
                         <li class="nav-item ">
-                            <form id="searchBar" class="d-flex ">
-                                <div class="input-group ">
-                                    <input type="search" id="query" name="q" class="form-control" placeholder="Search...">
+                            <form id="searchBar" class="d-flex" asp-controller="Product" asp-action="SearchResult" method="get">
+                                <div class="input-group">
+                                    <input type="search" id="query" name="query" class="form-control" placeholder="Search..." oninput="showSuggestions()">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-outline-secondary" type="button">
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </div>
                                 </div>
+                                <!-- Add a container for search results -->
+                                <div id="searchResults" class="search-results"></div>
                             </form>
                         </li>
                     </ul>
@@ -71,7 +93,36 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage.length > 0) {
+                toastr.error(errorMessage);
+            }
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,0 +1,58 @@
+﻿@model CatFoodSubscription.Web.ViewModels.Subscription.SubscriptionAllViewModel
+
+@{
+    ViewData["Title"] = "Subscriptions";
+}
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Subscription/styles.css"/>
+</head>
+<body>
+    <div class="subscription-order">
+        @foreach (var orderViewModel in Model.Orders)
+        {
+            <div>
+                @{
+                    DateTime renewalDate = orderViewModel.OrderDate.AddDays(30);
+                }
+                <h3 class="order-number">Order Number: @orderViewModel.OrderId</h3>
+                <p class="order-detail">Order Date: @orderViewModel.OrderDate.ToShortDateString() - Renewal Date: @renewalDate.ToShortDateString()</p>
+                <h4 class="order-detail">Subscription Products:</h4>
+                <div class="products-list">
+                    @if (orderViewModel.SubscriptionBox.Id != 0)
+                    {
+                        <div class="product-details">
+                            <img src="@orderViewModel.SubscriptionBox.ImageUrl" alt="@($"Product {orderViewModel.SubscriptionBox.Id} Image")" class="card-image">
+                            <div>
+                                <strong>Name:</strong> @orderViewModel.SubscriptionBox.Name<br />
+                                <strong>Price:</strong> @orderViewModel.SubscriptionBox.Price BGN<br />
+                                <strong>Quantity:</strong> 1<br />
+                            </div>
+                        </div>
+                    }
+                    @foreach (var product in orderViewModel.Products)
+                    {
+                        <div class="product-details">
+                            <img src="@product.ImageUrl" alt="@($"Product {product.Id} Image")" class="card-image">
+                            <div>
+                                <strong>Name:</strong> @product.Name<br />
+                                <strong>Price:</strong> @product.Price BGN<br />
+                                <strong>Quantity:</strong> @product.Quantity<br />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="center-btn">
+                    <form asp-controller="Subscription" asp-action="CancelSubscription" asp-route-id="@orderViewModel.OrderId" method="post">
+                        <button type="submit" class="btn-cancel btn-danger">Cancel</button>
+                    </form>
+                </div>
+            </div>
+            <hr style="color: #910A67; height: 2px;">
+        }
+    </div>
+</body>
+</html>

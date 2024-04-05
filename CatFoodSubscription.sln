@@ -11,11 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{A0302B1F-A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Data", "CatFoodSubsctiptio.Data\CatFoodSubscription.Data.csproj", "{19DE53BF-ABA3-49A6-B51B-8609F7AC9490}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatFoodSubscription.Data.Models", "CatFoodSubscription.Data.Models\CatFoodSubscription.Data.Models.csproj", "{CD421BC5-E086-419C-8D82-834DB83491E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Data.Models", "CatFoodSubscription.Data.Models\CatFoodSubscription.Data.Models.csproj", "{CD421BC5-E086-419C-8D82-834DB83491E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatFoodSubscription.Common", "CatFoodSubscription.Common\CatFoodSubscription.Common.csproj", "{0C2A8B42-ACF6-4325-89E7-19785CB38F87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Common", "CatFoodSubscription.Common\CatFoodSubscription.Common.csproj", "{0C2A8B42-ACF6-4325-89E7-19785CB38F87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatFoodSubscription.Web.ViewModels", "CatFoodSubscription.Web.ViewModels\CatFoodSubscription.Web.ViewModels.csproj", "{634911F9-72F8-42F4-BC59-EA02D8A5AEBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Web.ViewModels", "CatFoodSubscription.Web.ViewModels\CatFoodSubscription.Web.ViewModels.csproj", "{634911F9-72F8-42F4-BC59-EA02D8A5AEBE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BD9EABB0-5C2C-435E-94E0-048847ABEBC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Services.Data", "CatFoodSubscription.Services.Data\CatFoodSubscription.Services.Data.csproj", "{1885D121-2155-493A-8E47-1030D37C1DE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatFoodSubscription.Web.Infrastructure", "CatFoodSubscription.Web.Infrastructure\CatFoodSubscription.Web.Infrastructure.csproj", "{2098A25E-1BF4-41C2-9672-15330AA6F9D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +49,14 @@ Global
 		{634911F9-72F8-42F4-BC59-EA02D8A5AEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{634911F9-72F8-42F4-BC59-EA02D8A5AEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{634911F9-72F8-42F4-BC59-EA02D8A5AEBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1885D121-2155-493A-8E47-1030D37C1DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1885D121-2155-493A-8E47-1030D37C1DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1885D121-2155-493A-8E47-1030D37C1DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1885D121-2155-493A-8E47-1030D37C1DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2098A25E-1BF4-41C2-9672-15330AA6F9D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2098A25E-1BF4-41C2-9672-15330AA6F9D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2098A25E-1BF4-41C2-9672-15330AA6F9D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2098A25E-1BF4-41C2-9672-15330AA6F9D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +66,8 @@ Global
 		{19DE53BF-ABA3-49A6-B51B-8609F7AC9490} = {A0302B1F-A834-4ACC-9DA3-46DA634A5EE0}
 		{CD421BC5-E086-419C-8D82-834DB83491E6} = {A0302B1F-A834-4ACC-9DA3-46DA634A5EE0}
 		{634911F9-72F8-42F4-BC59-EA02D8A5AEBE} = {CEF48AAD-AE3A-4DCD-8D28-57733395A25E}
+		{1885D121-2155-493A-8E47-1030D37C1DE2} = {BD9EABB0-5C2C-435E-94E0-048847ABEBC2}
+		{2098A25E-1BF4-41C2-9672-15330AA6F9D2} = {CEF48AAD-AE3A-4DCD-8D28-57733395A25E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BE4F623-3786-41CE-8268-FDCEEC6DDC9E}

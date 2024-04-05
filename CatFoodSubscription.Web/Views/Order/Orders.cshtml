@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CatFoodSubscription.Web.ViewModels.Order.OrderAllViewModel>
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/css/Order/orders.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container-orders">
+        <h2 class="title">Your Orders</h2>
+        @foreach (var order in Model)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="list-group mb-5">
+                        <div class="list-group-item p-3 bg-snow" style="position: relative; background: wheat">
+                            <div class="row w-100 no-gutters">
+                                <div class="col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Order Number</b></h6>
+                                    <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Id</p>
+                                </div>
+                                <div class="col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Date and Time</b></h6>
+                                    <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.OrderDate</p>
+                                </div>
+                                <div class="col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Total</b></h6>
+                                    <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.TotalPrice</p>
+                                </div>
+                                <div class="col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Shipped To</b></h6>
+                                    <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.FirstName @order.LastName</p>
+                                </div>
+                                <div class="col-6 col-md">
+                                    <h6 class="text-charcoal mb-0 w-100"><b>Status</b></h6>
+                                    <p class="text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Status</p>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <form asp-controller="Order" asp-action="Summary" method="get">
+                                        <input type="hidden" name="id" value="@order.Id" />
+                                        <button type="submit" class="btn btn-primary w-100">View Order</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>

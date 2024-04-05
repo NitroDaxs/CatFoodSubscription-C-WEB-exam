@@ -1,0 +1,9 @@
+﻿namespace CatFoodSubscription.Web.ViewModels.Admin.Status
+{
+    public class AdminStatusViewModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = null!;
+    }
+}

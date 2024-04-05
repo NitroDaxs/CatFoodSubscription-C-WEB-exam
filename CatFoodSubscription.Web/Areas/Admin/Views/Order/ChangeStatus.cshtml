@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CatFoodSubscription.Web.ViewModels.Admin.Order.AdminOrderChangeStatusViewModel
+
+@{
+    ViewData["Title"] = "Order Status";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/Admin/edit.css" />
+</head>
+<body>
+<form asp-controller="Order" asp-action="SaveStatus" asp-area="Admin" method="post">
+    <div class="edit-container">
+        <div class="form-group">
+            <label asp-for="@Model.Id" class="control-label"></label>
+            <input asp-for="@Model.Id" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.CustomerId" class="control-label" aria-required="true"></label>
+            <input asp-for="@Model.CustomerId" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.StatusId" class="form-label-add-edit">Select Status</label>
+            <select asp-for="@Model.StatusId" class="form-control" aria-required="true">
+                <option disabled selected value="">Select Status...</option>
+                @foreach (var status in Model.Status)
+                {
+                    <option value="@status.Id">@status.Name</option>
+                }
+            </select>
+            <span asp-validation-for="@Model.StatusId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn-save btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
