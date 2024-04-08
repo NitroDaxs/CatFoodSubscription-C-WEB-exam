@@ -8,6 +8,7 @@ using CatFoodSubscription.Web.ViewModels.Admin.Product;
 using CatFoodSubscription.Web.ViewModels.Admin.Status;
 using CatFoodSubscription.Web.ViewModels.Admin.SubsctiptionBox;
 using Microsoft.EntityFrameworkCore;
+using static CatFoodSubscription.Common.ValidationConstants.ProductConstants;
 
 namespace CatFoodSubscription.Services.Data
 {
@@ -19,6 +20,11 @@ namespace CatFoodSubscription.Services.Data
         {
             context = _context;
         }
+
+        /// <summary>
+        /// This service is responsible for fetching all of the products in the store.
+        /// </summary>
+        /// <returns>A collection of all the products.</returns>
         public async Task<IEnumerable<AdminAllProductsViewModel>> GetAdminProductAllAsync()
         {
             var products = await context.Products
@@ -35,6 +41,11 @@ namespace CatFoodSubscription.Services.Data
             return products;
         }
 
+
+        /// <summary>
+        /// This service is responsible for fetching all of the orders made from the store.
+        /// </summary>
+        /// <returns>A collection of all the orders.</returns>
         public async Task<IEnumerable<AdminAllOrdersViewModel>> GetAdminOrderAllAsync()
         {
             var orders = await context.Orders
@@ -52,6 +63,12 @@ namespace CatFoodSubscription.Services.Data
             return orders;
         }
 
+
+        /// <summary>
+        /// This service is responsible for the search functionality in the "All Products" tab.
+        /// </summary>
+        /// <param name="query">This is the query by which the products will be fetched.</param>
+        /// <returns>A collection of the desired products from the search query.</returns>
         public async Task<IEnumerable<AdminAllProductsViewModel>> GetAdminProductBySearchAsync(string query)
         {
             var products = await context.Products
@@ -68,10 +85,16 @@ namespace CatFoodSubscription.Services.Data
             return products;
         }
 
+        /// <summary>
+        /// This service is responsible fetching a product by given Id.
+        /// </summary>
+        /// <param name="id">The Id of the product.</param>
+        /// <returns>A single product which meets the Id requirement.</returns>
         public async Task<AdminProductEditViewModel> GetAdminProductByIdAsync(int id)
         {
             var product = await context.Products
                 .Where(p => p.Id == id)
+                .AsNoTracking()
                 .Select(p => new AdminProductEditViewModel()
                 {
                     Id = id,
@@ -89,10 +112,16 @@ namespace CatFoodSubscription.Services.Data
             return product;
         }
 
+        /// <summary>
+        /// This service is responsible for fetching the product which will be soft deleted.
+        /// </summary>
+        /// <param name="id">The Id of the product.</param>
+        /// <returns>A single product which meets the Id requirement.</returns>
         public async Task<AdminDeleteViewModel> GetAdminDeleteProductByIdAsync(int id)
         {
             var productToDelete = await context.Products
                 .Where(p => p.Id == id)
+                .AsNoTracking()
                 .Select(p => new AdminDeleteViewModel()
                 {
                     Id = id,
@@ -100,18 +129,25 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .FirstOrDefaultAsync();
 
+            if (productToDelete == null)
+            {
+                return null;
+            }
+
             return productToDelete;
         }
 
-
-
+        /// <summary>
+        /// This service is responsible for the "Edit" functionality of the product.
+        /// </summary>
+        /// <param name="model">The model in the "Edit" form.</param>
         public async Task EditAdminProductByIdAsync(AdminProductEditViewModel model)
         {
             var product = await context.Products.FirstOrDefaultAsync(p => p.Id == model.Id);
 
             if (product == null)
             {
-                throw new Exception();
+                throw new InvalidOperationException();
             }
 
             product.Name = model.Name;
@@ -121,19 +157,29 @@ namespace CatFoodSubscription.Services.Data
             await context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// This service is responsible for the soft "Delete" functionality for the product.
+        /// </summary>
+        /// <param name="model">The model from which we fetch the correct product to soft delete.</param>
         public async Task ConfirmAdminDeleteProductAsync(AdminDeleteViewModel model)
         {
             var productToDelete = await context.Products.FirstOrDefaultAsync(p => p.Id == model.Id);
 
             if (productToDelete == null)
             {
-                throw new Exception();
+                throw new InvalidOperationException();
             }
 
             productToDelete.IsDeleted = true;
 
             await context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// This service is responsible for fetching the product that will be restored.
+        /// </summary>
+        /// <param name="id">The Id of the product to be restored.</param>
+        /// <returns>A single product which meets the Id requirement for restoration.</returns>
         public async Task<AdminRestoreViewModel> GetAdminRestoreProductByIdAsync(int id)
         {
             var productToDelete = await context.Products
@@ -145,8 +191,18 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .FirstOrDefaultAsync();
 
+            if (productToDelete == null)
+            {
+                return null;
+            }
+
             return productToDelete;
         }
+
+        /// <summary>
+        /// This service is responsible for confirming the restoration of a previously soft-deleted product.
+        /// </summary>
+        /// <param name="model">The model containing the Id of the product to restore.</param>
         public async Task ConfirmAdminRestoreProductAsync(AdminRestoreViewModel model)
         {
             var productToDelete = await context.Products.FirstOrDefaultAsync(p => p.Id == model.Id);
@@ -161,6 +217,11 @@ namespace CatFoodSubscription.Services.Data
             await context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// This service is responsible for fetching orders by a specific Id.
+        /// </summary>
+        /// <param name="id">The Id of the order.</param>
+        /// <returns>A collection of orders matching the given Id.</returns>
         public async Task<IEnumerable<AdminAllOrdersViewModel>> GetAdminOrderByIdAsync(int id)
         {
             var order = await context.Orders
@@ -178,6 +239,11 @@ namespace CatFoodSubscription.Services.Data
             return order;
         }
 
+        /// <summary>
+        /// This service is responsible for fetching an order by Id to change its status.
+        /// </summary>
+        /// <param name="id">The Id of the order whose status is to be changed.</param>
+        /// <returns>A view model for changing the status of an order.</returns>
         public async Task<AdminOrderChangeStatusViewModel> GetAdminOrderByIdChangeStatusAsync(int id)
         {
             var order = await context.Orders
@@ -190,23 +256,32 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .FirstOrDefaultAsync();
 
+            if (order == null)
+            {
+                return null;
+            }
+
             return order;
         }
 
+        /// <summary>
+        /// This service is responsible for updating the status of an order.
+        /// </summary>
+        /// <param name="model">The model containing the new status information for the order.</param>
         public async Task UpdateAdminOrderStatus(AdminOrderChangeStatusViewModel model)
         {
             var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == model.Id);
 
             if (order == null)
             {
-                throw new Exception();
+                throw new InvalidOperationException();
             }
 
             var status = await context.Statuses.FirstOrDefaultAsync(s => s.Id == model.StatusId);
 
             if (status == null)
             {
-                throw new Exception();
+                throw new InvalidOperationException();
             }
 
             order.Status = status;
@@ -214,6 +289,10 @@ namespace CatFoodSubscription.Services.Data
             await context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// This service is responsible for fetching all available order statuses except for the default one.
+        /// </summary>
+        /// <returns>A collection of all available order statuses.</returns>
         public async Task<IEnumerable<AdminStatusViewModel>> GetAdminOrderStatusesAsync()
         {
             var statuses = await context.Statuses
@@ -228,6 +307,10 @@ namespace CatFoodSubscription.Services.Data
             return statuses;
         }
 
+        /// <summary>
+        /// This service is responsible for fetching all product categories.
+        /// </summary>
+        /// <returns>A collection of all product categories.</returns>
         public async Task<IEnumerable<AdminCategoryViewModel>> GetAdminProductCategoriesAsync()
         {
             var categories = await context.Categories
@@ -241,6 +324,11 @@ namespace CatFoodSubscription.Services.Data
             return categories;
         }
 
+        /// <summary>
+        /// This service is responsible for providing a detailed summary of an order by its Id.
+        /// </summary>
+        /// <param name="id">The Id of the order.</param>
+        /// <returns>A detailed summary of the specified order.</returns>
         public async Task<AdminOrderSummaryViewModel> OrderSummaryByIdAsync(int id)
         {
             Order? order = await context.Orders
@@ -293,23 +381,20 @@ namespace CatFoodSubscription.Services.Data
             return orderSummary;
         }
 
+        /// <summary>
+        /// This service is responsible for adding a new product to the store.
+        /// </summary>
+        /// <param name="model">The model containing the new product information.</param>
         public async Task AddNewProductAsync(AdminAddProductViewModel model)
         {
-            if (model.ImageUrl == null)
-            {
-                model.ImageUrl = Common.ValidationConstants.ProductConstants.ProductDefaultImage;
-            }
-
-            int categoryId = model.CategoryId ?? 0;
-
             Product newProduct = new Product()
             {
                 Name = model.Name,
                 Description = model.Description,
                 Price = model.Price,
-                ImageUrl = model.ImageUrl,
+                ImageUrl = model.ImageUrl ?? ProductDefaultImage,
                 IsSubscription = model.IsSubscription,
-                CategoryId = categoryId
+                CategoryId = model.CategoryId ?? 0
             };
 
             await context.Products.AddAsync(newProduct);
