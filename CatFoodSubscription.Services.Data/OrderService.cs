@@ -19,6 +19,10 @@ namespace CatFoodSubscription.Services.Data
             context = _context;
         }
 
+        /// <summary>
+        /// This service is responsible for returning the cart of the current user.
+        /// </summary>
+        /// <param name="id">This is the current user's Id.</param>
         public async Task<OrderSummaryViewModel> GetOrderSummaryAsync(string id)
         {
             Order? order = await context.Orders
@@ -64,6 +68,10 @@ namespace CatFoodSubscription.Services.Data
             return orderSummary;
         }
 
+        /// <summary>
+        /// This service is responsible for fetching the desired product
+        /// </summary>
+        /// <param name="id">This is the Id of the desired Product</param>
         public async Task<OrderProductViewModel> GetProductByIdAsync(int id)
         {
             var product = await context.Products
@@ -87,6 +95,10 @@ namespace CatFoodSubscription.Services.Data
             return product;
         }
 
+        /// <summary>
+        /// This service is responsible for fetching the checkout items.
+        /// </summary>
+        /// <param name="id">This is the Id of the current user</param>
         public async Task<OrderCheckOutFormViewModel> GetCheckOutSummaryAsync(string id)
         {
             var order = await context.Orders
@@ -138,7 +150,11 @@ namespace CatFoodSubscription.Services.Data
             return orderSummary;
         }
 
-
+        /// <summary>
+        /// This service is responsible for processing the current order.
+        /// </summary>
+        /// <param name="model">This is the form for the address.</param>
+        /// <param name="id">This is the Id of the current user</param>
         public async Task ProcessOrderAsync(OrderCheckOutFormViewModel model, string id)
         {
             var address = new Address()
@@ -170,6 +186,11 @@ namespace CatFoodSubscription.Services.Data
             await this.AddOrderAsync(id);
         }
 
+        /// <summary>
+        /// This service is responsible for adding the desired product to the cart.
+        /// </summary>
+        /// <param name="product">Model of the product.</param>
+        /// <param name="id">This is the Id of the current user</param>
         public async Task AddToCartAsync(OrderProductViewModel product, string id)
         {
             if (product == null)
@@ -214,6 +235,10 @@ namespace CatFoodSubscription.Services.Data
             await context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// This is a private method responsible for adding a new order to the Db
+        /// </summary>
+        /// <param name="id">This is the current user's Id</param>
         private async Task<Order> AddOrderAsync(string id)
         {
             Order order;
@@ -229,7 +254,12 @@ namespace CatFoodSubscription.Services.Data
             return order;
         }
 
-
+        /// <summary>
+        /// This service is responsible for increasing or decreasing the product quantity in the cart.
+        /// </summary>
+        /// <param name="productId">This is the product Id.</param>
+        /// <param name="action">This is the action "increase" or "decrease"</param>
+        /// <param name="id">This is the current user's Id</param>
         public async Task UpdateProductQuantityAsync(int productId, string action, string id)
         {
             var order = await context.Orders
@@ -263,6 +293,11 @@ namespace CatFoodSubscription.Services.Data
             }
         }
 
+        /// <summary>
+        /// This service is responsible for adding a subscription box to the cart
+        /// </summary>
+        /// <param name="subscriptionBox">Model of the subscription box.</param>
+        /// <param name="id">Id of the current User</param>
         public async Task AddSubscriptionBoxToCartAsync(SubscriptionBoxAllViewModel subscriptionBox, string id)
         {
             var order = await context.Orders
@@ -301,16 +336,15 @@ namespace CatFoodSubscription.Services.Data
                         Description = subscriptionBox.Description,
                     };
                 }
-                else
-                {
-                    // Handle the case where a subscription box is already in the order (optional)
-                    // You may want to update the existing subscription box or handle it as needed
-                }
             }
 
             await context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// This service is responsible for removing the subscription box from the cart.
+        /// </summary>
+        /// <param name="orderId">This is the order's Id.</param>
         public async Task RemoveSubscriptionBoxAsync(int orderId)
         {
             var order = await context.Orders
@@ -326,6 +360,11 @@ namespace CatFoodSubscription.Services.Data
             }
         }
 
+        /// <summary>
+        /// This service fetches all of the order done by the User.
+        /// </summary>
+        /// <param name="id">This is the User's Id</param>
+        /// <returns></returns>
         public async Task<IEnumerable<OrderAllViewModel>> GetAllOrdersByIdAsync(string id)
         {
             var orders = await context.Orders
@@ -345,6 +384,10 @@ namespace CatFoodSubscription.Services.Data
             return orders;
         }
 
+        /// <summary>
+        /// This service is responsible for getting the summary of the desired order to the User.
+        /// </summary>
+        /// <param name="id">This is the order Id.</param>
         public async Task<OrderSummaryViewModel> OrderSummaryAsync(int id)
         {
             Order? order = await context.Orders
@@ -398,8 +441,3 @@ namespace CatFoodSubscription.Services.Data
         }
     }
 }
-
-
-
-
-
