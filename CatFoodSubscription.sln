@@ -21,8 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{BD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Services.Data", "CatFoodSubscription.Services.Data\CatFoodSubscription.Services.Data.csproj", "{1885D121-2155-493A-8E47-1030D37C1DE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatFoodSubscription.Web.Infrastructure", "CatFoodSubscription.Web.Infrastructure\CatFoodSubscription.Web.Infrastructure.csproj", "{2098A25E-1BF4-41C2-9672-15330AA6F9D2}"
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Web.ViewModels", "CatFoodSubscription.Web.ViewModels\CatFoodSubscription.Web.ViewModels.csproj", "{634911F9-72F8-42F4-BC59-EA02D8A5AEBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Web.Infrastructure", "CatFoodSubscription.Web.Infrastructure\CatFoodSubscription.Web.Infrastructure.csproj", "{2098A25E-1BF4-41C2-9672-15330AA6F9D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

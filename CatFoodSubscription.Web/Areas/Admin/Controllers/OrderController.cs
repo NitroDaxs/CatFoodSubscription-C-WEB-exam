@@ -25,7 +25,8 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                model.Status = await adminService.GetAdminOrderStatusesAsync();
+                return View("ChangeStatus", model);
             }
 
             await adminService.UpdateAdminOrderStatus(model);
