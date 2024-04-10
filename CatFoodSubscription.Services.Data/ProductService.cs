@@ -14,6 +14,10 @@ namespace CatFoodSubscription.Services.Data
             context = _context;
         }
 
+        /// <summary>
+        /// This service is responsible for fetching all available products.
+        /// </summary>
+        /// <returns>A collection of all available products.</returns>
         public async Task<IEnumerable<ProductAllViewModel>> GetProductAllAsync()
         {
             var products = await context.Products
@@ -38,6 +42,11 @@ namespace CatFoodSubscription.Services.Data
             return products;
         }
 
+        /// <summary>
+        /// This service is responsible for searching for products based on the provided query.
+        /// </summary>
+        /// <param name="query">The search query.</param>
+        /// <returns>A paginated view model containing the search results.</returns>
         public async Task<PaginatedProductsViewModel> GetProductSearchAsync(string query)
         {
 
@@ -67,6 +76,11 @@ namespace CatFoodSubscription.Services.Data
             return result;
         }
 
+        /// <summary>
+        /// This service is responsible for retrieving product details by its Id.
+        /// </summary>
+        /// <param name="id">The Id of the product.</param>
+        /// <returns>The detailed information of the specified product.</returns>
         public async Task<ProductDetailViewModel> GetProductByIdAsync(int id)
         {
             var product = await context.Products
@@ -91,6 +105,11 @@ namespace CatFoodSubscription.Services.Data
             return product;
         }
 
+        /// <summary>
+        /// This service is responsible for searching for products based on the provided query for the search bar.
+        /// </summary>
+        /// <param name="query">The search query.</param>
+        /// <returns>A collection of products matching the search query.</returns>
         public async Task<IEnumerable<ProductSearchViewModel>> GetProductSearchBarAsync(string query)
         {
             var results = await context.Products
