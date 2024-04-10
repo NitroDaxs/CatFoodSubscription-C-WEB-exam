@@ -15,7 +15,11 @@ namespace CatFoodSubscription.Services.Data
             context = _context;
         }
 
-
+        /// <summary>
+        /// This service is responsible for retrieving subscription-related information for a specific customer.
+        /// </summary>
+        /// <param name="id">The customer's Id.</param>
+        /// <returns>A view model containing subscription-related information for the customer.</returns>
         public async Task<SubscriptionAllViewModel> GetOrderSubscriptionProductAsync(string id)
         {
             var subscriptionViewModel = new SubscriptionAllViewModel
@@ -53,12 +57,16 @@ namespace CatFoodSubscription.Services.Data
 
             if (subscriptionViewModel == null)
             {
-                throw new NullReferenceException();
+                return null;
             }
 
             return subscriptionViewModel;
         }
 
+        /// <summary>
+        /// This service is responsible for canceling a subscription by updating the corresponding order.
+        /// </summary>
+        /// <param name="id">The Id of the order to cancel.</param>
         public async Task CancelSubscription(int id)
         {
             var order = await context.Orders
