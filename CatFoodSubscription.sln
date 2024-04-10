@@ -23,6 +23,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatFoodSubscription.Web.Infrastructure", "CatFoodSubscription.Web.Infrastructure\CatFoodSubscription.Web.Infrastructure.csproj", "{2098A25E-1BF4-41C2-9672-15330AA6F9D2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{40147A3F-7E2A-476B-BED9-0139322F1AD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatFoodSubscription.Tests", "CatFoodSubscription.Tests\CatFoodSubscription.Tests.csproj", "{BC69DF69-84A5-4901-A1BA-E4878CD9AF45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,10 @@ Global
 		{2098A25E-1BF4-41C2-9672-15330AA6F9D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2098A25E-1BF4-41C2-9672-15330AA6F9D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2098A25E-1BF4-41C2-9672-15330AA6F9D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC69DF69-84A5-4901-A1BA-E4878CD9AF45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC69DF69-84A5-4901-A1BA-E4878CD9AF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC69DF69-84A5-4901-A1BA-E4878CD9AF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC69DF69-84A5-4901-A1BA-E4878CD9AF45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +76,7 @@ Global
 		{634911F9-72F8-42F4-BC59-EA02D8A5AEBE} = {CEF48AAD-AE3A-4DCD-8D28-57733395A25E}
 		{1885D121-2155-493A-8E47-1030D37C1DE2} = {BD9EABB0-5C2C-435E-94E0-048847ABEBC2}
 		{2098A25E-1BF4-41C2-9672-15330AA6F9D2} = {CEF48AAD-AE3A-4DCD-8D28-57733395A25E}
+		{BC69DF69-84A5-4901-A1BA-E4878CD9AF45} = {40147A3F-7E2A-476B-BED9-0139322F1AD4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BE4F623-3786-41CE-8268-FDCEEC6DDC9E}
