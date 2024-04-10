@@ -38,6 +38,11 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .ToListAsync();
 
+            if (products == null)
+            {
+                return null;
+            }
+
             return products;
         }
 
@@ -60,6 +65,11 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .ToListAsync();
 
+            if (orders == null)
+            {
+                return null;
+            }
+
             return orders;
         }
 
@@ -73,7 +83,7 @@ namespace CatFoodSubscription.Services.Data
         {
             var products = await context.Products
                 .AsNoTracking()
-                .Where(p => p.Name.Contains(query))
+                .Where(p => p.Name.ToLower().Contains(query))
                 .Select(p => new AdminAllProductsViewModel()
                 {
                     Id = p.Id,
@@ -81,6 +91,11 @@ namespace CatFoodSubscription.Services.Data
                     ImageUrl = p.ImageUrl,
                 })
                 .ToListAsync();
+
+            if (products == null)
+            {
+                return null;
+            }
 
             return products;
         }
@@ -106,7 +121,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (product == null)
             {
-                throw new Exception();
+                return null;
             }
 
             return product;
@@ -209,7 +224,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (productToDelete == null)
             {
-                throw new Exception();
+                throw new InvalidOperationException();
             }
 
             productToDelete.IsDeleted = false;
@@ -235,6 +250,11 @@ namespace CatFoodSubscription.Services.Data
                     Status = o.Status.Name
                 })
                 .ToListAsync();
+
+            if (order == null)
+            {
+                return null;
+            }
 
             return order;
         }
@@ -304,6 +324,11 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .ToListAsync();
 
+            if (statuses == null)
+            {
+                return null;
+            }
+
             return statuses;
         }
 
@@ -320,6 +345,11 @@ namespace CatFoodSubscription.Services.Data
                     Name = c.Name,
                 })
                 .ToListAsync();
+
+            if (categories == null)
+            {
+                return null;
+            }
 
             return categories;
         }
