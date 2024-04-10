@@ -14,6 +14,11 @@ namespace CatFoodSubscription.Services.Data
         {
             context = _context;
         }
+
+        /// <summary>
+        /// This service is responsible for fetching all available subscription boxes.
+        /// </summary>
+        /// <returns>A collection of all available subscription boxes.</returns>
         public async Task<IEnumerable<SubscriptionBoxAllViewModel>> GetAllAsync()
         {
             var subscriptionBoxes = await context.SubscriptionBoxes
@@ -43,6 +48,11 @@ namespace CatFoodSubscription.Services.Data
             return model;
         }
 
+        /// <summary>
+        /// This service is responsible for fetching a subscription box by its Id.
+        /// </summary>
+        /// <param name="id">The Id of the subscription box.</param>
+        /// <returns>The subscription box with the specified Id.</returns>
         public async Task<SubscriptionBoxAllViewModel> GetByIdAsync(int id)
         {
             var subscriptionBoxes = await context.SubscriptionBoxes
@@ -69,6 +79,11 @@ namespace CatFoodSubscription.Services.Data
                         .ToList()
                 })
                 .FirstOrDefault();
+
+            if (model == null)
+            {
+                return null;
+            }
 
             return model;
         }
