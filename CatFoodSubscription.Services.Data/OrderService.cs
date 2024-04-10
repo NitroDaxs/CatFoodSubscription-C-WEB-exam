@@ -8,8 +8,6 @@ using static CatFoodSubscription.Common.ValidationConstants;
 
 namespace CatFoodSubscription.Services.Data
 {
-
-
     public class OrderService : IOrderService
     {
         private readonly CatFoodSubscriptionDbContext context;
