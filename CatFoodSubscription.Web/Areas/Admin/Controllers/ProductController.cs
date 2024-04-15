@@ -8,10 +8,13 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
     public class ProductController : BaseAdminController
     {
         private readonly IAdminService adminService;
+        private readonly ILogger<ProductController> logger;
 
-        public ProductController(IAdminService _adminService)
+        public ProductController(IAdminService _adminService
+        , ILogger<ProductController> logger)
         {
             adminService = _adminService;
+            this.logger = logger;
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -29,9 +32,18 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
                 var product = await adminService.GetAdminProductByIdAsync(id);
                 return View("Edit", product);
             }
-            await adminService.EditAdminProductByIdAsync(model);
+            try
+            {
+                await adminService.EditAdminProductByIdAsync(model);
 
-            return RedirectToAction("AllProducts", "Home");
+                return RedirectToAction("AllProducts", "Home");
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = errorNotification;
+                logger.LogError($"Error has occurred while trying to fetch a product by Id {0}", DateTime.Now);
+                return RedirectToAction("AllProducts", "Home");
+            }
         }
 
         [HttpGet]
@@ -50,9 +62,20 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
                 var product = await adminService.GetAdminProductByIdAsync(id);
                 return View("Edit", product);
             }
-            await adminService.ConfirmAdminDeleteProductAsync(model);
 
-            return RedirectToAction("AllProducts", "Home");
+            try
+            {
+                await adminService.ConfirmAdminDeleteProductAsync(model);
+
+                return RedirectToAction("AllProducts", "Home");
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = errorNotification;
+                logger.LogError($"Error has occurred while trying to confirm a product deletion {0}", DateTime.Now);
+                return RedirectToAction("AllProducts", "Home");
+            }
+
         }
 
         [HttpGet]
@@ -78,9 +101,20 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
                 var product = await adminService.GetAdminProductByIdAsync(id);
                 return View("Edit", product);
             }
-            await adminService.ConfirmAdminRestoreProductAsync(model);
 
-            return RedirectToAction("AllProducts", "Home");
+            try
+            {
+                await adminService.ConfirmAdminRestoreProductAsync(model);
+
+                return RedirectToAction("AllProducts", "Home");
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = errorNotification;
+                logger.LogError($"Error has occurred while trying restore a product! {0}", DateTime.Now);
+                return RedirectToAction("AllProducts", "Home");
+            }
+
         }
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -106,6 +140,7 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
             catch (Exception)
             {
                 TempData["ErrorMessage"] = errorNotification;
+                logger.LogError($"Error has occurred while trying to add a new product! {0}", DateTime.Now);
                 return RedirectToAction("Index", "Home");
             }
         }

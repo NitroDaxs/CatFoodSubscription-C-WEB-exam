@@ -38,14 +38,8 @@ namespace CatFoodSubscription.Services.Data
                 })
                 .ToListAsync();
 
-            if (products == null)
-            {
-                return null;
-            }
-
             return products;
         }
-
 
         /// <summary>
         /// This service is responsible for fetching all of the orders made from the store.
@@ -121,7 +115,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (product == null)
             {
-                return null;
+                throw new InvalidOperationException();
             }
 
             return product;
@@ -146,7 +140,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (productToDelete == null)
             {
-                return null;
+                throw new InvalidOperationException();
             }
 
             return productToDelete;
@@ -208,7 +202,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (productToDelete == null)
             {
-                return null;
+                throw new InvalidOperationException();
             }
 
             return productToDelete;
@@ -372,7 +366,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (order == null)
             {
-                throw new NullReferenceException();
+                throw new InvalidOperationException();
             }
 
             var orderSummary = new AdminOrderSummaryViewModel()

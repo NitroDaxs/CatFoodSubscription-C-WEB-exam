@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CatFoodSubscription.Data.Migrations
 {
     [DbContext(typeof(CatFoodSubscriptionDbContext))]
-    [Migration("20240310141214_ChangingPostCOde")]
-    partial class ChangingPostCOde
+    [Migration("20240414142930_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -208,7 +208,7 @@ namespace CatFoodSubscription.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKUOwKwcvBO5OgwmpilXVWtmfoB2zzWgxdqZ7sDJkNKZNSBCdUSZg+ugXmChVH7fHQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJxIvd4NYt9zHM93ie7HHkS5bDuhKhay5jJMNRtaMeyGXhkbKKrd2eys2BKO9Wb8TA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ADMIN@GMAIL.COM",
                             TwoFactorEnabled = false,
@@ -237,6 +237,10 @@ namespace CatFoodSubscription.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasComment("Identification of the customer");
+
+                    b.Property<bool>("IsSubscriptionCanceled")
+                        .HasColumnType("bit")
+                        .HasComment("Indicates if the subscription is canceled");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2")
@@ -289,6 +293,10 @@ namespace CatFoodSubscription.Data.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Path leading to the product's image");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasComment("Indicates if the product is deleted");
+
                     b.Property<bool>("IsSubscription")
                         .HasColumnType("bit")
                         .HasComment("Indicates if the product is subscription based");
@@ -316,6 +324,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 3,
                             Description = "Essential cat calcium supplement for strong bones and teeth.",
                             ImageUrl = "https://i.ibb.co/frhS8TM/Catio-com-2.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Calcium",
                             Price = 8.99m
@@ -326,6 +335,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 3,
                             Description = "Boost your cat's coat and skin health with our Omega-3 supplement. Promotes a shiny coat and supports overall well-being.",
                             ImageUrl = "https://i.ibb.co/DzdTWbZ/6.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Omega-3",
                             Price = 9.99m
@@ -336,6 +346,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 3,
                             Description = "Maintain healthy digestion for your cat with our fiber supplement. Supports bowel regularity and digestive balance.",
                             ImageUrl = "https://i.ibb.co/wLCVbkz/Catio-com-3.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Fiber",
                             Price = 7.99m
@@ -346,6 +357,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 1,
                             Description = "Delicious wet cat food with real chicken for a savory dining experience.",
                             ImageUrl = "https://i.ibb.co/6PNYp8Q/Wet-Chicken.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Wet Chicken",
                             Price = 2.99m
@@ -356,6 +368,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 2,
                             Description = "Nutritious dry cat food with chicken as the main ingredient. Supports overall health.",
                             ImageUrl = "https://i.ibb.co/vjHdjs2/Dry-Chicken.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Dry Chicken",
                             Price = 2.50m
@@ -366,6 +379,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 1,
                             Description = "Tasty wet cat food featuring real fish to satisfy your cat's seafood cravings.",
                             ImageUrl = "https://i.ibb.co/vVXjkg7/Wet-Fish.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Wet Fish",
                             Price = 3.99m
@@ -376,6 +390,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 2,
                             Description = "High-quality dry cat food with fish for a protein-rich and flavorful meal.",
                             ImageUrl = "https://i.ibb.co/JshpRy2/Dry-Fish.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Dry Fish",
                             Price = 3.50m
@@ -386,6 +401,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 1,
                             Description = "Irresistible wet cat food with real beef, providing a source of premium protein.",
                             ImageUrl = "https://i.ibb.co/thzxbh1/Wet-Beef.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Wet Beef",
                             Price = 3.99m
@@ -396,6 +412,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 2,
                             Description = "Wholesome dry cat food featuring beef for a balanced and tasty diet.",
                             ImageUrl = "https://i.ibb.co/0FSfBhf/Dry-Beef.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Dry Beef",
                             Price = 3.50m
@@ -406,6 +423,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 2,
                             Description = "Perfectly balanced dry cat food with a blend of chicken and turkey for optimal nutrition.",
                             ImageUrl = "https://i.ibb.co/XL7NV1D/Dry-Chicken-And-Turkey.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Dry Chicken & Turkey",
                             Price = 4.99m
@@ -416,6 +434,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 1,
                             Description = "Indulge your cat with wet food featuring a delightful combination of salmon and chicken.",
                             ImageUrl = "https://i.ibb.co/WK3QYZ5/Wet-Chicken-And-Salmon.png",
+                            IsDeleted = false,
                             IsSubscription = true,
                             Name = "Wet Salmon & Chicken",
                             Price = 3.99m
@@ -426,6 +445,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 4,
                             Description = "A multi-level cat tree designed to keep your feline friend entertained and comfortable.",
                             ImageUrl = "https://i.ibb.co/Jy1fQrV/Cat-Tree.png",
+                            IsDeleted = false,
                             IsSubscription = false,
                             Name = "Cat Tree",
                             Price = 25.99m
@@ -436,6 +456,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 5,
                             Description = "A stylish food bowl perfect for serving your cat's favorite wet and dry food.",
                             ImageUrl = "https://i.ibb.co/yy4md2H/Food-Bowl.png",
+                            IsDeleted = false,
                             IsSubscription = false,
                             Name = "Food Bowl",
                             Price = 5.45m
@@ -446,6 +467,7 @@ namespace CatFoodSubscription.Data.Migrations
                             CategoryId = 4,
                             Description = "An interactive fishing rod toy that will engage your cat in playful antics for hours.",
                             ImageUrl = "https://i.ibb.co/tm04yZf/Fishing-Rod-Toy.png",
+                            IsDeleted = false,
                             IsSubscription = false,
                             Name = "Fishing Rod Toy",
                             Price = 2.99m
@@ -792,15 +814,15 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ef0e9a4e-10f1-42cb-b8a0-5c239dc25c66",
-                            ConcurrencyStamp = "e2ad2ddb-6aa3-4e0e-ba22-83b98abd346f",
+                            Id = "3e410e1a-4ad1-46f6-bcad-c543a3ec1c21",
+                            ConcurrencyStamp = "ceb93c03-152d-4d66-9eec-d4f8f4cd3a54",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "fd3fa4f5-ac49-48de-ba75-bfe43c46e481",
-                            ConcurrencyStamp = "b77c6225-9037-41ab-b540-a4e81af84916",
+                            Id = "4e7fd1e8-b75d-46ae-bcd4-a6dd48d80eff",
+                            ConcurrencyStamp = "933ecf58-e535-4d89-9a89-c032587ae1b7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

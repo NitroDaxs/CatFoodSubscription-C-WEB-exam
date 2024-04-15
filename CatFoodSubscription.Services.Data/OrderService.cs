@@ -300,7 +300,7 @@ namespace CatFoodSubscription.Services.Data
         {
             var order = await context.Orders
                 .Where(o => o.CustomerId == id && o.StatusId == 1)
-                .Include(o => o.SubscriptionBox) // Make sure to include the SubscriptionBox
+                .Include(o => o.SubscriptionBox)
                 .FirstOrDefaultAsync();
 
             if (order == null)

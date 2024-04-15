@@ -22,7 +22,6 @@ builder.Services
         options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
         options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
     });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,7 +42,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthentication();
 app.UseAuthorization();
 

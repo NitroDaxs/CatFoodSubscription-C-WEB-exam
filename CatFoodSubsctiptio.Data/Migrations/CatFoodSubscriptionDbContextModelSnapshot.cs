@@ -206,7 +206,7 @@ namespace CatFoodSubscription.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECCuf/NafX73DSFIGCjRVw1fXVOaavIOks2a2n7EBuvkXOboi+BCovd+QEOArUnGAw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJxIvd4NYt9zHM93ie7HHkS5bDuhKhay5jJMNRtaMeyGXhkbKKrd2eys2BKO9Wb8TA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ADMIN@GMAIL.COM",
                             TwoFactorEnabled = false,
@@ -812,15 +812,15 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "71f65851-1f23-459f-8b67-a6a00324fd39",
-                            ConcurrencyStamp = "3b50f8ab-e84e-4133-a7c6-7f7cfcb1bd95",
+                            Id = "3e410e1a-4ad1-46f6-bcad-c543a3ec1c21",
+                            ConcurrencyStamp = "ceb93c03-152d-4d66-9eec-d4f8f4cd3a54",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "8ac1f2a2-6638-4ef3-866d-b2b19c2ce92c",
-                            ConcurrencyStamp = "e161d944-7465-492d-b94d-7a7813c0d39e",
+                            Id = "4e7fd1e8-b75d-46ae-bcd4-a6dd48d80eff",
+                            ConcurrencyStamp = "933ecf58-e535-4d89-9a89-c032587ae1b7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

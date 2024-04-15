@@ -168,7 +168,7 @@ namespace CatFoodSubscription.Web.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 TempData["ErrorMessage"] = errorNotification;
                 logger.LogError($"Error has occurred while trying to remove a subscription box to cart! {DateTime.Now}");
@@ -209,7 +209,7 @@ namespace CatFoodSubscription.Web.Controllers
 
                 return View(order);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 TempData["ErrorMessage"] = errorNotification;
                 logger.LogError($"Error has occurred while trying to fetch one of the customer's orders! {DateTime.Now}");

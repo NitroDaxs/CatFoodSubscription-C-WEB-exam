@@ -74,7 +74,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (order == null)
             {
-                throw new NullReferenceException();
+                throw new InvalidOperationException();
             }
 
             order.IsSubscriptionCanceled = true;

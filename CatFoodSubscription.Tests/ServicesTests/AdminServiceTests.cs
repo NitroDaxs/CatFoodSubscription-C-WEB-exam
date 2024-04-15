@@ -132,9 +132,7 @@ namespace CatFoodSubscription.Tests.ServicesTests
             Assert.IsNotNull(result);
             Assert.AreEqual(6, result2.Id);
 
-            var result3 = await adminService.GetAdminProductByIdAsync(9999999);
-
-            Assert.IsNull(result3);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await adminService.GetAdminProductByIdAsync(-1));
         }
 
         [Test]
@@ -150,9 +148,7 @@ namespace CatFoodSubscription.Tests.ServicesTests
             Assert.IsNotNull(result);
             Assert.AreEqual(6, result2.Id);
 
-            var result3 = await adminService.GetAdminProductByIdAsync(9999999);
-
-            Assert.IsNull(result3);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await adminService.GetAdminDeleteProductByIdAsync(-1));
         }
 
         [Test]
@@ -241,9 +237,7 @@ namespace CatFoodSubscription.Tests.ServicesTests
             Assert.IsNotNull(result);
             Assert.AreEqual(6, result2.Id);
 
-            var result3 = await adminService.GetAdminRestoreProductByIdAsync(9999999);
-
-            Assert.IsNull(result3);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await adminService.GetAdminRestoreProductByIdAsync(-1));
         }
 
         [Test]

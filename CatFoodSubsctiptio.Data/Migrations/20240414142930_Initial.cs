@@ -18,7 +18,7 @@ namespace CatFoodSubscription.Data.Migrations
                     Country = table.Column<string>(type: "nvarchar(56)", maxLength: 56, nullable: false, comment: "Country of the address"),
                     City = table.Column<string>(type: "nvarchar(58)", maxLength: 58, nullable: false, comment: "City of the address"),
                     Street = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false, comment: "Street of the address"),
-                    PostalCode = table.Column<int>(type: "int", nullable: false, comment: "PostalCode of the address"),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "PostalCode of the address"),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "First name of the customer"),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true, comment: "Last name of the customer"),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "PhoneNumber for the address"),
@@ -229,7 +229,8 @@ namespace CatFoodSubscription.Data.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "Price of the product"),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Path leading to the product's image"),
                     IsSubscription = table.Column<bool>(type: "bit", nullable: false, comment: "Indicates if the product is subscription based"),
-                    CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Identification for the category of the product")
+                    CategoryId = table.Column<int>(type: "int", nullable: false, comment: "Identification for the category of the product"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, comment: "Indicates if the product is deleted")
                 },
                 constraints: table =>
                 {
@@ -254,7 +255,8 @@ namespace CatFoodSubscription.Data.Migrations
                     ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date of the arrival"),
                     StatusId = table.Column<int>(type: "int", nullable: false),
                     AddressId = table.Column<int>(type: "int", nullable: true, comment: "Identification of the address"),
-                    SubscriptionBoxId = table.Column<int>(type: "int", nullable: true, comment: "Identification of the subscriptionBox")
+                    SubscriptionBoxId = table.Column<int>(type: "int", nullable: true, comment: "Identification of the subscriptionBox"),
+                    IsSubscriptionCanceled = table.Column<bool>(type: "bit", nullable: false, comment: "Indicates if the subscription is canceled")
                 },
                 constraints: table =>
                 {
@@ -332,14 +334,14 @@ namespace CatFoodSubscription.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "c9f3b538-1185-4eca-b398-b9cca1278fa4", "d277403e-b3a9-493d-a336-b8bd1f84bb78", "IdentityRole", "User", "USER" },
-                    { "ca38621d-29a6-41da-b94e-42a3e9974f66", "58dbbaeb-0a3e-48ec-b60a-1eca45c4851d", "IdentityRole", "Admin", "ADMIN" }
+                    { "3e410e1a-4ad1-46f6-bcad-c543a3ec1c21", "ceb93c03-152d-4d66-9eec-d4f8f4cd3a54", "IdentityRole", "User", "USER" },
+                    { "4e7fd1e8-b75d-46ae-bcd4-a6dd48d80eff", "933ecf58-e535-4d89-9a89-c032587ae1b7", "IdentityRole", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsDeleted", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b", 0, "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b", "admin@gmail.com", true, false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAEAACcQAAAAEK0pQgxj5TAhi0FgqfpB2jxMZg6k5i6Wv28nASCKBuV8N1u2/MzIcndH6xVaMnEUag==", null, false, "ADMIN@GMAIL.COM", false, "admin@gmail.com" });
+                values: new object[] { "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b", 0, "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b", "admin@gmail.com", true, false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAEAACcQAAAAEJxIvd4NYt9zHM93ie7HHkS5bDuhKhay5jJMNRtaMeyGXhkbKKrd2eys2BKO9Wb8TA==", null, false, "ADMIN@GMAIL.COM", false, "admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -377,23 +379,23 @@ namespace CatFoodSubscription.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "Description", "ImageUrl", "IsSubscription", "Name", "Price" },
+                columns: new[] { "Id", "CategoryId", "Description", "ImageUrl", "IsDeleted", "IsSubscription", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, 3, "Essential cat calcium supplement for strong bones and teeth.", "https://i.ibb.co/frhS8TM/Catio-com-2.png", true, "Calcium", 8.99m },
-                    { 2, 3, "Boost your cat's coat and skin health with our Omega-3 supplement. Promotes a shiny coat and supports overall well-being.", "https://i.ibb.co/DzdTWbZ/6.png", true, "Omega-3", 9.99m },
-                    { 3, 3, "Maintain healthy digestion for your cat with our fiber supplement. Supports bowel regularity and digestive balance.", "https://i.ibb.co/wLCVbkz/Catio-com-3.png", true, "Fiber", 7.99m },
-                    { 4, 1, "Delicious wet cat food with real chicken for a savory dining experience.", "https://i.ibb.co/6PNYp8Q/Wet-Chicken.png", true, "Wet Chicken", 2.99m },
-                    { 5, 2, "Nutritious dry cat food with chicken as the main ingredient. Supports overall health.", "https://i.ibb.co/vjHdjs2/Dry-Chicken.png", true, "Dry Chicken", 2.50m },
-                    { 6, 1, "Tasty wet cat food featuring real fish to satisfy your cat's seafood cravings.", "https://i.ibb.co/vVXjkg7/Wet-Fish.png", true, "Wet Fish", 3.99m },
-                    { 7, 2, "High-quality dry cat food with fish for a protein-rich and flavorful meal.", "https://i.ibb.co/JshpRy2/Dry-Fish.png", true, "Dry Fish", 3.50m },
-                    { 8, 1, "Irresistible wet cat food with real beef, providing a source of premium protein.", "https://i.ibb.co/thzxbh1/Wet-Beef.png", true, "Wet Beef", 3.99m },
-                    { 9, 2, "Wholesome dry cat food featuring beef for a balanced and tasty diet.", "https://i.ibb.co/0FSfBhf/Dry-Beef.png", true, "Dry Beef", 3.50m },
-                    { 10, 2, "Perfectly balanced dry cat food with a blend of chicken and turkey for optimal nutrition.", "https://i.ibb.co/XL7NV1D/Dry-Chicken-And-Turkey.png", true, "Dry Chicken & Turkey", 4.99m },
-                    { 11, 1, "Indulge your cat with wet food featuring a delightful combination of salmon and chicken.", "https://i.ibb.co/WK3QYZ5/Wet-Chicken-And-Salmon.png", true, "Wet Salmon & Chicken", 3.99m },
-                    { 12, 4, "A multi-level cat tree designed to keep your feline friend entertained and comfortable.", "https://i.ibb.co/Jy1fQrV/Cat-Tree.png", false, "Cat Tree", 25.99m },
-                    { 13, 5, "A stylish food bowl perfect for serving your cat's favorite wet and dry food.", "https://i.ibb.co/yy4md2H/Food-Bowl.png", false, "Food Bowl", 5.45m },
-                    { 14, 4, "An interactive fishing rod toy that will engage your cat in playful antics for hours.", "https://i.ibb.co/tm04yZf/Fishing-Rod-Toy.png", false, "Fishing Rod Toy", 2.99m }
+                    { 1, 3, "Essential cat calcium supplement for strong bones and teeth.", "https://i.ibb.co/frhS8TM/Catio-com-2.png", false, true, "Calcium", 8.99m },
+                    { 2, 3, "Boost your cat's coat and skin health with our Omega-3 supplement. Promotes a shiny coat and supports overall well-being.", "https://i.ibb.co/DzdTWbZ/6.png", false, true, "Omega-3", 9.99m },
+                    { 3, 3, "Maintain healthy digestion for your cat with our fiber supplement. Supports bowel regularity and digestive balance.", "https://i.ibb.co/wLCVbkz/Catio-com-3.png", false, true, "Fiber", 7.99m },
+                    { 4, 1, "Delicious wet cat food with real chicken for a savory dining experience.", "https://i.ibb.co/6PNYp8Q/Wet-Chicken.png", false, true, "Wet Chicken", 2.99m },
+                    { 5, 2, "Nutritious dry cat food with chicken as the main ingredient. Supports overall health.", "https://i.ibb.co/vjHdjs2/Dry-Chicken.png", false, true, "Dry Chicken", 2.50m },
+                    { 6, 1, "Tasty wet cat food featuring real fish to satisfy your cat's seafood cravings.", "https://i.ibb.co/vVXjkg7/Wet-Fish.png", false, true, "Wet Fish", 3.99m },
+                    { 7, 2, "High-quality dry cat food with fish for a protein-rich and flavorful meal.", "https://i.ibb.co/JshpRy2/Dry-Fish.png", false, true, "Dry Fish", 3.50m },
+                    { 8, 1, "Irresistible wet cat food with real beef, providing a source of premium protein.", "https://i.ibb.co/thzxbh1/Wet-Beef.png", false, true, "Wet Beef", 3.99m },
+                    { 9, 2, "Wholesome dry cat food featuring beef for a balanced and tasty diet.", "https://i.ibb.co/0FSfBhf/Dry-Beef.png", false, true, "Dry Beef", 3.50m },
+                    { 10, 2, "Perfectly balanced dry cat food with a blend of chicken and turkey for optimal nutrition.", "https://i.ibb.co/XL7NV1D/Dry-Chicken-And-Turkey.png", false, true, "Dry Chicken & Turkey", 4.99m },
+                    { 11, 1, "Indulge your cat with wet food featuring a delightful combination of salmon and chicken.", "https://i.ibb.co/WK3QYZ5/Wet-Chicken-And-Salmon.png", false, true, "Wet Salmon & Chicken", 3.99m },
+                    { 12, 4, "A multi-level cat tree designed to keep your feline friend entertained and comfortable.", "https://i.ibb.co/Jy1fQrV/Cat-Tree.png", false, false, "Cat Tree", 25.99m },
+                    { 13, 5, "A stylish food bowl perfect for serving your cat's favorite wet and dry food.", "https://i.ibb.co/yy4md2H/Food-Bowl.png", false, false, "Food Bowl", 5.45m },
+                    { 14, 4, "An interactive fishing rod toy that will engage your cat in playful antics for hours.", "https://i.ibb.co/tm04yZf/Fishing-Rod-Toy.png", false, false, "Fishing Rod Toy", 2.99m }
                 });
 
             migrationBuilder.InsertData(

@@ -34,9 +34,9 @@ namespace CatFoodSubscription.Services.Data
                 .ToListAsync();
 
 
-            if (!products.Any())
+            if (products == null)
             {
-                throw new NullReferenceException();
+                return null;
             }
 
             return products;
@@ -52,7 +52,7 @@ namespace CatFoodSubscription.Services.Data
 
             var products = await context.Products
                 .AsNoTracking()
-                .Where(p => p.Name.Contains(query))
+                .Where(p => p.Name.ToLower().Contains(query))
                 .Select(p => new ProductAllViewModel()
                 {
                     Id = p.Id,
@@ -70,7 +70,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (!result.Products.Any())
             {
-                throw new NullReferenceException();
+                throw new InvalidOperationException();
             }
 
             return result;
@@ -99,7 +99,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (product == null)
             {
-                throw new Exception();
+                throw new InvalidOperationException();
             }
 
             return product;
@@ -113,7 +113,7 @@ namespace CatFoodSubscription.Services.Data
         public async Task<IEnumerable<ProductSearchViewModel>> GetProductSearchBarAsync(string query)
         {
             var results = await context.Products
-                .Where(p => p.Name.Contains(query))
+                .Where(p => p.Name.ToLower().Contains(query))
                 .Select(p => new ProductSearchViewModel()
                 {
                     Id = p.Id,
@@ -124,7 +124,7 @@ namespace CatFoodSubscription.Services.Data
 
             if (results == null)
             {
-                throw new NullReferenceException();
+                throw new InvalidOperationException();
             }
 
             return results;
