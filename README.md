@@ -115,7 +115,7 @@ The types of roles are:
   <img src="https://i.ibb.co/72b6Dr7/image.png" alt="image" width="" height="">
 </details>
 <details>
-  <summary>Subscriotions Page</summary>
+  <summary>Subscriptions Page</summary>
   <img src="https://i.ibb.co/XVc0fSj/image.png" alt="image" width="" height="">
 </details>
 <details>
