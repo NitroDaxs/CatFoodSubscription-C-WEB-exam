@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="~/css/Admin/order.css" />
 </head>
 <body>
-    <form asp-controller="Home" asp-action="SearchedOrders" method="post">
+    <form asp-controller="Home" asp-action="SearchedOrders" method="get">
         <div class="search-bar">
             <div class="search-box">
                 <input type="text" name="id" class="form-control" placeholder="Search order id...">
@@ -42,6 +42,20 @@
                                     <h6 class="text-charcoal mb-0 w-100"><b>Status</b></h6>
                                     <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@order.Status</p>
                                 </div>
+                                @if (order.Status == "Shipped")
+                                {
+                                    <div class="group col-6 col-md">
+                                        <h6 class="text-charcoal mb-0 w-100"><b>Status Date</b></h6>
+                                        <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@order.ShippedDate.Value.ToString("M/d/yy")</p>
+                                    </div>
+                                }
+                                else if (order.Status == "In Delivery Center")
+                                {
+                                    <div class="group col-6 col-md">
+                                        <h6 class="text-charcoal mb-0 w-100"><b>Status Date</b></h6>
+                                        <p class="group-element text-pebble mb-0 w-100 mb-2 mb-md-0">@order.DeliveryDate.Value.ToString("M/d/yy")</p>
+                                    </div>
+                                }
                                 <div class="group-element  col-12 col-md-3">
                                     <form asp-area="Admin" asp-controller="Order" asp-action="Info" method="get">
                                         <input type="hidden" name="id" value="@order.Id" />

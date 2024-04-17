@@ -2,6 +2,7 @@
 using CatFoodSubscription.Web.ViewModels.Admin.Order;
 using CatFoodSubscription.Web.ViewModels.Admin.Product;
 using CatFoodSubscription.Web.ViewModels.Admin.Status;
+using CatFoodSubscription.Web.ViewModels.Admin.Subscription;
 
 namespace CatFoodSubscription.Services.Data.Interfaces
 {
@@ -27,5 +28,11 @@ namespace CatFoodSubscription.Services.Data.Interfaces
         Task<AdminOrderSummaryViewModel> OrderSummaryByIdAsync(int id);
 
         Task AddNewProductAsync(AdminAddProductViewModel model);
+
+        Task<IEnumerable<AdminAllSubscriptionsViewModel>> GetAdminAllSubscriptionsAsync();
+
+        Task UpdateAdminSubscriptionRenewalDate(int id);
+
+        Task<IEnumerable<AdminAllSubscriptionsViewModel>> GetAdminSubscriptionByIdAsync(int id);
     }
 }

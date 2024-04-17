@@ -176,6 +176,7 @@ namespace CatFoodSubscription.Services.Data
             {
                 order.StatusId = 2;
                 order.OrderDate = DateTime.Now;
+                order.RenewalDate = DateTime.Now.AddMonths(1);
                 order.AddressId = address.Id;
 
                 await context.SaveChangesAsync();
@@ -303,36 +304,24 @@ namespace CatFoodSubscription.Services.Data
                 .Include(o => o.SubscriptionBox)
                 .FirstOrDefaultAsync();
 
+            var subBox = await context.SubscriptionBoxes.FirstOrDefaultAsync(sb => sb.Id == subscriptionBox.Id);
+
             if (order == null)
             {
                 order = new Order
                 {
                     CustomerId = id,
                     StatusId = 1,
-                    SubscriptionBox = new SubscriptionBox
-                    {
-                        Id = subscriptionBox.Id,
-                        Name = subscriptionBox.Name,
-                        ImageUrl = subscriptionBox.ImageUrl,
-                        Price = subscriptionBox.Price,
-                        Description = subscriptionBox.Description,
-                    }
+                    SubscriptionBox = subBox
                 };
 
-                context.Orders.Add(order);
+                await context.Orders.AddAsync(order);
             }
             else
             {
                 if (order.SubscriptionBox == null)
                 {
-                    order.SubscriptionBox = new SubscriptionBox
-                    {
-                        Id = subscriptionBox.Id,
-                        Name = subscriptionBox.Name,
-                        ImageUrl = subscriptionBox.ImageUrl,
-                        Price = subscriptionBox.Price,
-                        Description = subscriptionBox.Description,
-                    };
+                    order.SubscriptionBox = subBox;
                 }
             }
 

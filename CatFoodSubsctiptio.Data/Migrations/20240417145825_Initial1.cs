@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CatFoodSubscription.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initial1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -251,6 +251,8 @@ namespace CatFoodSubscription.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "Identification of the customer"),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Date of the order"),
+                    RenewalDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RenewedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ShippedDate = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date of the shipment"),
                     ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Date of the arrival"),
                     StatusId = table.Column<int>(type: "int", nullable: false),
@@ -334,14 +336,14 @@ namespace CatFoodSubscription.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Discriminator", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "3e410e1a-4ad1-46f6-bcad-c543a3ec1c21", "ceb93c03-152d-4d66-9eec-d4f8f4cd3a54", "IdentityRole", "User", "USER" },
-                    { "4e7fd1e8-b75d-46ae-bcd4-a6dd48d80eff", "933ecf58-e535-4d89-9a89-c032587ae1b7", "IdentityRole", "Admin", "ADMIN" }
+                    { "388872d3-f844-4e1c-8495-9be0fb610b1b", "d7a8fca8-2bb2-4a3c-bbe9-96b71f7c633b", "IdentityRole", "User", "USER" },
+                    { "78b01d24-5600-4697-b852-aa2a3faf3c2f", "aba1f775-6184-4c82-996d-d66a49508ec8", "IdentityRole", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsDeleted", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b", 0, "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b", "admin@gmail.com", true, false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAEAACcQAAAAEJxIvd4NYt9zHM93ie7HHkS5bDuhKhay5jJMNRtaMeyGXhkbKKrd2eys2BKO9Wb8TA==", null, false, "ADMIN@GMAIL.COM", false, "admin@gmail.com" });
+                values: new object[] { "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b", 0, "cd3c1ede-9fbe-4c46-81c6-c754507a4a0b", "admin@gmail.com", true, false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAEAACcQAAAAEKuiZa26qJQnnFaY2nTw8E6zEz6JyxXK7mBpsbxhrMBpH23kqkniOqV8IU8MbQ9ypQ==", null, false, "ADMIN@GMAIL.COM", false, "admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",

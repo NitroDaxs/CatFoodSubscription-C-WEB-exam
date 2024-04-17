@@ -23,7 +23,7 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
             return View(products);
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> SearchedProducts(string query)
         {
             if (!string.IsNullOrEmpty(query))
@@ -35,7 +35,7 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
             return RedirectToAction("AllProducts");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> SearchedOrders(int id)
         {
             if (id != 0)
@@ -48,12 +48,30 @@ namespace CatFoodSubscription.Web.Areas.Admin.Controllers
             return RedirectToAction("AllOrders");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SearchSubscription(int id)
+        {
+            if (id != 0)
+            {
+                var order = await adminService.GetAdminSubscriptionByIdAsync(id);
 
+                return View("AllSubscriptions", order);
+            }
+
+            return RedirectToAction("AllSubscriptions");
+        }
         [HttpGet]
         public async Task<IActionResult> AllOrders()
         {
             var orders = await adminService.GetAdminOrderAllAsync();
             return View(orders);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AllSubscriptions()
+        {
+            var subscriptions = await adminService.GetAdminAllSubscriptionsAsync();
+            return View(subscriptions);
         }
     }
 }

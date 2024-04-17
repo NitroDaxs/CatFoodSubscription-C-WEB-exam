@@ -22,6 +22,9 @@ namespace CatFoodSubscription.Data.Models
         [Required]
         public DateTime OrderDate { get; set; }
 
+        public DateTime? RenewalDate { get; set; }
+        public DateTime? RenewedDate { get; set; }
+
         [Comment("Date of the shipment")]
         public DateTime? ShippedDate { get; set; }
 

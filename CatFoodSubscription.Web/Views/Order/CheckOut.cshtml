@@ -143,7 +143,7 @@
                 <div class="one-time-products">
                     @if (Model.Products.Any())
                     {
-                        <h5>Subscription Products</h5>
+                        <h5>One Time Products</h5>
                         @foreach (var product in Model.Products.Where(p => p.IsSubscription == false))
                         {
                             <div class="row justify-content-between">

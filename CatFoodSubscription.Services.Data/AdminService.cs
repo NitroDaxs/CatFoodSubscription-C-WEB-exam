@@ -6,6 +6,7 @@ using CatFoodSubscription.Web.ViewModels.Admin.Category;
 using CatFoodSubscription.Web.ViewModels.Admin.Order;
 using CatFoodSubscription.Web.ViewModels.Admin.Product;
 using CatFoodSubscription.Web.ViewModels.Admin.Status;
+using CatFoodSubscription.Web.ViewModels.Admin.Subscription;
 using CatFoodSubscription.Web.ViewModels.Admin.SubsctiptionBox;
 using Microsoft.EntityFrameworkCore;
 using static CatFoodSubscription.Common.ValidationConstants.ProductConstants;
@@ -55,7 +56,10 @@ namespace CatFoodSubscription.Services.Data
                     Id = o.Id,
                     FirstName = o.Address.FirstName,
                     LastName = o.Address.LastName,
-                    Status = o.Status.Name
+                    Status = o.Status.Name,
+                    OrderDate = o.OrderDate,
+                    DeliveryDate = o.ArrivalDate,
+                    ShippedDate = o.ShippedDate
                 })
                 .ToListAsync();
 
@@ -299,6 +303,14 @@ namespace CatFoodSubscription.Services.Data
             }
 
             order.Status = status;
+            if (status.Name == "Shipped")
+            {
+                order.ShippedDate = DateTime.Now;
+            }
+            else if (status.Name == "In Delivery Center")
+            {
+                order.ArrivalDate = DateTime.Now;
+            }
 
             await context.SaveChangesAsync();
         }
@@ -422,6 +434,77 @@ namespace CatFoodSubscription.Services.Data
             };
 
             await context.Products.AddAsync(newProduct);
+            await context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// This service is responsible for fetching all subscription orders.
+        /// </summary>
+        /// <returns>A collection of subscription orders.</returns>
+        public async Task<IEnumerable<AdminAllSubscriptionsViewModel>> GetAdminAllSubscriptionsAsync()
+        {
+            var subscriptions = await context.Orders
+                .Include(o => o.ProductsOrders)
+                .ThenInclude(po => po.Product)
+                .Where(o => o.ProductsOrders.Any(po => po.Product.IsSubscription == true) && o.IsSubscriptionCanceled == false && o.Status.Id != 1)
+                .Select(o => new AdminAllSubscriptionsViewModel
+                {
+                    OrderId = o.Id,
+                    FirstName = o.Address.FirstName,
+                    LastName = o.Address.LastName,
+                    OrderDate = o.OrderDate,
+                    RenewalDate = o.RenewalDate,
+                    Products = o.ProductsOrders.Select(po => new AdminAllProductsViewModel
+                    {
+                        Id = po.Product.Id,
+                        Name = po.Product.Name,
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return subscriptions;
+        }
+
+        /// <summary>
+        /// This service is responsible for fetching specific subscription orders.
+        /// </summary>
+        /// <param name="id">The id of the subscription</param>
+        /// <returns>Specified subscription order by the id.</returns>
+        public async Task<IEnumerable<AdminAllSubscriptionsViewModel>> GetAdminSubscriptionByIdAsync(int id)
+        {
+            var subscriptions = await context.Orders
+                .Include(o => o.ProductsOrders)
+                .ThenInclude(po => po.Product)
+                .Where(o => o.ProductsOrders.Any(po => po.Product.IsSubscription == true) && o.IsSubscriptionCanceled == false && o.Status.Id != 1 && o.Id == id)
+                .Select(o => new AdminAllSubscriptionsViewModel
+                {
+                    OrderId = o.Id,
+                    FirstName = o.Address.FirstName,
+                    LastName = o.Address.LastName,
+                    OrderDate = o.OrderDate,
+                    RenewalDate = o.OrderDate.AddMonths(1),
+                    Products = o.ProductsOrders.Select(po => new AdminAllProductsViewModel
+                    {
+                        Id = po.Product.Id,
+                        Name = po.Product.Name,
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return subscriptions;
+        }
+
+        /// <summary>
+        /// This service is responsible for updating the renewal and renewed dates.
+        /// </summary>
+        /// <param name="id">Id of the subscription order.</param>
+        public async Task UpdateAdminSubscriptionRenewalDate(int id)
+        {
+            var subscription = await context.Orders.FindAsync(id);
+
+            subscription.RenewedDate = DateTime.UtcNow;
+            subscription.RenewalDate = subscription.RenewedDate.Value.AddMonths(1);
+
             await context.SaveChangesAsync();
         }
     }

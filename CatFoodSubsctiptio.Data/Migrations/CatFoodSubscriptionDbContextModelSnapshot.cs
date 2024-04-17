@@ -206,7 +206,7 @@ namespace CatFoodSubscription.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJxIvd4NYt9zHM93ie7HHkS5bDuhKhay5jJMNRtaMeyGXhkbKKrd2eys2BKO9Wb8TA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKuiZa26qJQnnFaY2nTw8E6zEz6JyxXK7mBpsbxhrMBpH23kqkniOqV8IU8MbQ9ypQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "ADMIN@GMAIL.COM",
                             TwoFactorEnabled = false,
@@ -243,6 +243,12 @@ namespace CatFoodSubscription.Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2")
                         .HasComment("Date of the order");
+
+                    b.Property<DateTime?>("RenewalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RenewedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("ShippedDate")
                         .HasColumnType("datetime2")
@@ -812,15 +818,15 @@ namespace CatFoodSubscription.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3e410e1a-4ad1-46f6-bcad-c543a3ec1c21",
-                            ConcurrencyStamp = "ceb93c03-152d-4d66-9eec-d4f8f4cd3a54",
+                            Id = "388872d3-f844-4e1c-8495-9be0fb610b1b",
+                            ConcurrencyStamp = "d7a8fca8-2bb2-4a3c-bbe9-96b71f7c633b",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "4e7fd1e8-b75d-46ae-bcd4-a6dd48d80eff",
-                            ConcurrencyStamp = "933ecf58-e535-4d89-9a89-c032587ae1b7",
+                            Id = "78b01d24-5600-4697-b852-aa2a3faf3c2f",
+                            ConcurrencyStamp = "aba1f775-6184-4c82-996d-d66a49508ec8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
