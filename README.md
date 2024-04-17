@@ -82,7 +82,7 @@ The types of roles are:
     * <img src = "https://i.ibb.co/qMx3gn0/image.png" width="" height="30" >
 
         * Upon clicking on the button the Admin will be redirected to the admin page.
-         * <img src="https://i.ibb.co/QbtGKqx/image.png" alt="image" width="" height="225">
+         * <img src="https://i.ibb.co/X36jGLd/image.png" alt="image" width="" height="260">
         
         * After clicking on the **"All Products"** button the admin is redirected to the page.
             * <img src="https://i.ibb.co/FHRQg78/image.png" alt="image" width="" height="">
@@ -100,4 +100,57 @@ The types of roles are:
                 * Button "Change Status" allows the Admin to change the order's status.
 
                     * <img src="https://i.ibb.co/SwVr4nh/image.png" alt="image" width="" height="120">
+        * Upon clicking **"All Subscriptions"** the Admin will be shown a page with all of the subscription orders and will be able to renew the orders
             
+<details>
+  <summary>Main Page</summary>
+  <img src="https://i.ibb.co/1fk050S/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>Products Page</summary>
+  <img src="https://i.ibb.co/L9zcbR5/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>Details Page</summary>
+  <img src="https://i.ibb.co/72b6Dr7/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>Subscriotions Page</summary>
+  <img src="https://i.ibb.co/XVc0fSj/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>About Us Page</summary>
+  <img src="https://i.ibb.co/nwwGqh9/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>Cart Page</summary>
+  <img src="https://i.ibb.co/G38NZ5H/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>Checkout Page</summary>
+  <img src="https://i.ibb.co/nCkDgB7/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>Orders Page</summary>
+  <img src="https://i.ibb.co/NpygGJH/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>Admin Panel Page</summary>
+  <img src="https://i.ibb.co/TqTjJyg/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>All Products Page</summary>
+  <img src="https://i.ibb.co/xS9sbsW/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>Add Product Page</summary>
+  <img src="https://i.ibb.co/NZ3pCYd/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>All Orders Page</summary>
+  <img src="https://i.ibb.co/tx21hzP/image.png" alt="image" width="" height="">
+</details>
+<details>
+  <summary>All Subscriptions Page</summary>
+  <img src="https://i.ibb.co/Tqz2GcN/image.png" alt="image" width="" height="">
+</details>
